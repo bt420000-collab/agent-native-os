@@ -1,0 +1,47 @@
+name: research-summary
+version: 0.1.0
+type: skill-app
+
+description: >
+  Summarize mounted source materials into a structured brief.
+
+runtime:
+  agent_role: researcher
+  requires_audit: true
+
+inputs:
+  - name: source_bundle
+    type: mounted_sources
+    required: true
+  - name: task_card
+    type: task_contract
+    required: true
+
+outputs:
+  - name: brief
+    type: markdown
+    path: .agent-os/outputs/{task_id}/brief.md
+  - name: handoff_report
+    type: markdown
+    path: .agent-os/handoffs/HANDOFF-{task_id}.md
+
+permissions:
+  read:
+    - mounted_sources
+    - task_card
+  write:
+    - outputs/
+    - handoffs/
+  forbidden:
+    - sources/source_law/
+    - registry/
+    - archive/cold/
+
+policies:
+  source_priority: strict
+  uncertainty_policy: mark_unknown
+  mutation_policy: no_core_source_mutation
+
+audit:
+  required_by:
+    - host

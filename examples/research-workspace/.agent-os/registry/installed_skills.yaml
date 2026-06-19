@@ -1,0 +1,5 @@
+installed_skills:
+  - name: source-digest
+    version: 0.1.0
+    path: skills/source-digest
+    enabled: true

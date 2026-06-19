@@ -1,0 +1,37 @@
+name: source-digest
+version: 0.1.0
+type: skill-app
+
+description: >
+  Digest mounted sources into bullet-point notes with uncertainties.
+
+runtime:
+  agent_role: researcher
+  requires_audit: false
+
+inputs:
+  - name: source_bundle
+    type: mounted_sources
+    required: true
+
+outputs:
+  - name: digest
+    type: markdown
+    path: .agent-os/outputs/{task_id}/source_digest.md
+
+permissions:
+  read:
+    - mounted_sources
+  write:
+    - outputs/
+  forbidden:
+    - registry/
+    - archive/cold/
+
+policies:
+  source_priority: strict
+  uncertainty_policy: mark_unknown
+  mutation_policy: no_core_source_mutation
+
+audit:
+  required_by: []

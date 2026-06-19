@@ -1,0 +1,240 @@
+﻿{
+    "name":  "agent-native-os",
+    "version":  "0.1.0",
+    "updated_at":  "2026-06-19T02:53:56.2027797Z",
+    "description":  "A context-native operating system architecture for long-running AI agents and installable Skill Apps.",
+    "files":  [
+                  {
+                      "bytes":  80,
+                      "path":  ".gitattributes"
+                  },
+                  {
+                      "bytes":  494,
+                      "path":  ".github/ISSUE_TEMPLATE/bug_report.md"
+                  },
+                  {
+                      "bytes":  185,
+                      "path":  ".github/ISSUE_TEMPLATE/config.yml"
+                  },
+                  {
+                      "bytes":  488,
+                      "path":  ".github/ISSUE_TEMPLATE/feature_request.md"
+                  },
+                  {
+                      "bytes":  660,
+                      "path":  ".github/PULL_REQUEST_TEMPLATE.md"
+                  },
+                  {
+                      "bytes":  401,
+                      "path":  ".gitignore"
+                  },
+                  {
+                      "bytes":  192,
+                      "path":  "CHANGELOG.md"
+                  },
+                  {
+                      "bytes":  1143,
+                      "path":  "CODE_OF_CONDUCT.md"
+                  },
+                  {
+                      "bytes":  2212,
+                      "path":  "CODEX_HANDOFF.md"
+                  },
+                  {
+                      "bytes":  784,
+                      "path":  "CONTRIBUTING.md"
+                  },
+                  {
+                      "bytes":  928,
+                      "path":  "docs/01_why_agent_os.md"
+                  },
+                  {
+                      "bytes":  1155,
+                      "path":  "docs/02_computer_use_vs_agent_native.md"
+                  },
+                  {
+                      "bytes":  997,
+                      "path":  "docs/03_context_kernel.md"
+                  },
+                  {
+                      "bytes":  998,
+                      "path":  "docs/04_skill_app_runtime.md"
+                  },
+                  {
+                      "bytes":  922,
+                      "path":  "docs/05_context_abi.md"
+                  },
+                  {
+                      "bytes":  1242,
+                      "path":  "docs/06_failure_modes.md"
+                  },
+                  {
+                      "bytes":  807,
+                      "path":  "docs/07_open_core_private_editions.md"
+                  },
+                  {
+                      "bytes":  1145,
+                      "path":  "docs/08_glossary.md"
+                  },
+                  {
+                      "bytes":  1085,
+                      "path":  "docs/09_security_and_governance.md"
+                  },
+                  {
+                      "bytes":  1119,
+                      "path":  "docs/10_implementation_notes.md"
+                  },
+                  {
+                      "bytes":  116,
+                      "path":  "examples/docs-workspace/.agent-os/registry/installed_skills.yaml"
+                  },
+                  {
+                      "bytes":  178,
+                      "path":  "examples/docs-workspace/.agent-os/sources/current_requirements.md"
+                  },
+                  {
+                      "bytes":  729,
+                      "path":  "examples/docs-workspace/.agent-os/tasks/TASK-001.md"
+                  },
+                  {
+                      "bytes":  210,
+                      "path":  "examples/docs-workspace/README.md"
+                  },
+                  {
+                      "bytes":  280,
+                      "path":  "examples/docs-workspace/skills/research-summary/instructions.md"
+                  },
+                  {
+                      "bytes":  841,
+                      "path":  "examples/docs-workspace/skills/research-summary/manifest.yaml"
+                  },
+                  {
+                      "bytes":  110,
+                      "path":  "examples/research-workspace/.agent-os/registry/installed_skills.yaml"
+                  },
+                  {
+                      "bytes":  107,
+                      "path":  "examples/research-workspace/README.md"
+                  },
+                  {
+                      "bytes":  632,
+                      "path":  "examples/research-workspace/skills/source-digest/manifest.yaml"
+                  },
+                  {
+                      "bytes":  1158,
+                      "path":  "GOVERNANCE.md"
+                  },
+                  {
+                      "bytes":  10265,
+                      "path":  "LICENSE"
+                  },
+                  {
+                      "bytes":  2400,
+                      "path":  "MANIFESTO.md"
+                  },
+                  {
+                      "bytes":  8515,
+                      "path":  "PACKAGE_MANIFEST.json"
+                  },
+                  {
+                      "bytes":  363,
+                      "path":  "private-editions.md"
+                  },
+                  {
+                      "bytes":  3316,
+                      "path":  "README.md"
+                  },
+                  {
+                      "bytes":  3466,
+                      "path":  "README.zh-CN.md"
+                  },
+                  {
+                      "bytes":  1089,
+                      "path":  "ROADMAP.md"
+                  },
+                  {
+                      "bytes":  1843,
+                      "path":  "scripts/init_workspace.py"
+                  },
+                  {
+                      "bytes":  1104,
+                      "path":  "SECURITY.md"
+                  },
+                  {
+                      "bytes":  3134,
+                      "path":  "SPEC.md"
+                  },
+                  {
+                      "bytes":  631,
+                      "path":  "spec/audit-gate.schema.md"
+                  },
+                  {
+                      "bytes":  542,
+                      "path":  "spec/handoff-report.schema.md"
+                  },
+                  {
+                      "bytes":  883,
+                      "path":  "spec/output-contract.schema.md"
+                  },
+                  {
+                      "bytes":  547,
+                      "path":  "spec/recovery-point.schema.md"
+                  },
+                  {
+                      "bytes":  777,
+                      "path":  "spec/role-runtime.schema.md"
+                  },
+                  {
+                      "bytes":  1178,
+                      "path":  "spec/skill-manifest.schema.md"
+                  },
+                  {
+                      "bytes":  975,
+                      "path":  "spec/source-mount.schema.md"
+                  },
+                  {
+                      "bytes":  827,
+                      "path":  "spec/task-card.schema.md"
+                  },
+                  {
+                      "bytes":  374,
+                      "path":  "templates/AUDIT_REPORT.md"
+                  },
+                  {
+                      "bytes":  201,
+                      "path":  "templates/HANDOFF_REPORT.md"
+                  },
+                  {
+                      "bytes":  237,
+                      "path":  "templates/INCIDENT_REPORT.md"
+                  },
+                  {
+                      "bytes":  395,
+                      "path":  "templates/OUTPUT_CONTRACT.md"
+                  },
+                  {
+                      "bytes":  196,
+                      "path":  "templates/ROLE_CARD.md"
+                  },
+                  {
+                      "bytes":  823,
+                      "path":  "templates/SKILL_MANIFEST.yaml"
+                  },
+                  {
+                      "bytes":  493,
+                      "path":  "templates/SOURCE_MOUNT.md"
+                  },
+                  {
+                      "bytes":  419,
+                      "path":  "templates/SOURCE_POLICY.md"
+                  },
+                  {
+                      "bytes":  381,
+                      "path":  "templates/TASK_CARD.md"
+                  },
+                  {
+                      "bytes":  6,
+                      "path":  "VERSION"
+                  }
+              ]
+}

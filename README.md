@@ -1,0 +1,127 @@
+# Agent-Native OS
+
+A context-native operating system architecture for long-running AI agents.
+
+Most AI agents today are being trained to use human computers: screens, buttons, browsers, terminals, APIs, and GUI workflows.
+
+Agent-Native OS asks a different question:
+
+> What kind of operating system does an agent need for its own work?
+
+Human operating systems are built around apps, windows, files, and devices. Agent-native systems should be built around context, source hierarchy, task isolation, role runtime, output contracts, audit gates, handoff protocols, archives, and recovery points.
+
+## Core idea
+
+In a human OS, the first-class citizen is the application.
+
+In an Agent OS, the first-class citizen is the context.
+
+Agent-Native OS is an open architecture for installing and running Skill Apps inside governed, context-aware agent workspaces.
+
+## What this project defines
+
+This repository is a specification and project seed for building an "Agent Windows" layer:
+
+- Context Kernel
+- Skill App Runtime
+- Source File System
+- Role & Permission System
+- Task Scheduler
+- Output Contract Engine
+- Audit Gate
+- Handoff Bus
+- Memory & Archive Layer
+- Recovery System
+
+## What it is not
+
+Agent-Native OS is not another chatbot prompt pack.
+
+It is not a GUI automation tool.
+
+It is not a replacement for model frameworks, tool frameworks, or workflow engines.
+
+Instead:
+
+- LLM frameworks call models.
+- Agent frameworks call tools.
+- Workflow engines arrange steps.
+- Agent-Native OS governs long-running agent work.
+
+## Why now
+
+Tools are multiplying: browsers, terminals, APIs, MCP servers, file editors, vector databases, and GUI control. More tools make agents more powerful, but also more chaotic.
+
+Without an OS layer, agents suffer from:
+
+- context overflow
+- role bleeding
+- source pollution
+- handoff amnesia
+- output drift
+- unauthorized mutation
+- review collapse
+- archive haunting
+- user override loss
+- long-run degradation
+
+Agent-Native OS turns agent work into a governable environment.
+
+## Minimal viable kernel
+
+The MVP is intentionally small:
+
+1. Skill App Manifest
+2. Source Mount
+3. Task Card
+4. Output Contract
+5. Handoff Report
+
+Recommended extensions:
+
+6. Audit Gate
+7. Recovery Point
+8. Role Runtime
+9. Skill Registry
+10. Source Policy
+
+## Repository map
+
+```txt
+agent-native-os/
+  README.md
+  README.zh-CN.md
+  MANIFESTO.md
+  SPEC.md
+  ROADMAP.md
+  CODEX_HANDOFF.md
+  docs/
+  spec/
+  templates/
+  examples/
+  scripts/
+```
+
+## Public core, private editions
+
+This repository defines the open architecture.
+
+Domain-specific private editions can be built on top of it. Private editions may contain domain craft, business logic, specialized scoring systems, or proprietary workflows, and are intentionally not included.
+
+## Contributing
+
+This is a specification-first project. Contributions that clarify the architecture, improve templates, add neutral examples, or strengthen security and governance are welcome.
+
+See `CONTRIBUTING.md`, `GOVERNANCE.md`, `SECURITY.md`, and `CODE_OF_CONDUCT.md`.
+
+## Slogan
+
+> Stop teaching agents only to use human desktops. Give them a native workspace.
+
+Or, more directly:
+
+> We are building the Windows layer for agents: a context-native OS where developers can install Skill Apps and compose reliable workflows.
+
+## License
+
+Apache-2.0. See `LICENSE`.
