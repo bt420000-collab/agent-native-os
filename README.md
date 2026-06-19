@@ -106,6 +106,22 @@ Recommended extensions:
 9. Skill Registry
 10. Source Policy
 
+## Try the demo
+
+Run:
+
+```bash
+python scripts/run_docs_brief_demo.py
+```
+
+Then open:
+
+```txt
+examples/docs-brief-demo/PROMPT_FOR_AGENT.md
+```
+
+Copy the prompt into your coding agent or LLM and let it produce the governed outputs.
+
 ## Repository map
 
 ```txt
@@ -124,6 +140,7 @@ agent-native-os/
   spec/
   templates/
   examples/
+    docs-brief-demo/
   scripts/
 ```
 

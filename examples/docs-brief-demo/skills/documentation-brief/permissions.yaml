@@ -1,0 +1,14 @@
+read:
+  - .agent-os/sources/current_requirements.md
+  - .agent-os/sources/project_notes.md
+  - .agent-os/tasks/TASK-001.md
+  - .agent-os/mounts/MOUNT-001.yaml
+  - .agent-os/contracts/CONTRACT-TASK-001.yaml
+write:
+  - .agent-os/outputs/TASK-001/
+  - .agent-os/handoffs/
+forbidden:
+  - archive/
+  - registry/
+mutation_policy: no_source_mutation
+audit_required: true

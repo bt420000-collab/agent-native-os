@@ -1,7 +1,7 @@
 ﻿{
     "name":  "agent-native-os",
     "version":  "0.1.0",
-    "updated_at":  "2026-06-19T03:53:44.7964063Z",
+    "updated_at":  "2026-06-19T04:05:03.7145669Z",
     "description":  "A context-native operating system architecture for long-running AI agents and installable Skill Apps.",
     "files":  [
                   {
@@ -97,6 +97,70 @@
                       "path":  "docs/10_implementation_notes.md"
                   },
                   {
+                      "bytes":  838,
+                      "path":  "examples/docs-brief-demo/.agent-os/contracts/CONTRACT-TASK-001.yaml"
+                  },
+                  {
+                      "bytes":  1,
+                      "path":  "examples/docs-brief-demo/.agent-os/handoffs/.gitkeep"
+                  },
+                  {
+                      "bytes":  493,
+                      "path":  "examples/docs-brief-demo/.agent-os/mounts/MOUNT-001.yaml"
+                  },
+                  {
+                      "bytes":  1,
+                      "path":  "examples/docs-brief-demo/.agent-os/outputs/TASK-001/.gitkeep"
+                  },
+                  {
+                      "bytes":  1,
+                      "path":  "examples/docs-brief-demo/.agent-os/reviews/.gitkeep"
+                  },
+                  {
+                      "bytes":  789,
+                      "path":  "examples/docs-brief-demo/.agent-os/sources/current_requirements.md"
+                  },
+                  {
+                      "bytes":  963,
+                      "path":  "examples/docs-brief-demo/.agent-os/sources/project_notes.md"
+                  },
+                  {
+                      "bytes":  788,
+                      "path":  "examples/docs-brief-demo/.agent-os/tasks/TASK-001.md"
+                  },
+                  {
+                      "bytes":  2995,
+                      "path":  "examples/docs-brief-demo/EXPECTED_OUTPUT_SAMPLE.md"
+                  },
+                  {
+                      "bytes":  1686,
+                      "path":  "examples/docs-brief-demo/PROMPT_FOR_AGENT.md"
+                  },
+                  {
+                      "bytes":  1599,
+                      "path":  "examples/docs-brief-demo/README.md"
+                  },
+                  {
+                      "bytes":  1543,
+                      "path":  "examples/docs-brief-demo/README.zh-CN.md"
+                  },
+                  {
+                      "bytes":  748,
+                      "path":  "examples/docs-brief-demo/skills/documentation-brief/instructions.md"
+                  },
+                  {
+                      "bytes":  1327,
+                      "path":  "examples/docs-brief-demo/skills/documentation-brief/manifest.yaml"
+                  },
+                  {
+                      "bytes":  459,
+                      "path":  "examples/docs-brief-demo/skills/documentation-brief/output_contract.md"
+                  },
+                  {
+                      "bytes":  364,
+                      "path":  "examples/docs-brief-demo/skills/documentation-brief/permissions.yaml"
+                  },
+                  {
                       "bytes":  116,
                       "path":  "examples/docs-workspace/.agent-os/registry/installed_skills.yaml"
                   },
@@ -149,7 +213,7 @@
                       "path":  "NAMING_STRATEGY.md"
                   },
                   {
-                      "bytes":  9041,
+                      "bytes":  9186,
                       "path":  "PACKAGE_MANIFEST.json"
                   },
                   {
@@ -157,20 +221,28 @@
                       "path":  "private-editions.md"
                   },
                   {
-                      "bytes":  4231,
+                      "bytes":  4483,
                       "path":  "README.md"
                   },
                   {
-                      "bytes":  4332,
+                      "bytes":  4628,
                       "path":  "README.zh-CN.md"
                   },
                   {
-                      "bytes":  1089,
+                      "bytes":  1178,
                       "path":  "ROADMAP.md"
                   },
                   {
                       "bytes":  1843,
                       "path":  "scripts/init_workspace.py"
+                  },
+                  {
+                      "bytes":  1929,
+                      "path":  "scripts/run_docs_brief_demo.py"
+                  },
+                  {
+                      "bytes":  1753,
+                      "path":  "scripts/validate_workspace.py"
                   },
                   {
                       "bytes":  1110,

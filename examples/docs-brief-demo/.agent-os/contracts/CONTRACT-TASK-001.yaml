@@ -1,0 +1,35 @@
+id: CONTRACT-TASK-001
+task_id: TASK-001
+contract_type: output_contract
+role: Researcher
+skill_app: documentation-brief
+outputs:
+  - name: documentation_brief
+    path: .agent-os/outputs/TASK-001/documentation_brief.md
+    format: markdown
+    required_sections:
+      - Summary
+      - Key Findings
+      - Unknowns
+      - Risks
+      - Next Steps
+  - name: handoff_report
+    path: .agent-os/handoffs/HANDOFF-TASK-001.md
+    format: typed_markdown
+    required_sections:
+      - Metadata
+      - Sources Used
+      - Outputs Created
+      - Decisions Made
+      - Uncertainties
+      - Risks
+      - Next Steps
+      - Audit Status
+validation:
+  source_policy: use_mounted_sources_only
+  uncertainty_policy: mark_unknown
+  mutation_policy: no_source_mutation
+audit:
+  required: true
+  required_by: Host
+  status: pending_until_reviewed

@@ -1,0 +1,19 @@
+id: MOUNT-001
+task_id: TASK-001
+mount_type: source_mount
+policy: strict
+sources:
+  - path: .agent-os/sources/current_requirements.md
+    authority: high
+    state: hot
+    reason: Current confirmed requirements for TASK-001.
+  - path: .agent-os/sources/project_notes.md
+    authority: medium
+    state: hot
+    reason: Working notes that may contain unresolved details.
+forbidden:
+  - archive/
+  - registry/
+conflict_resolution:
+  default: prefer_highest_authority
+  unknowns: mark_explicitly

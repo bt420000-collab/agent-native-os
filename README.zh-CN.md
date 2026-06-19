@@ -106,6 +106,22 @@ MVP 很小：
 9. Skill Registry：技能注册表
 10. Source Policy：法源策略
 
+## 试跑 Demo
+
+运行：
+
+```bash
+python scripts/run_docs_brief_demo.py
+```
+
+然后打开：
+
+```txt
+examples/docs-brief-demo/PROMPT_FOR_AGENT.md
+```
+
+把提示词复制给 Codex、ChatGPT、Claude 或其他 Agent，让它按 Agent-Native OS 的任务契约生成产物。
+
 ## 仓库结构
 
 ```txt
@@ -124,6 +140,7 @@ agent-native-os/
   spec/
   templates/
   examples/
+    docs-brief-demo/
   scripts/
 ```
 

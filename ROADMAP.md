@@ -11,6 +11,10 @@
 
 ## v0.2: Validation package
 
+- Runnable Docs Brief Demo
+- Workspace validator
+- Demo runner
+- First Skill App example
 - Add JSON/YAML schemas
 - Add validation scripts
 - Add more sample Skill Apps
