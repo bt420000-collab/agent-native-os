@@ -9,7 +9,8 @@ Please do not disclose exploitable issues publicly before maintainers have had a
 Use one of these channels:
 
 - Open a private GitHub security advisory if the repository has advisories enabled.
-- Contact the maintainers privately if a maintainer contact is listed on the project profile.
+- Email the maintainer privately at bt420@126.com.
+- Contact the maintainer on WeChat: iMelodyJust.
 - If neither option is available yet, open a minimal public issue that says you have a security report to share, without including exploit details.
 
 ## What to Include

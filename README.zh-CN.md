@@ -1,5 +1,7 @@
 # Agent-Native OS
 
+语言：[English](README.md) | [简体中文](README.zh-CN.md)
+
 面向长任务 AI Agent 的上下文原生操作系统架构。
 
 今天的大多数 AI Agent 正在学习如何使用人类电脑：屏幕、按钮、浏览器、终端、API 和 GUI 工作流。
@@ -91,7 +93,10 @@ MVP 很小：
 agent-native-os/
   README.md
   README.zh-CN.md
+  AUTHORS.md
+  BILINGUAL_POLICY.md
   MANIFESTO.md
+  NAMING_STRATEGY.md
   SPEC.md
   ROADMAP.md
   CODEX_HANDOFF.md
@@ -112,7 +117,14 @@ agent-native-os/
 
 这是一个规范优先的项目。欢迎贡献架构澄清、模板改进、中立示例，以及安全与治理模型方面的增强。
 
-请参见 `CONTRIBUTING.md`、`GOVERNANCE.md`、`SECURITY.md` 和 `CODE_OF_CONDUCT.md`。
+请参见 `CONTRIBUTING.md`、`GOVERNANCE.md`、`SECURITY.md`、`CODE_OF_CONDUCT.md` 和 `BILINGUAL_POLICY.md`。
+
+## 作者与联系方式
+
+维护者：[bt420000-collab](https://github.com/bt420000-collab)
+
+- 邮箱：bt420@126.com
+- 微信：iMelodyJust
 
 ## 口号
 

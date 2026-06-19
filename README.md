@@ -1,5 +1,7 @@
 # Agent-Native OS
 
+Languages: [English](README.md) | [简体中文](README.zh-CN.md)
+
 A context-native operating system architecture for long-running AI agents.
 
 Most AI agents today are being trained to use human computers: screens, buttons, browsers, terminals, APIs, and GUI workflows.
@@ -91,7 +93,10 @@ Recommended extensions:
 agent-native-os/
   README.md
   README.zh-CN.md
+  AUTHORS.md
+  BILINGUAL_POLICY.md
   MANIFESTO.md
+  NAMING_STRATEGY.md
   SPEC.md
   ROADMAP.md
   CODEX_HANDOFF.md
@@ -112,7 +117,14 @@ Domain-specific private editions can be built on top of it. Private editions may
 
 This is a specification-first project. Contributions that clarify the architecture, improve templates, add neutral examples, or strengthen security and governance are welcome.
 
-See `CONTRIBUTING.md`, `GOVERNANCE.md`, `SECURITY.md`, and `CODE_OF_CONDUCT.md`.
+See `CONTRIBUTING.md`, `GOVERNANCE.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, and `BILINGUAL_POLICY.md`.
+
+## Author and contact
+
+Maintainer: [bt420000-collab](https://github.com/bt420000-collab)
+
+- Email: bt420@126.com
+- WeChat: iMelodyJust
 
 ## Slogan
 

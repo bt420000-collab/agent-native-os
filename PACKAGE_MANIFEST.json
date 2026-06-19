@@ -1,7 +1,7 @@
 ﻿{
     "name":  "agent-native-os",
     "version":  "0.1.0",
-    "updated_at":  "2026-06-19T02:53:56.2027797Z",
+    "updated_at":  "2026-06-19T03:07:51.2784377Z",
     "description":  "A context-native operating system architecture for long-running AI agents and installable Skill Apps.",
     "files":  [
                   {
@@ -27,6 +27,14 @@
                   {
                       "bytes":  401,
                       "path":  ".gitignore"
+                  },
+                  {
+                      "bytes":  186,
+                      "path":  "AUTHORS.md"
+                  },
+                  {
+                      "bytes":  8927,
+                      "path":  "BILINGUAL_POLICY.md"
                   },
                   {
                       "bytes":  192,
@@ -133,7 +141,11 @@
                       "path":  "MANIFESTO.md"
                   },
                   {
-                      "bytes":  8515,
+                      "bytes":  6294,
+                      "path":  "NAMING_STRATEGY.md"
+                  },
+                  {
+                      "bytes":  8644,
                       "path":  "PACKAGE_MANIFEST.json"
                   },
                   {
@@ -141,11 +153,11 @@
                       "path":  "private-editions.md"
                   },
                   {
-                      "bytes":  3316,
+                      "bytes":  3598,
                       "path":  "README.md"
                   },
                   {
-                      "bytes":  3466,
+                      "bytes":  3753,
                       "path":  "README.zh-CN.md"
                   },
                   {
@@ -157,7 +169,7 @@
                       "path":  "scripts/init_workspace.py"
                   },
                   {
-                      "bytes":  1104,
+                      "bytes":  1110,
                       "path":  "SECURITY.md"
                   },
                   {
