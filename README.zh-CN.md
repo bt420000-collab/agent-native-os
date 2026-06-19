@@ -8,70 +8,105 @@
 ![License](https://img.shields.io/badge/license-Apache--2.0-green)
 ![Status](https://img.shields.io/badge/status-draft-orange)
 
-## 这是什么？
+<p align="center">
+  <img src="docs/assets/homepage/poster-not-human-desktop.png" alt="不是让 AI 接管电脑，是给 AI 装一台自己的电脑" width="88%" />
+</p>
 
-今天的大多数 AI Agent 正在学习如何使用人类电脑：屏幕、按钮、浏览器、终端、API 和 GUI 工作流。
+<p align="center">
+  <img src="docs/assets/homepage/poster-token-effective-work.png" alt="让 Token 花在有效工作上" width="43%" />
+  <img src="docs/assets/homepage/poster-robot-os-standard.png" alt="给下一代智能机器人建立操作系统规范" width="43%" />
+</p>
 
-Agent-Native OS 问的是另一个问题：
+> **不是让 AI 接管电脑。**  
+> **是给 AI 装一台自己的电脑。**
 
-> Agent 自己工作时，需要什么样的操作系统？
+Agent-Native OS 不是给人类桌面用的操作系统。
+它是给大模型 Agent 用的原生工作系统：一个可治理的工作空间，让 Agent 可以安装 Skill App、管理上下文、隔离任务、执行权限、交接状态，并维持长任务工作的稳定秩序。
 
-人类操作系统围绕应用、窗口、文件和设备构建。
+通俗说，它就是 **AI Agent 的 Windows 层**。
 
-Agent 原生系统应该围绕上下文、法源层级、任务隔离、角色运行时、输出契约、审查门禁、交接协议、归档和恢复点构建。
+## 为什么要做这个项目
 
-## 核心判断
+今天很多 AI 工具都在解决同一个方向的问题：
+让 Agent 更会使用人类电脑，例如浏览器、终端、GUI、API 和现成的应用工作流。
 
-在人类 OS 里，应用是第一公民。
+而 Agent-Native OS 问的是一个更底层的问题：
 
-在 Agent OS 里，上下文是第一公民。
+> **Agent 自己工作时，到底需要什么样的操作系统？**
 
-Agent-Native OS 是一种开放架构，用于在可治理、上下文感知的 Agent 工作空间中安装和运行 Skill App。
+因为 Agent 的工作天然会出现一整套系统病：
 
-通俗说，它就是 AI Agent 的 Windows 层：一个原生工作空间，让 Agent 可以安装 Skill App、管理上下文、执行权限、审查输出，并保存长期项目状态。
+- 上下文爆炸
+- 法源污染
+- 角色串线
+- 交接失忆
+- 输出失审
+- 长程退化
+- 工作流混乱导致的大量 token 浪费
+
+Agent-Native OS 的目标，就是减少这些浪费，让每一个 token 更接近真正有效的工作。
+
+## 它的核心判断
+
+在人类 OS 里，第一公民是应用。
+
+在 Agent OS 里，第一公民是上下文。
+
+Agent-Native OS 是一种开放架构，核心包括：
+
+- Context Kernel（上下文内核）
+- Skill App Runtime（技能应用运行时）
+- Source File System（法源文件系统）
+- Role & Permission System（角色权限系统）
+- Task Scheduler（任务调度器）
+- Output Contract Engine（输出契约引擎）
+- Audit Gate（审查门禁）
+- Handoff Bus（交接总线）
+- Memory & Archive Layer（记忆与归档层）
+- Recovery System（恢复系统）
 
 ## 五大原则
 
-Agent-Native OS 建立在五个原则上：
+1. **上下文是第一资源。**
+2. **契约化自然语言是源代码。**
+3. **上下文内核是运行时。**
+4. **结构化输出是 Context ABI。**
+5. **Skill App 是可安装应用。**
 
-1. 上下文是第一资源。
-2. 契约化自然语言是源代码。
-3. 上下文内核是运行时。
-4. 结构化输出是 Context ABI。
-5. Skill App 是可安装应用。
+## 为什么它不只是一个小工具
 
-## 本项目定义什么
+Agent-Native OS 不只是给文档整理或代码 Agent 用的。
+它指向的是一层更大的基础设施：未来 Agent 世界的工作秩序层。
 
-这个仓库定义以下开放架构：
+它的价值包括：
 
-- Context Kernel：上下文内核
-- Skill App Runtime：技能应用运行时
-- Source File System：法源文件系统
-- Role & Permission System：角色权限系统
-- Task Scheduler：任务调度器
-- Output Contract Engine：输出契约引擎
-- Audit Gate：审查门禁
-- Handoff Bus：交接总线
-- Memory & Archive Layer：记忆与归档层
-- Recovery System：恢复系统
+- 更高效的 AI 有效工作流
+- 更少的上下文浪费与 token 浪费
+- 更稳定的多 Agent 协作
+- 更清晰的权限、审查、交接与恢复规范
+- 为未来具身智能与机器人操作系统建立基础规则
 
-## 它不是什么
+## 视觉总览
 
-Agent-Native OS 不是：
+### 1）从 code-for-machines 到 context-for-agents
 
-- 提示词包
-- GUI 自动化工具
-- 单 Agent 脚本
-- 简单工作流模板
-- 绑定某个厂商的 Agent 框架
-- 某个私有领域发行版
+<p align="center">
+  <img src="docs/assets/homepage/diagram-from-code-to-agents.png" alt="从代码到代理的未来" width="82%" />
+</p>
 
-更准确地说：
+### 2）系统架构与最小工作闭环
 
-- 模型框架管模型调用。
-- Agent 框架管工具调用。
-- 工作流引擎管步骤编排。
-- Agent-Native OS 管长期 Agent 工作的秩序。
+<p align="center">
+  <img src="docs/assets/homepage/diagram-core-architecture.png" alt="系统架构图" width="46%" />
+  <img src="docs/assets/homepage/diagram-operating-loop.png" alt="最小工作闭环图" width="46%" />
+</p>
+
+### 3）Agent 原生系统与工作区布局
+
+<p align="center">
+  <img src="docs/assets/homepage/diagram-agent-native-system.png" alt="Agent 原生系统图" width="46%" />
+  <img src="docs/assets/homepage/diagram-workspace-layout.png" alt="工作区布局图" width="46%" />
+</p>
 
 ## 试跑 Demo
 
@@ -101,24 +136,6 @@ python scripts/validate_workspace.py examples/docs-brief-demo
 Source -> Task -> Mount -> Output Contract -> Agent Prompt -> Handoff -> Audit
 ```
 
-## 最小可行内核
-
-MVP 很小：
-
-1. Skill App Manifest：技能应用声明
-2. Source Mount：资料挂载协议
-3. Task Card：任务卡协议
-4. Output Contract：输出契约
-5. Handoff Report：交接报告
-
-建议扩展：
-
-6. Audit Gate：审查门禁
-7. Recovery Point：恢复点
-8. Role Runtime：角色运行时
-9. Skill Registry：技能注册表
-10. Source Policy：法源策略
-
 ## 仓库结构
 
 ```txt
@@ -140,11 +157,11 @@ agent-native-os/
 
 ## 开放内核，私有发行版
 
-本仓库定义开放架构。
+本仓库定义的是开放架构。
 
-领域专用发行版可以基于本架构构建。私有发行版可能包含行业工艺、商业逻辑、评分系统和专有工作流，不包含在本仓库内。
+领域专用发行版可以基于本架构构建。私有发行版可能包含行业工艺、商业逻辑、评分系统和专有工作流，不包含在本仓库之内。
 
-开放架构，保留私有发行版。
+**开放架构，保留私有发行版。**
 
 ## 建议 GitHub 简介
 

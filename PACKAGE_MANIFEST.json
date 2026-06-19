@@ -1,7 +1,7 @@
 ﻿{
     "name":  "agent-native-os",
     "version":  "0.1.0",
-    "updated_at":  "2026-06-19T04:28:22.8481989Z",
+    "updated_at":  "2026-06-19T04:58:12.6483971Z",
     "description":  "A context-native operating system architecture for long-running AI agents and installable Skill Apps.",
     "files":  [
                   {
@@ -45,7 +45,7 @@
                       "path":  "CODE_OF_CONDUCT.md"
                   },
                   {
-                      "bytes":  838,
+                      "bytes":  452,
                       "path":  "CODEX_COMPLETION_REPORT_TEMPLATE.md"
                   },
                   {
@@ -55,6 +55,10 @@
                   {
                       "bytes":  2212,
                       "path":  "CODEX_HANDOFF.md"
+                  },
+                  {
+                      "bytes":  1639,
+                      "path":  "CODEX_HOMEPAGE_UPDATE_INSTRUCTIONS.md"
                   },
                   {
                       "bytes":  784,
@@ -103,6 +107,38 @@
                   {
                       "bytes":  1119,
                       "path":  "docs/10_implementation_notes.md"
+                  },
+                  {
+                      "bytes":  1759606,
+                      "path":  "docs/assets/homepage/diagram-agent-native-system.png"
+                  },
+                  {
+                      "bytes":  1581802,
+                      "path":  "docs/assets/homepage/diagram-core-architecture.png"
+                  },
+                  {
+                      "bytes":  1747144,
+                      "path":  "docs/assets/homepage/diagram-from-code-to-agents.png"
+                  },
+                  {
+                      "bytes":  1687538,
+                      "path":  "docs/assets/homepage/diagram-operating-loop.png"
+                  },
+                  {
+                      "bytes":  1775880,
+                      "path":  "docs/assets/homepage/diagram-workspace-layout.png"
+                  },
+                  {
+                      "bytes":  2219774,
+                      "path":  "docs/assets/homepage/poster-not-human-desktop.png"
+                  },
+                  {
+                      "bytes":  2312706,
+                      "path":  "docs/assets/homepage/poster-robot-os-standard.png"
+                  },
+                  {
+                      "bytes":  2079041,
+                      "path":  "docs/assets/homepage/poster-token-effective-work.png"
                   },
                   {
                       "bytes":  1008,
@@ -221,7 +257,7 @@
                       "path":  "NAMING_STRATEGY.md"
                   },
                   {
-                      "bytes":  2609,
+                      "bytes":  1401,
                       "path":  "PACKAGE_MANIFEST.json"
                   },
                   {
@@ -229,11 +265,11 @@
                       "path":  "private-editions.md"
                   },
                   {
-                      "bytes":  3965,
+                      "bytes":  5221,
                       "path":  "README.md"
                   },
                   {
-                      "bytes":  4106,
+                      "bytes":  5266,
                       "path":  "README.zh-CN.md"
                   },
                   {

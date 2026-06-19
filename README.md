@@ -8,41 +8,50 @@ A context-native operating system architecture for long-running AI agents and in
 ![License](https://img.shields.io/badge/license-Apache--2.0-green)
 ![Status](https://img.shields.io/badge/status-draft-orange)
 
-## What is this?
+<p align="center">
+  <img src="docs/assets/homepage/poster-not-human-desktop.png" alt="Not letting AI take over human computers, but giving AI its own computer" width="88%" />
+</p>
 
-Most AI agents today are being trained to use human computers: screens, buttons, browsers, terminals, APIs, and GUI workflows.
+<p align="center">
+  <img src="docs/assets/homepage/poster-token-effective-work.png" alt="Spend tokens on effective work" width="43%" />
+  <img src="docs/assets/homepage/poster-robot-os-standard.png" alt="Build operating system standards for the next generation of intelligent robots" width="43%" />
+</p>
 
-Agent-Native OS asks a different question:
+> **Not teaching AI to use human desktops.**  
+> **Giving AI a computer of its own.**
 
-> What kind of operating system does an agent need for its own work?
+Agent-Native OS is not an operating system for humans.
+It is a native operating layer for large-model agents: a governed workspace where agents can install Skill Apps, manage context, isolate tasks, enforce permissions, hand off state, and keep long-running work coherent.
 
-Human operating systems are built around applications, windows, files, and devices.
+Informally, you can think of it as **the Windows layer for AI agents**.
 
-Agent-native systems should be built around context, source hierarchy, task isolation, role runtime, output contracts, audit gates, handoff protocols, archives, and recovery points.
+## Why this project exists
 
-## Core idea
+Most AI tooling today is focused on making agents better at using human computers: browsers, terminals, GUIs, APIs, and app workflows.
+
+Agent-Native OS asks a deeper systems question:
+
+> **What kind of operating system does an agent need for its own work?**
+
+This project exists because agent work has its own failure modes:
+
+- context overflow
+- source pollution
+- role bleeding
+- broken handoffs
+- unaudited outputs
+- long-run degradation
+- massive token waste across messy workflows
+
+Agent-Native OS is designed to reduce that waste and make every token more likely to contribute to effective work.
+
+## What it means
 
 In a human OS, the first-class citizen is the application.
 
 In an Agent OS, the first-class citizen is the context.
 
-Agent-Native OS is an open architecture for installing and running Skill Apps inside governed, context-aware agent workspaces.
-
-Informally, it can be understood as the "Windows layer for AI agents": a native workspace where agents can install Skill Apps, manage context, enforce permissions, audit outputs, and preserve long-running project state.
-
-## Five principles
-
-Agent-Native OS is built on five principles:
-
-1. Context is the first-class resource.
-2. Contracted natural language is source code.
-3. Context Kernel is the runtime.
-4. Structured output is the Context ABI.
-5. Skill Apps are installable applications.
-
-## What this project defines
-
-This repository defines the open architecture for:
+Agent-Native OS is an open architecture for:
 
 - Context Kernel
 - Skill App Runtime
@@ -55,23 +64,48 @@ This repository defines the open architecture for:
 - Memory & Archive Layer
 - Recovery System
 
-## What it is not
+## Five principles
 
-Agent-Native OS is not:
+1. **Context is the first-class resource.**
+2. **Contracted natural language is source code.**
+3. **Context Kernel is the runtime.**
+4. **Structured output is the Context ABI.**
+5. **Skill Apps are installable applications.**
 
-- a prompt pack
-- a GUI automation tool
-- a single-agent script
-- a simple workflow template
-- a vendor-specific agent framework
-- a domain-specific private edition
+## Why it matters beyond software
 
-Instead:
+Agent-Native OS is not only about documentation or coding agents.
+It points toward a broader infrastructure layer for the next generation of intelligent systems.
 
-- LLM frameworks call models.
-- Agent frameworks call tools.
-- Workflow engines arrange steps.
-- Agent-Native OS governs long-running agent work.
+Potential impact areas:
+
+- more efficient AI work pipelines
+- lower token waste through governed context use
+- more reliable multi-agent collaboration
+- clearer standards for permissions, audits, and recovery
+- foundational norms for future embodied or robotic operating systems
+
+## Visual overview
+
+### 1) From code-for-machines to context-for-agents
+
+<p align="center">
+  <img src="docs/assets/homepage/diagram-from-code-to-agents.png" alt="From code for machines to context for agents" width="82%" />
+</p>
+
+### 2) System architecture and operating loop
+
+<p align="center">
+  <img src="docs/assets/homepage/diagram-core-architecture.png" alt="Core architecture" width="46%" />
+  <img src="docs/assets/homepage/diagram-operating-loop.png" alt="Operating loop" width="46%" />
+</p>
+
+### 3) Agent-native system and workspace layout
+
+<p align="center">
+  <img src="docs/assets/homepage/diagram-agent-native-system.png" alt="Agent-native system" width="46%" />
+  <img src="docs/assets/homepage/diagram-workspace-layout.png" alt="Workspace layout" width="46%" />
+</p>
 
 ## Try the demo
 
@@ -87,7 +121,7 @@ Then open:
 examples/docs-brief-demo/PROMPT_FOR_AGENT.md
 ```
 
-Copy the prompt into your coding agent or LLM and let it produce the governed outputs.
+Copy the prompt into your coding agent or LLM and let it produce governed outputs.
 
 Validate the workspace:
 
@@ -95,29 +129,11 @@ Validate the workspace:
 python scripts/validate_workspace.py examples/docs-brief-demo
 ```
 
-The demo shows the minimal governed loop:
+The demo shows the minimal operating loop:
 
 ```txt
 Source -> Task -> Mount -> Output Contract -> Agent Prompt -> Handoff -> Audit
 ```
-
-## Minimal viable kernel
-
-The MVP is intentionally small:
-
-1. Skill App Manifest
-2. Source Mount
-3. Task Card
-4. Output Contract
-5. Handoff Report
-
-Recommended extensions:
-
-6. Audit Gate
-7. Recovery Point
-8. Role Runtime
-9. Skill Registry
-10. Source Policy
 
 ## Repository map
 
@@ -144,7 +160,7 @@ This repository defines the open architecture.
 
 Domain-specific private editions can be built on top of it. Private editions may contain domain craft, business logic, specialized scoring systems, or proprietary workflows, and are intentionally not included.
 
-Open the architecture. Keep private editions private.
+**Open the architecture. Keep private editions private.**
 
 ## Suggested GitHub description
 
