@@ -12,6 +12,25 @@ Agent-Native OS asks a different question:
 
 Human operating systems are built around apps, windows, files, and devices. Agent-native systems should be built around context, source hierarchy, task isolation, role runtime, output contracts, audit gates, handoff protocols, archives, and recovery points.
 
+## Start here
+
+If you are new to the project, start with `CORE_THEORY_AND_GLOSSARY.md`.
+
+It defines the core theory, standard vocabulary, and normative language for Agent-Native OS. In short:
+
+```txt
+Agent-Native OS turns natural-language instructions into executable context
+and turns agent outputs into structured state for reliable continuation.
+```
+
+The project is built on five principles:
+
+1. Context is the first-class resource.
+2. Contracted natural language is source code.
+3. Context Kernel is the runtime.
+4. Structured output is the Context ABI.
+5. Skill Apps are installable applications.
+
 ## Core idea
 
 In a human OS, the first-class citizen is the application.
@@ -95,6 +114,7 @@ agent-native-os/
   README.zh-CN.md
   AUTHORS.md
   BILINGUAL_POLICY.md
+  CORE_THEORY_AND_GLOSSARY.md
   MANIFESTO.md
   NAMING_STRATEGY.md
   SPEC.md

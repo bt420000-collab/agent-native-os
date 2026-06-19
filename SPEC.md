@@ -3,6 +3,26 @@
 Status: Draft  
 Codename: Context Kernel
 
+## 0. Normative foundation
+
+This specification is grounded in `CORE_THEORY_AND_GLOSSARY.md`, which is the vocabulary authority for the public project.
+
+Agent-Native OS is built on five principles:
+
+1. Context is the first-class resource.
+2. Contracted natural language is source code.
+3. Context Kernel is the runtime.
+4. Structured output is the Context ABI.
+5. Skill Apps are installable applications.
+
+The specification must preserve the distinction between:
+
+- loose natural-language intent and contracted natural language
+- ordinary files and authority-bearing sources
+- human-facing output and structured continuation state
+- prompt templates and installable, permissioned Skill Apps
+- workflow automation and governable agent-native work
+
 ## 1. System layers
 
 ```txt

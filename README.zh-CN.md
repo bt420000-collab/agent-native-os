@@ -12,6 +12,25 @@ Agent-Native OS 问的是另一个问题：
 
 人类操作系统围绕应用、窗口、文件和设备构建。Agent 原生系统应该围绕上下文、法源层级、任务隔离、角色运行时、输出契约、审查门禁、交接协议、归档和恢复点构建。
 
+## 先读这里
+
+如果你是第一次进入这个项目，请先读 `CORE_THEORY_AND_GLOSSARY.md`。
+
+它定义了 Agent-Native OS 的核心理论、标准术语和规范表达。最短地说：
+
+```txt
+Agent-Native OS 把自然语言指令变成可执行上下文，
+把 Agent 输出变成可可靠接力的结构化状态。
+```
+
+本项目建立在五个原则上：
+
+1. 上下文是第一资源。
+2. 契约化自然语言是源代码。
+3. 上下文内核是运行时。
+4. 结构化输出是 Context ABI。
+5. Skill App 是可安装应用。
+
 ## 核心判断
 
 在人类 OS 里，应用是第一公民。
@@ -95,6 +114,7 @@ agent-native-os/
   README.zh-CN.md
   AUTHORS.md
   BILINGUAL_POLICY.md
+  CORE_THEORY_AND_GLOSSARY.md
   MANIFESTO.md
   NAMING_STRATEGY.md
   SPEC.md

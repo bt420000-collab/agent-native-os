@@ -1,53 +1,40 @@
 # Glossary
 
-## Agent-Native OS
+The authoritative glossary for Agent-Native OS is maintained in `../CORE_THEORY_AND_GLOSSARY.md`.
 
-An operating system architecture for context-native AI agent work.
+Use that document when adding or revising project terms, schemas, templates, examples, documentation, or Skill App contracts.
 
-## Agent Windows
+## Core Rule
 
-Informal product metaphor: a Windows-like system layer for agents where Skill Apps can be installed and governed.
+Do not turn Agent-Native OS into a generic prompt pack, workflow template, or GUI automation tool.
 
-## Context Kernel
+Agent-Native OS is an operating system architecture for agent-native work.
 
-The runtime layer that decides what an agent can know, do, change, and hand off.
+## Core Categories
 
-## Skill App
+New concepts should be classified under one of these categories:
 
-An installable agent capability package with manifest, instructions, contracts, permissions, and audit requirements.
+- project identity
+- core architecture
+- source and context
+- task and contract
+- Skill App
+- interface
+- failure mode
+- programming model
 
-## Context ABI
+If a concept does not fit any category, reconsider whether it belongs in the core specification.
 
-The interface contract between Skill Apps and the agent workspace.
+## Canonical Summary
 
-## Source Law
+Agent-Native OS is built on five principles:
 
-The hierarchy that determines which sources have authority.
+1. Context is the first-class resource.
+2. Contracted natural language is source code.
+3. Context Kernel is the runtime.
+4. Structured output is the Context ABI.
+5. Skill Apps are installable applications.
 
-## Source Mount
+The old software stack used code to drive machines and UI to serve humans.
 
-The act of making specific sources available to a task.
-
-## Task Card
-
-A contract describing a unit of work.
-
-## Output Contract
-
-A contract describing what the agent must produce and where.
-
-## Audit Gate
-
-A checkpoint that prevents unaudited work from entering the mainline.
-
-## Handoff Report
-
-A structured continuation state produced after a task.
-
-## Cold Archive
-
-Materials preserved but not loaded into default context.
-
-## Recovery Point
-
-A record allowing changes to be traced or rolled back.
+The agent-native stack uses contracted natural language to drive agents, context to run work, and structured output to hand off state across agents, tools, audits, and humans.
