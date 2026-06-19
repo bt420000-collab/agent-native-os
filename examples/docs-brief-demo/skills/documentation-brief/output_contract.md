@@ -1,6 +1,12 @@
 # Output Contract: documentation-brief
 
-## `documentation_brief.md`
+## Primary output
+
+Path:
+
+```txt
+.agent-os/outputs/TASK-001/documentation_brief.md
+```
 
 Required sections:
 
@@ -10,7 +16,13 @@ Required sections:
 - Risks
 - Next Steps
 
-## `HANDOFF-TASK-001.md`
+## Handoff output
+
+Path:
+
+```txt
+.agent-os/handoffs/HANDOFF-TASK-001.md
+```
 
 Required sections:
 
@@ -23,10 +35,6 @@ Required sections:
 - Next Steps
 - Audit Status
 
-## Rules
+## Status
 
-- Use mounted sources only.
-- Respect source authority.
-- Mark unknowns explicitly.
-- Do not claim Host approval.
-- Prepare output for audit.
+Both outputs should be marked as draft or pending audit until reviewed by Host.

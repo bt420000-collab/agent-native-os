@@ -1,62 +1,72 @@
 #!/usr/bin/env python3
-"""
-Check the Docs Brief Demo workspace and print next steps.
+"""Check that the Docs Brief Demo workspace is present and ready.
 
-Usage:
-  python scripts/run_docs_brief_demo.py
+This script does not call any model or external API. It verifies the demo
+structure and prints the next steps for a human or coding agent.
 """
+
+from __future__ import annotations
 
 from pathlib import Path
 import sys
 
 
-REQUIRED_FILES = [
-    "README.md",
-    "README.zh-CN.md",
-    "PROMPT_FOR_AGENT.md",
-    "EXPECTED_OUTPUT_SAMPLE.md",
-    ".agent-os/sources/project_notes.md",
-    ".agent-os/sources/current_requirements.md",
-    ".agent-os/tasks/TASK-001.md",
-    ".agent-os/mounts/MOUNT-001.yaml",
-    ".agent-os/contracts/CONTRACT-TASK-001.yaml",
-    ".agent-os/outputs/TASK-001/.gitkeep",
-    ".agent-os/handoffs/.gitkeep",
-    ".agent-os/reviews/.gitkeep",
-    "skills/documentation-brief/manifest.yaml",
-    "skills/documentation-brief/instructions.md",
-    "skills/documentation-brief/output_contract.md",
-    "skills/documentation-brief/permissions.yaml",
+REQUIRED_PATHS = [
+    "examples/docs-brief-demo/README.md",
+    "examples/docs-brief-demo/README.zh-CN.md",
+    "examples/docs-brief-demo/PROMPT_FOR_AGENT.md",
+    "examples/docs-brief-demo/EXPECTED_OUTPUT_SAMPLE.md",
+    "examples/docs-brief-demo/.agent-os/sources/project_notes.md",
+    "examples/docs-brief-demo/.agent-os/sources/current_requirements.md",
+    "examples/docs-brief-demo/.agent-os/tasks/TASK-001.md",
+    "examples/docs-brief-demo/.agent-os/mounts/MOUNT-001.yaml",
+    "examples/docs-brief-demo/.agent-os/contracts/CONTRACT-TASK-001.yaml",
+    "examples/docs-brief-demo/.agent-os/outputs/TASK-001/.gitkeep",
+    "examples/docs-brief-demo/.agent-os/handoffs/.gitkeep",
+    "examples/docs-brief-demo/.agent-os/reviews/.gitkeep",
+    "examples/docs-brief-demo/skills/documentation-brief/manifest.yaml",
+    "examples/docs-brief-demo/skills/documentation-brief/instructions.md",
+    "examples/docs-brief-demo/skills/documentation-brief/output_contract.md",
+    "examples/docs-brief-demo/skills/documentation-brief/permissions.yaml",
 ]
 
 
-def repo_root() -> Path:
-    return Path(__file__).resolve().parents[1]
+def find_repo_root(start: Path) -> Path:
+    current = start.resolve()
+    for candidate in [current, *current.parents]:
+        if (candidate / "README.md").exists() and (candidate / "examples").exists():
+            return candidate
+    return start.resolve()
 
 
 def main() -> int:
-    root = repo_root()
-    demo = root / "examples" / "docs-brief-demo"
+    repo_root = find_repo_root(Path.cwd())
+    missing: list[str] = []
 
-    print("Docs Brief Demo check")
-    print(f"Workspace: {demo.relative_to(root)}")
+    for rel in REQUIRED_PATHS:
+        if not (repo_root / rel).exists():
+            missing.append(rel)
 
-    missing = [path for path in REQUIRED_FILES if not (demo / path).exists()]
+    print("Agent-Native OS Docs Brief Demo Check")
+    print("=" * 44)
+    print(f"Repository root: {repo_root}")
 
     if missing:
-        print("\nFAIL: missing required files:")
-        for path in missing:
-            print(f"- {path}")
+        print("\nFAIL: Missing required demo files:")
+        for rel in missing:
+            print(f"  - {rel}")
         return 1
 
-    print("\nPASS: demo workspace exists and required files are present.")
+    print("\nPASS: Docs Brief Demo is ready.")
     print("\nNext steps:")
     print("1. Open examples/docs-brief-demo/PROMPT_FOR_AGENT.md")
-    print("2. Copy the prompt into Codex, ChatGPT, Claude, or another agent.")
-    print("3. Ask the agent to create:")
+    print("2. Copy the prompt into Codex, ChatGPT, Claude, or another agent")
+    print("3. Let the agent create:")
     print("   - examples/docs-brief-demo/.agent-os/outputs/TASK-001/documentation_brief.md")
     print("   - examples/docs-brief-demo/.agent-os/handoffs/HANDOFF-TASK-001.md")
-    print("4. Review the result against examples/docs-brief-demo/EXPECTED_OUTPUT_SAMPLE.md")
+    print("4. Validate the workspace:")
+    print("   python scripts/validate_workspace.py examples/docs-brief-demo")
+
     return 0
 
 

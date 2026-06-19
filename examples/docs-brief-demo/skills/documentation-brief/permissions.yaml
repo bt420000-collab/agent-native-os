@@ -1,14 +1,31 @@
-read:
-  - .agent-os/sources/current_requirements.md
-  - .agent-os/sources/project_notes.md
-  - .agent-os/tasks/TASK-001.md
-  - .agent-os/mounts/MOUNT-001.yaml
-  - .agent-os/contracts/CONTRACT-TASK-001.yaml
-write:
-  - .agent-os/outputs/TASK-001/
+role: Researcher
+skill_app: documentation-brief
+
+read_permissions:
+  - mounted_sources
+  - task_card
+  - source_mount
+  - output_contract
+  - skill_instructions
+
+write_permissions:
+  - .agent-os/outputs/
   - .agent-os/handoffs/
-forbidden:
+
+forbidden_paths:
+  - .agent-os/sources/
+  - .agent-os/tasks/
+  - .agent-os/mounts/
+  - .agent-os/contracts/
+  - skills/
   - archive/
   - registry/
-mutation_policy: no_source_mutation
-audit_required: true
+  - private_editions/
+
+audit_authority: []
+
+mutation_policy: no_core_source_mutation
+
+notes: >
+  This Skill App may create outputs and handoffs only. It may not modify
+  mounted sources, task cards, contracts, or its own skill files.

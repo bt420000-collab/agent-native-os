@@ -1,55 +1,57 @@
 name: documentation-brief
-version: 0.2.0
+version: 0.1.0
 type: skill-app
 
 description: >
-  Produce a concise documentation brief from mounted project sources while
-  preserving source authority, unknowns, handoff state, and audit readiness.
+  Create a concise documentation brief from mounted sources while preserving
+  unknowns, risks, and handoff state.
 
 runtime:
   agent_role: Researcher
   requires_audit: true
 
 inputs:
-  - name: source_mount
-    type: source_mount
-    path: .agent-os/mounts/MOUNT-001.yaml
-    required: true
   - name: task_card
-    type: task_card
-    path: .agent-os/tasks/TASK-001.md
+    type: task_contract
+    required: true
+  - name: source_mount
+    type: mounted_sources
     required: true
   - name: output_contract
     type: output_contract
-    path: .agent-os/contracts/CONTRACT-TASK-001.yaml
     required: true
 
 outputs:
   - name: documentation_brief
     type: markdown
-    path: .agent-os/outputs/TASK-001/documentation_brief.md
+    path: .agent-os/outputs/{task_id}/documentation_brief.md
   - name: handoff_report
-    type: typed_markdown
-    path: .agent-os/handoffs/HANDOFF-TASK-001.md
+    type: markdown
+    path: .agent-os/handoffs/HANDOFF-{task_id}.md
 
 permissions:
   read:
-    - .agent-os/sources/current_requirements.md
-    - .agent-os/sources/project_notes.md
-    - .agent-os/tasks/TASK-001.md
-    - .agent-os/mounts/MOUNT-001.yaml
-    - .agent-os/contracts/CONTRACT-TASK-001.yaml
+    - mounted_sources
+    - task_card
+    - output_contract
+    - skill_instructions
   write:
-    - .agent-os/outputs/TASK-001/
+    - .agent-os/outputs/
     - .agent-os/handoffs/
   forbidden:
+    - .agent-os/sources/
+    - .agent-os/tasks/
+    - .agent-os/mounts/
+    - .agent-os/contracts/
+    - skills/
     - archive/
     - registry/
 
 policies:
   source_priority: strict
   uncertainty_policy: mark_unknown
-  mutation_policy: no_source_mutation
+  mutation_policy: no_core_source_mutation
+  hallucination_policy: mounted_sources_only
 
 audit:
   required_by:

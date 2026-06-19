@@ -1,30 +1,41 @@
-# Documentation Brief Skill Instructions
+# Documentation Brief Skill
+
+## Purpose
+
+Create a concise documentation brief from mounted sources.
 
 ## Role
 
-Act as the Researcher role.
+Researcher.
 
-## Goal
+## Required behavior
 
-Turn mounted source material into a concise documentation brief that a Host can audit and a future Writer can continue.
+- Use only mounted sources.
+- Preserve source authority.
+- Mark unknowns explicitly as `UNKNOWN`.
+- Do not invent facts.
+- Do not modify source, task, mount, contract, or skill files.
+- Create a Handoff Report after the brief.
 
-## Source Rules
+## Required documentation brief sections
 
-- Read only the mounted sources declared for the task.
-- Treat `current_requirements.md` as higher authority than `project_notes.md`.
-- Do not use forbidden paths.
-- Do not modify source files.
-- Mark unresolved information as unknown instead of guessing.
+- Summary
+- Key Findings
+- Unknowns
+- Risks
+- Next Steps
 
-## Output Rules
+## Required handoff report sections
 
-Create:
+- Metadata
+- Sources Used
+- Outputs Created
+- Decisions Made
+- Uncertainties
+- Risks
+- Next Steps
+- Audit Status
 
-- `.agent-os/outputs/TASK-001/documentation_brief.md`
-- `.agent-os/handoffs/HANDOFF-TASK-001.md`
+## Audit
 
-Follow `.agent-os/contracts/CONTRACT-TASK-001.yaml`.
-
-## Audit Readiness
-
-The output is not approved for mainline until the Host audits it.
+The output is a draft until Host audit approves it.

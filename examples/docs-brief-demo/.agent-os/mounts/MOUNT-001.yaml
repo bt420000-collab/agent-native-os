@@ -1,19 +1,40 @@
-id: MOUNT-001
+mount_id: MOUNT-001
 task_id: TASK-001
-mount_type: source_mount
-policy: strict
-sources:
+status: active
+
+hot_sources:
   - path: .agent-os/sources/current_requirements.md
-    authority: high
-    state: hot
-    reason: Current confirmed requirements for TASK-001.
+    reason: Confirmed current requirements for the demo task.
   - path: .agent-os/sources/project_notes.md
-    authority: medium
-    state: hot
-    reason: Working notes that may contain unresolved details.
-forbidden:
-  - archive/
-  - registry/
-conflict_resolution:
-  default: prefer_highest_authority
-  unknowns: mark_explicitly
+    reason: Mounted project notes for summarization.
+  - path: .agent-os/tasks/TASK-001.md
+    reason: Active task card.
+  - path: .agent-os/contracts/CONTRACT-TASK-001.yaml
+    reason: Output contract for the task.
+
+warm_sources:
+  - path: skills/documentation-brief/instructions.md
+    reason: Skill App instructions.
+  - path: skills/documentation-brief/output_contract.md
+    reason: Human-readable output contract.
+
+cold_sources: []
+
+forbidden_sources:
+  - path: archive/
+    reason: Archived materials are not part of the active task.
+  - path: registry/
+    reason: Registry is not required for this demo.
+  - path: private_editions/
+    reason: Private domain editions must not be used.
+
+source_priority:
+  - current_requirements
+  - mounted_project_notes
+  - task_card
+  - output_contract
+  - skill_instructions
+
+notes: >
+  This mount intentionally keeps the task small. The agent should not use
+  unmounted files or external knowledge.

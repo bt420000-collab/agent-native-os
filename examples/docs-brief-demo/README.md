@@ -2,55 +2,99 @@
 
 Languages: [English](README.md) | [简体中文](README.zh-CN.md)
 
-This demo shows the minimal Agent-Native OS operating loop:
+This demo shows the minimal Agent-Native OS loop:
 
 ```txt
 Source -> Task -> Mount -> Output Contract -> Agent Prompt -> Handoff -> Audit
 ```
 
-## Purpose
+The goal is to turn messy project notes into a governed documentation brief.
 
-Turn messy project notes into a governed documentation brief using Agent-Native OS primitives.
+This demo does not call any API and does not require any external package. It is designed to be copied into Codex, ChatGPT, Claude, or another agent.
 
-The scenario is intentionally neutral: a small team is building an internal knowledge base and needs a concise brief from scattered notes and current requirements.
+## What this demo proves
 
-## What This Demonstrates
+This is not "ask an AI to summarize notes."
 
-- Sources are mounted explicitly.
-- A Task Card defines role, goal, readable sources, forbidden areas, outputs, and audit.
-- An Output Contract defines the required sections and paths.
-- A Skill App declares its instructions, permissions, and output contract.
-- A copyable prompt lets a human run the task with any capable coding agent or LLM.
-- A handoff report preserves continuation state.
-- An audit checklist shows how work is reviewed before entering mainline.
+This is a governed agent workspace where:
 
-## Try It
+- sources are mounted
+- a task is scoped
+- a Skill App is declared
+- forbidden paths are defined
+- outputs are contract-bound
+- unknowns must be marked
+- handoff is required
+- audit is expected
 
-From the repository root, run:
+## Demo files
+
+```txt
+examples/docs-brief-demo/
+  README.md
+  README.zh-CN.md
+  PROMPT_FOR_AGENT.md
+  EXPECTED_OUTPUT_SAMPLE.md
+
+  .agent-os/
+    sources/
+      project_notes.md
+      current_requirements.md
+    tasks/
+      TASK-001.md
+    mounts/
+      MOUNT-001.yaml
+    contracts/
+      CONTRACT-TASK-001.yaml
+    outputs/
+      TASK-001/
+    handoffs/
+    reviews/
+
+  skills/
+    documentation-brief/
+      manifest.yaml
+      instructions.md
+      output_contract.md
+      permissions.yaml
+```
+
+## Run the check
+
+From the repository root:
 
 ```bash
 python scripts/run_docs_brief_demo.py
+python scripts/validate_workspace.py examples/docs-brief-demo
 ```
 
-Then open:
+## Run the agent task
+
+Open:
 
 ```txt
 examples/docs-brief-demo/PROMPT_FOR_AGENT.md
 ```
 
-Copy the prompt into your coding agent or LLM. The agent should create:
+Copy the prompt into your agent.
+
+The agent should create:
 
 ```txt
 examples/docs-brief-demo/.agent-os/outputs/TASK-001/documentation_brief.md
 examples/docs-brief-demo/.agent-os/handoffs/HANDOFF-TASK-001.md
 ```
 
-## Validate the Workspace
+Then a Host or Auditor can create:
 
-Run:
-
-```bash
-python scripts/validate_workspace.py examples/docs-brief-demo
+```txt
+examples/docs-brief-demo/.agent-os/reviews/AUDIT-TASK-001.md
 ```
 
-The validator checks for a minimal Agent-Native OS workspace skeleton and at least one task file.
+## Expected output
+
+See:
+
+```txt
+examples/docs-brief-demo/EXPECTED_OUTPUT_SAMPLE.md
+```

@@ -1,7 +1,7 @@
 ﻿{
     "name":  "agent-native-os",
     "version":  "0.1.0",
-    "updated_at":  "2026-06-19T04:05:03.7145669Z",
+    "updated_at":  "2026-06-19T04:28:22.8481989Z",
     "description":  "A context-native operating system architecture for long-running AI agents and installable Skill Apps.",
     "files":  [
                   {
@@ -43,6 +43,14 @@
                   {
                       "bytes":  1143,
                       "path":  "CODE_OF_CONDUCT.md"
+                  },
+                  {
+                      "bytes":  838,
+                      "path":  "CODEX_COMPLETION_REPORT_TEMPLATE.md"
+                  },
+                  {
+                      "bytes":  1403,
+                      "path":  "CODEX_COPY_INSTRUCTIONS.md"
                   },
                   {
                       "bytes":  2212,
@@ -97,67 +105,67 @@
                       "path":  "docs/10_implementation_notes.md"
                   },
                   {
-                      "bytes":  838,
+                      "bytes":  1008,
                       "path":  "examples/docs-brief-demo/.agent-os/contracts/CONTRACT-TASK-001.yaml"
                   },
                   {
-                      "bytes":  1,
+                      "bytes":  0,
                       "path":  "examples/docs-brief-demo/.agent-os/handoffs/.gitkeep"
                   },
                   {
-                      "bytes":  493,
+                      "bytes":  1172,
                       "path":  "examples/docs-brief-demo/.agent-os/mounts/MOUNT-001.yaml"
                   },
                   {
-                      "bytes":  1,
+                      "bytes":  0,
                       "path":  "examples/docs-brief-demo/.agent-os/outputs/TASK-001/.gitkeep"
                   },
                   {
-                      "bytes":  1,
+                      "bytes":  0,
                       "path":  "examples/docs-brief-demo/.agent-os/reviews/.gitkeep"
                   },
                   {
-                      "bytes":  789,
+                      "bytes":  487,
                       "path":  "examples/docs-brief-demo/.agent-os/sources/current_requirements.md"
                   },
                   {
-                      "bytes":  963,
+                      "bytes":  801,
                       "path":  "examples/docs-brief-demo/.agent-os/sources/project_notes.md"
                   },
                   {
-                      "bytes":  788,
+                      "bytes":  1448,
                       "path":  "examples/docs-brief-demo/.agent-os/tasks/TASK-001.md"
                   },
                   {
-                      "bytes":  2995,
+                      "bytes":  3180,
                       "path":  "examples/docs-brief-demo/EXPECTED_OUTPUT_SAMPLE.md"
                   },
                   {
-                      "bytes":  1686,
+                      "bytes":  1904,
                       "path":  "examples/docs-brief-demo/PROMPT_FOR_AGENT.md"
                   },
                   {
-                      "bytes":  1599,
+                      "bytes":  1920,
                       "path":  "examples/docs-brief-demo/README.md"
                   },
                   {
-                      "bytes":  1543,
+                      "bytes":  1915,
                       "path":  "examples/docs-brief-demo/README.zh-CN.md"
                   },
                   {
-                      "bytes":  748,
+                      "bytes":  686,
                       "path":  "examples/docs-brief-demo/skills/documentation-brief/instructions.md"
                   },
                   {
-                      "bytes":  1327,
+                      "bytes":  1189,
                       "path":  "examples/docs-brief-demo/skills/documentation-brief/manifest.yaml"
                   },
                   {
-                      "bytes":  459,
+                      "bytes":  508,
                       "path":  "examples/docs-brief-demo/skills/documentation-brief/output_contract.md"
                   },
                   {
-                      "bytes":  364,
+                      "bytes":  610,
                       "path":  "examples/docs-brief-demo/skills/documentation-brief/permissions.yaml"
                   },
                   {
@@ -213,7 +221,7 @@
                       "path":  "NAMING_STRATEGY.md"
                   },
                   {
-                      "bytes":  9186,
+                      "bytes":  2609,
                       "path":  "PACKAGE_MANIFEST.json"
                   },
                   {
@@ -221,15 +229,15 @@
                       "path":  "private-editions.md"
                   },
                   {
-                      "bytes":  4483,
+                      "bytes":  3965,
                       "path":  "README.md"
                   },
                   {
-                      "bytes":  4628,
+                      "bytes":  4106,
                       "path":  "README.zh-CN.md"
                   },
                   {
-                      "bytes":  1178,
+                      "bytes":  2340,
                       "path":  "ROADMAP.md"
                   },
                   {
@@ -237,11 +245,11 @@
                       "path":  "scripts/init_workspace.py"
                   },
                   {
-                      "bytes":  1929,
+                      "bytes":  2706,
                       "path":  "scripts/run_docs_brief_demo.py"
                   },
                   {
-                      "bytes":  1753,
+                      "bytes":  2796,
                       "path":  "scripts/validate_workspace.py"
                   },
                   {

@@ -1,35 +1,49 @@
-id: CONTRACT-TASK-001
+contract_id: CONTRACT-TASK-001
 task_id: TASK-001
-contract_type: output_contract
-role: Researcher
 skill_app: documentation-brief
+status: active
+
 outputs:
   - name: documentation_brief
+    type: markdown
     path: .agent-os/outputs/TASK-001/documentation_brief.md
-    format: markdown
-    required_sections:
-      - Summary
-      - Key Findings
-      - Unknowns
-      - Risks
-      - Next Steps
   - name: handoff_report
+    type: markdown
     path: .agent-os/handoffs/HANDOFF-TASK-001.md
-    format: typed_markdown
-    required_sections:
-      - Metadata
-      - Sources Used
-      - Outputs Created
-      - Decisions Made
-      - Uncertainties
-      - Risks
-      - Next Steps
-      - Audit Status
+
+documentation_brief_required_sections:
+  - Summary
+  - Key Findings
+  - Unknowns
+  - Risks
+  - Next Steps
+
+handoff_report_required_sections:
+  - Metadata
+  - Sources Used
+  - Outputs Created
+  - Decisions Made
+  - Uncertainties
+  - Risks
+  - Next Steps
+  - Audit Status
+
+forbidden_changes:
+  - .agent-os/sources/
+  - .agent-os/tasks/
+  - .agent-os/mounts/
+  - .agent-os/contracts/
+  - skills/
+
 validation:
-  source_policy: use_mounted_sources_only
-  uncertainty_policy: mark_unknown
-  mutation_policy: no_source_mutation
-audit:
-  required: true
-  required_by: Host
-  status: pending_until_reviewed
+  method: checklist
+  validator_role: Host
+  audit_required: true
+
+completion_checklist:
+  - documentation_brief exists.
+  - handoff_report exists.
+  - Required sections are present.
+  - Unknowns are marked explicitly.
+  - Only mounted sources were used.
+  - Forbidden paths were not modified.

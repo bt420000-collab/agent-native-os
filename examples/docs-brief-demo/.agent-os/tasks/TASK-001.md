@@ -1,32 +1,52 @@
-# Task Card: TASK-001
+# Task Card
 
 ## Metadata
 
 - Task ID: TASK-001
+- Title: Create documentation brief
 - Role: Researcher
 - Skill App: documentation-brief
-- Status: ready
+- Source Mount: MOUNT-001
+- Output Contract: CONTRACT-TASK-001
+- Created By: Host
+- Status: open
 
 ## Goal
 
-Produce a documentation brief from mounted sources.
+Read the mounted sources and produce a concise documentation brief for the internal knowledge base project.
 
 ## Readable Sources
 
-- `.agent-os/sources/current_requirements.md`
-- `.agent-os/sources/project_notes.md`
+- .agent-os/sources/current_requirements.md
+- .agent-os/sources/project_notes.md
 
 ## Forbidden
 
-- `archive/`
-- `registry/`
+Do not read or use:
+
+- archive/
+- registry/
+- private editions
+- unmounted sources
+
+Do not modify:
+
+- .agent-os/sources/
+- .agent-os/tasks/
+- .agent-os/mounts/
+- .agent-os/contracts/
+- skills/
 
 ## Required Outputs
 
-- `.agent-os/outputs/TASK-001/documentation_brief.md`
-- `.agent-os/handoffs/HANDOFF-TASK-001.md`
+| Name | Type | Path |
+|---|---|---|
+| documentation_brief | markdown | .agent-os/outputs/TASK-001/documentation_brief.md |
+| handoff_report | markdown | .agent-os/handoffs/HANDOFF-TASK-001.md |
 
-## Required Sections for `documentation_brief.md`
+## Required Sections
+
+The documentation brief must include:
 
 - Summary
 - Key Findings
@@ -34,7 +54,7 @@ Produce a documentation brief from mounted sources.
 - Risks
 - Next Steps
 
-## Required Sections for `HANDOFF-TASK-001.md`
+The handoff report must include:
 
 - Metadata
 - Sources Used
@@ -45,6 +65,23 @@ Produce a documentation brief from mounted sources.
 - Next Steps
 - Audit Status
 
-## Audit
+## Rules
 
-Required by Host before the output enters mainline.
+- Use only mounted sources.
+- Mark unknowns explicitly as `UNKNOWN`.
+- Do not invent facts.
+- Do not modify forbidden paths.
+- Prepare for Host audit.
+
+## Audit Requirement
+
+- Required: yes
+- Auditor Role: Host
+
+## Recovery Requirement
+
+- Required: no
+
+## Handoff Requirement
+
+- Required: yes

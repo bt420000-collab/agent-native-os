@@ -2,7 +2,13 @@
 
 语言：[English](README.md) | [简体中文](README.zh-CN.md)
 
-面向长任务 AI Agent 的上下文原生操作系统架构。
+面向长任务 AI Agent 与可安装 Skill App 的上下文原生操作系统架构。
+
+![Spec](https://img.shields.io/badge/spec-v0.2-blue)
+![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![Status](https://img.shields.io/badge/status-draft-orange)
+
+## 这是什么？
 
 今天的大多数 AI Agent 正在学习如何使用人类电脑：屏幕、按钮、浏览器、终端、API 和 GUI 工作流。
 
@@ -10,26 +16,9 @@ Agent-Native OS 问的是另一个问题：
 
 > Agent 自己工作时，需要什么样的操作系统？
 
-人类操作系统围绕应用、窗口、文件和设备构建。Agent 原生系统应该围绕上下文、法源层级、任务隔离、角色运行时、输出契约、审查门禁、交接协议、归档和恢复点构建。
+人类操作系统围绕应用、窗口、文件和设备构建。
 
-## 先读这里
-
-如果你是第一次进入这个项目，请先读 `CORE_THEORY_AND_GLOSSARY.md`。
-
-它定义了 Agent-Native OS 的核心理论、标准术语和规范表达。最短地说：
-
-```txt
-Agent-Native OS 把自然语言指令变成可执行上下文，
-把 Agent 输出变成可可靠接力的结构化状态。
-```
-
-本项目建立在五个原则上：
-
-1. 上下文是第一资源。
-2. 契约化自然语言是源代码。
-3. 上下文内核是运行时。
-4. 结构化输出是 Context ABI。
-5. Skill App 是可安装应用。
+Agent 原生系统应该围绕上下文、法源层级、任务隔离、角色运行时、输出契约、审查门禁、交接协议、归档和恢复点构建。
 
 ## 核心判断
 
@@ -39,9 +28,21 @@ Agent-Native OS 把自然语言指令变成可执行上下文，
 
 Agent-Native OS 是一种开放架构，用于在可治理、上下文感知的 Agent 工作空间中安装和运行 Skill App。
 
+通俗说，它就是 AI Agent 的 Windows 层：一个原生工作空间，让 Agent 可以安装 Skill App、管理上下文、执行权限、审查输出，并保存长期项目状态。
+
+## 五大原则
+
+Agent-Native OS 建立在五个原则上：
+
+1. 上下文是第一资源。
+2. 契约化自然语言是源代码。
+3. 上下文内核是运行时。
+4. 结构化输出是 Context ABI。
+5. Skill App 是可安装应用。
+
 ## 本项目定义什么
 
-这个仓库是一个“Agent Windows”层的规范与项目种子：
+这个仓库定义以下开放架构：
 
 - Context Kernel：上下文内核
 - Skill App Runtime：技能应用运行时
@@ -52,15 +53,18 @@ Agent-Native OS 是一种开放架构，用于在可治理、上下文感知的 
 - Audit Gate：审查门禁
 - Handoff Bus：交接总线
 - Memory & Archive Layer：记忆与归档层
-- Recovery System：事故恢复系统
+- Recovery System：恢复系统
 
 ## 它不是什么
 
-Agent-Native OS 不是另一个聊天提示词包。
+Agent-Native OS 不是：
 
-它不是 GUI 自动化工具。
-
-它也不是模型框架、工具框架或工作流引擎的替代品。
+- 提示词包
+- GUI 自动化工具
+- 单 Agent 脚本
+- 简单工作流模板
+- 绑定某个厂商的 Agent 框架
+- 某个私有领域发行版
 
 更准确地说：
 
@@ -69,24 +73,33 @@ Agent-Native OS 不是另一个聊天提示词包。
 - 工作流引擎管步骤编排。
 - Agent-Native OS 管长期 Agent 工作的秩序。
 
-## 为什么现在需要它
+## 试跑 Demo
 
-工具正在爆炸式增加：浏览器、终端、API、MCP、文件编辑器、向量数据库、GUI 控制。工具越多，Agent 越强，也越容易乱。
+运行：
 
-没有 OS 层，Agent 会出现：
+```bash
+python scripts/run_docs_brief_demo.py
+```
 
-- 上下文爆炸
-- 角色串线
-- 法源污染
-- 交接失忆
-- 输出漂移
-- 越权修改
-- 审查失效
-- 旧档闹鬼
-- 用户意见丢失
-- 长程退化
+然后打开：
 
-Agent-Native OS 要把 Agent 工作变成一个可治理的环境。
+```txt
+examples/docs-brief-demo/PROMPT_FOR_AGENT.md
+```
+
+把提示词复制给 Codex、ChatGPT、Claude 或其他 Agent，让它按 Agent-Native OS 的任务契约生成产物。
+
+验证工作区：
+
+```bash
+python scripts/validate_workspace.py examples/docs-brief-demo
+```
+
+这个 Demo 展示最小可治理闭环：
+
+```txt
+Source -> Task -> Mount -> Output Contract -> Agent Prompt -> Handoff -> Audit
+```
 
 ## 最小可行内核
 
@@ -106,41 +119,22 @@ MVP 很小：
 9. Skill Registry：技能注册表
 10. Source Policy：法源策略
 
-## 试跑 Demo
-
-运行：
-
-```bash
-python scripts/run_docs_brief_demo.py
-```
-
-然后打开：
-
-```txt
-examples/docs-brief-demo/PROMPT_FOR_AGENT.md
-```
-
-把提示词复制给 Codex、ChatGPT、Claude 或其他 Agent，让它按 Agent-Native OS 的任务契约生成产物。
-
 ## 仓库结构
 
 ```txt
 agent-native-os/
   README.md
   README.zh-CN.md
-  AUTHORS.md
-  BILINGUAL_POLICY.md
-  CORE_THEORY_AND_GLOSSARY.md
   MANIFESTO.md
-  NAMING_STRATEGY.md
   SPEC.md
   ROADMAP.md
-  CODEX_HANDOFF.md
+  CORE_THEORY_AND_GLOSSARY.md
+  NAMING_STRATEGY.md
+  BILINGUAL_POLICY.md
   docs/
   spec/
   templates/
   examples/
-    docs-brief-demo/
   scripts/
 ```
 
@@ -150,26 +144,28 @@ agent-native-os/
 
 领域专用发行版可以基于本架构构建。私有发行版可能包含行业工艺、商业逻辑、评分系统和专有工作流，不包含在本仓库内。
 
-## 参与贡献
+开放架构，保留私有发行版。
 
-这是一个规范优先的项目。欢迎贡献架构澄清、模板改进、中立示例，以及安全与治理模型方面的增强。
+## 建议 GitHub 简介
 
-请参见 `CONTRIBUTING.md`、`GOVERNANCE.md`、`SECURITY.md`、`CODE_OF_CONDUCT.md` 和 `BILINGUAL_POLICY.md`。
+```txt
+A context-native operating system architecture for long-running AI agents and installable Skill Apps.
+```
 
-## 作者与联系方式
+## 建议 topics
 
-维护者：[bt420000-collab](https://github.com/bt420000-collab)
-
-- 邮箱：bt420@126.com
-- 微信：iMelodyJust
-
-## 口号
-
-> 别只教 Agent 使用人类桌面。给它们一个原生工作空间。
-
-更直接一点：
-
-> 我们在做 Agent 的 Windows 层：一个上下文原生操作系统，开发者可以在里面安装 Skill App，组合出可靠的工作流。
+```txt
+ai-agents
+agent-os
+agent-native
+context-engineering
+context-native
+multi-agent
+skill-apps
+workflow-automation
+agent-framework
+ai-native
+```
 
 ## 协议
 

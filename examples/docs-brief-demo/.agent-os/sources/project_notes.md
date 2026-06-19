@@ -1,25 +1,25 @@
 # Project Notes
 
-These notes are working material. They are useful, but less authoritative than `current_requirements.md`.
+The team is building an internal knowledge base for a small product group.
 
-## Meeting Notes
+Current situation:
 
-- The team wants a shared place for onboarding and project memory.
-- Several people mentioned that decisions are currently scattered across chats, documents, and meeting notes.
-- A lightweight documentation brief would help align the first version.
-- Someone suggested publishing in a wiki, but no final publishing target was chosen.
-- There is concern that old notes may be copied into the knowledge base without review.
+- Requirements are scattered across meeting notes.
+- Some notes are outdated.
+- New contributors have trouble finding the current project direction.
+- There is no confirmed documentation owner yet.
+- There is no confirmed update cadence yet.
+- The team wants a simple brief before creating a larger documentation system.
 
-## Ideas
+Potential risks:
 
-- Add a decision log.
-- Add a source index.
-- Add maintenance rules.
-- Mark outdated material instead of deleting it immediately.
-- Keep the first version small enough to review in one session.
+- Old notes may pollute current documentation.
+- The team may treat assumptions as confirmed facts.
+- The documentation may become stale without ownership.
+- Future agents may need a handoff report to continue safely.
 
-## Open Questions
+Open questions:
 
-- Who owns documentation maintenance?
-- How often should the knowledge base be reviewed?
-- Which source should be treated as the highest authority after requirements change?
+- Who owns the documentation?
+- How often should it be updated?
+- Where should the approved brief be published?

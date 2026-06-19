@@ -1,31 +1,19 @@
 # Current Requirements
 
-This file is the highest-authority source for TASK-001.
+The team needs a concise documentation brief for an internal knowledge base project.
 
-## Goal
+The brief should help new contributors understand:
 
-Create a concise documentation brief for an internal knowledge base.
+- project purpose
+- current documentation problems
+- key requirements
+- risks
+- next steps
 
-## Audience
+The output should be short enough to review quickly.
 
-The first audience is new team members and project contributors.
+The output must mark unknowns explicitly.
 
-## Required Initial Sections
+The output must not include unconfirmed assumptions as facts.
 
-- Onboarding
-- Decision log
-- Source index
-- Maintenance rules
-
-## Constraints
-
-- The first brief must separate confirmed requirements from unresolved notes.
-- The brief must identify risks around outdated or unconfirmed information.
-- The brief must include next steps for a human Host to review.
-- The brief must not assume a publishing platform.
-
-## Confirmed Non-Goals
-
-- Do not create a public documentation site yet.
-- Do not include private customer data.
-- Do not create domain-specific private edition content.
+The output must be prepared for Host audit before entering the mainline.

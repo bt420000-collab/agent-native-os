@@ -2,7 +2,13 @@
 
 Languages: [English](README.md) | [简体中文](README.zh-CN.md)
 
-A context-native operating system architecture for long-running AI agents.
+A context-native operating system architecture for long-running AI agents and installable Skill Apps.
+
+![Spec](https://img.shields.io/badge/spec-v0.2-blue)
+![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![Status](https://img.shields.io/badge/status-draft-orange)
+
+## What is this?
 
 Most AI agents today are being trained to use human computers: screens, buttons, browsers, terminals, APIs, and GUI workflows.
 
@@ -10,26 +16,9 @@ Agent-Native OS asks a different question:
 
 > What kind of operating system does an agent need for its own work?
 
-Human operating systems are built around apps, windows, files, and devices. Agent-native systems should be built around context, source hierarchy, task isolation, role runtime, output contracts, audit gates, handoff protocols, archives, and recovery points.
+Human operating systems are built around applications, windows, files, and devices.
 
-## Start here
-
-If you are new to the project, start with `CORE_THEORY_AND_GLOSSARY.md`.
-
-It defines the core theory, standard vocabulary, and normative language for Agent-Native OS. In short:
-
-```txt
-Agent-Native OS turns natural-language instructions into executable context
-and turns agent outputs into structured state for reliable continuation.
-```
-
-The project is built on five principles:
-
-1. Context is the first-class resource.
-2. Contracted natural language is source code.
-3. Context Kernel is the runtime.
-4. Structured output is the Context ABI.
-5. Skill Apps are installable applications.
+Agent-native systems should be built around context, source hierarchy, task isolation, role runtime, output contracts, audit gates, handoff protocols, archives, and recovery points.
 
 ## Core idea
 
@@ -39,9 +28,21 @@ In an Agent OS, the first-class citizen is the context.
 
 Agent-Native OS is an open architecture for installing and running Skill Apps inside governed, context-aware agent workspaces.
 
+Informally, it can be understood as the "Windows layer for AI agents": a native workspace where agents can install Skill Apps, manage context, enforce permissions, audit outputs, and preserve long-running project state.
+
+## Five principles
+
+Agent-Native OS is built on five principles:
+
+1. Context is the first-class resource.
+2. Contracted natural language is source code.
+3. Context Kernel is the runtime.
+4. Structured output is the Context ABI.
+5. Skill Apps are installable applications.
+
 ## What this project defines
 
-This repository is a specification and project seed for building an "Agent Windows" layer:
+This repository defines the open architecture for:
 
 - Context Kernel
 - Skill App Runtime
@@ -56,11 +57,14 @@ This repository is a specification and project seed for building an "Agent Windo
 
 ## What it is not
 
-Agent-Native OS is not another chatbot prompt pack.
+Agent-Native OS is not:
 
-It is not a GUI automation tool.
-
-It is not a replacement for model frameworks, tool frameworks, or workflow engines.
+- a prompt pack
+- a GUI automation tool
+- a single-agent script
+- a simple workflow template
+- a vendor-specific agent framework
+- a domain-specific private edition
 
 Instead:
 
@@ -69,24 +73,33 @@ Instead:
 - Workflow engines arrange steps.
 - Agent-Native OS governs long-running agent work.
 
-## Why now
+## Try the demo
 
-Tools are multiplying: browsers, terminals, APIs, MCP servers, file editors, vector databases, and GUI control. More tools make agents more powerful, but also more chaotic.
+Run:
 
-Without an OS layer, agents suffer from:
+```bash
+python scripts/run_docs_brief_demo.py
+```
 
-- context overflow
-- role bleeding
-- source pollution
-- handoff amnesia
-- output drift
-- unauthorized mutation
-- review collapse
-- archive haunting
-- user override loss
-- long-run degradation
+Then open:
 
-Agent-Native OS turns agent work into a governable environment.
+```txt
+examples/docs-brief-demo/PROMPT_FOR_AGENT.md
+```
+
+Copy the prompt into your coding agent or LLM and let it produce the governed outputs.
+
+Validate the workspace:
+
+```bash
+python scripts/validate_workspace.py examples/docs-brief-demo
+```
+
+The demo shows the minimal governed loop:
+
+```txt
+Source -> Task -> Mount -> Output Contract -> Agent Prompt -> Handoff -> Audit
+```
 
 ## Minimal viable kernel
 
@@ -106,41 +119,22 @@ Recommended extensions:
 9. Skill Registry
 10. Source Policy
 
-## Try the demo
-
-Run:
-
-```bash
-python scripts/run_docs_brief_demo.py
-```
-
-Then open:
-
-```txt
-examples/docs-brief-demo/PROMPT_FOR_AGENT.md
-```
-
-Copy the prompt into your coding agent or LLM and let it produce the governed outputs.
-
 ## Repository map
 
 ```txt
 agent-native-os/
   README.md
   README.zh-CN.md
-  AUTHORS.md
-  BILINGUAL_POLICY.md
-  CORE_THEORY_AND_GLOSSARY.md
   MANIFESTO.md
-  NAMING_STRATEGY.md
   SPEC.md
   ROADMAP.md
-  CODEX_HANDOFF.md
+  CORE_THEORY_AND_GLOSSARY.md
+  NAMING_STRATEGY.md
+  BILINGUAL_POLICY.md
   docs/
   spec/
   templates/
   examples/
-    docs-brief-demo/
   scripts/
 ```
 
@@ -150,26 +144,28 @@ This repository defines the open architecture.
 
 Domain-specific private editions can be built on top of it. Private editions may contain domain craft, business logic, specialized scoring systems, or proprietary workflows, and are intentionally not included.
 
-## Contributing
+Open the architecture. Keep private editions private.
 
-This is a specification-first project. Contributions that clarify the architecture, improve templates, add neutral examples, or strengthen security and governance are welcome.
+## Suggested GitHub description
 
-See `CONTRIBUTING.md`, `GOVERNANCE.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, and `BILINGUAL_POLICY.md`.
+```txt
+A context-native operating system architecture for long-running AI agents and installable Skill Apps.
+```
 
-## Author and contact
+## Suggested topics
 
-Maintainer: [bt420000-collab](https://github.com/bt420000-collab)
-
-- Email: bt420@126.com
-- WeChat: iMelodyJust
-
-## Slogan
-
-> Stop teaching agents only to use human desktops. Give them a native workspace.
-
-Or, more directly:
-
-> We are building the Windows layer for agents: a context-native OS where developers can install Skill Apps and compose reliable workflows.
+```txt
+ai-agents
+agent-os
+agent-native
+context-engineering
+context-native
+multi-agent
+skill-apps
+workflow-automation
+agent-framework
+ai-native
+```
 
 ## License
 

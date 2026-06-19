@@ -1,44 +1,55 @@
 # Expected Output Sample
 
-This sample is illustrative. It shows the shape of a successful run, not a mandatory generated result.
+This file shows an illustrative result for the Docs Brief Demo.
 
-## Example `documentation_brief.md`
+It is not a source file and should not be treated as mounted context for TASK-001.
+
+## Example: documentation_brief.md
 
 ```md
+---
+artifact_type: documentation_brief
+task_id: TASK-001
+role: Researcher
+skill_app: documentation-brief
+status: draft
+audit_required: true
+---
+
 # Documentation Brief
 
 ## Summary
 
-The team is building an internal knowledge base for onboarding, project decisions, and operational references. The immediate documentation need is a concise starter brief that separates confirmed requirements from unresolved notes.
+The project is building an internal knowledge base for a small team. Current notes show a need to organize scattered requirements, meeting notes, and maintenance risks into a clearer documentation system.
 
 ## Key Findings
 
-- The current priority is an internal knowledge base, not a public docs site.
-- The first audience is new team members and project contributors.
-- Required initial sections are onboarding, decision log, source index, and maintenance rules.
-- Existing notes contain useful ideas, but some details are unconfirmed and should not enter mainline without review.
+- The team needs a concise project brief for onboarding and planning.
+- Current documentation is scattered across meeting notes and informal project notes.
+- The project requires explicit ownership, update cadence, and risk tracking.
+- Outdated information is a known risk.
 
 ## Unknowns
 
-- The owner for long-term documentation maintenance is not confirmed.
-- The publishing target is not decided.
-- The update cadence is not confirmed.
+- UNKNOWN: The final documentation owner is not confirmed.
+- UNKNOWN: The update schedule is not confirmed.
+- UNKNOWN: The exact publishing location is not confirmed.
 
 ## Risks
 
-- Outdated meeting notes could contaminate the current brief if treated as authoritative.
-- Without ownership, the knowledge base may become stale.
-- Missing maintenance rules could cause source pollution over time.
+- Documentation may become stale if no owner is assigned.
+- Unmounted or outdated notes may pollute future work.
+- Lack of audit may allow unconfirmed assumptions into the mainline.
 
 ## Next Steps
 
-1. Ask the Host to confirm the documentation owner.
-2. Decide whether the first version lives in a repository, wiki, or shared drive.
-3. Create a source policy for confirmed requirements, working notes, and deprecated material.
-4. Draft the first onboarding page from confirmed requirements only.
+1. Assign a documentation owner.
+2. Confirm update cadence.
+3. Create a mainline documentation index.
+4. Audit the brief before using it as a source.
 ```
 
-## Example `HANDOFF-TASK-001.md`
+## Example: HANDOFF-TASK-001.md
 
 ```md
 ---
@@ -46,7 +57,8 @@ artifact_type: handoff_report
 task_id: TASK-001
 role: Researcher
 skill_app: documentation-brief
-audit_status: pending_host_review
+status: completed
+audit_required: true
 ---
 
 # Handoff Report
@@ -56,53 +68,80 @@ audit_status: pending_host_review
 - Task ID: TASK-001
 - Role: Researcher
 - Skill App: documentation-brief
-- Status: completed_for_audit
+- Status: completed
+- Audit Required: yes
 
 ## Sources Used
 
-- `.agent-os/sources/current_requirements.md`
-- `.agent-os/sources/project_notes.md`
+- .agent-os/sources/current_requirements.md
+- .agent-os/sources/project_notes.md
+- .agent-os/tasks/TASK-001.md
+- .agent-os/mounts/MOUNT-001.yaml
+- .agent-os/contracts/CONTRACT-TASK-001.yaml
 
 ## Outputs Created
 
-- `.agent-os/outputs/TASK-001/documentation_brief.md`
+- .agent-os/outputs/TASK-001/documentation_brief.md
+- .agent-os/handoffs/HANDOFF-TASK-001.md
 
 ## Decisions Made
 
-- Treated `current_requirements.md` as higher authority than `project_notes.md`.
-- Marked ownership, publishing target, and update cadence as unknowns.
+- Treated documentation ownership and update cadence as unknown because they were not confirmed in mounted sources.
+- Kept output in draft status until Host audit.
 
 ## Uncertainties
 
-- Documentation owner remains unconfirmed.
-- Publishing target remains unconfirmed.
-- Maintenance cadence remains unconfirmed.
+- Documentation owner is UNKNOWN.
+- Update cadence is UNKNOWN.
+- Publishing location is UNKNOWN.
 
 ## Risks
 
-- Source pollution if older notes are reused without review.
-- Stale documentation if ownership is not assigned.
+- Source pollution from unmounted notes.
+- Stale documentation without ownership.
+- Assumptions entering mainline without audit.
 
 ## Next Steps
 
-- Host should audit the brief.
-- If approved, Writer role can draft the first onboarding page.
+1. Host should audit the documentation brief.
+2. Confirm unknowns with the human operator.
+3. Promote audited output to mainline if approved.
 
 ## Audit Status
 
 Pending Host audit.
 ```
 
-## Example Audit Checklist
+## Example: AUDIT-TASK-001.md
 
 ```md
-# Audit Checklist for TASK-001
+---
+artifact_type: audit_report
+task_id: TASK-001
+auditor_role: Host
+status: pending
+approved_for_mainline: false
+---
 
-- [ ] Output uses only mounted sources.
-- [ ] Required sections are present.
-- [ ] Unknowns are marked explicitly.
-- [ ] Source authority is respected.
-- [ ] Forbidden paths were not read or modified.
-- [ ] Handoff report includes continuation state.
-- [ ] Output is ready to enter mainline or return for revision.
+# Audit Report
+
+## Criteria
+
+- [ ] Uses only mounted sources.
+- [ ] Contains all required sections.
+- [ ] Marks unknowns explicitly.
+- [ ] Does not modify forbidden paths.
+- [ ] Includes usable handoff state.
+
+## Findings
+
+Pending.
+
+## Required Fixes
+
+Pending.
+
+## Approval Notes
+
+Pending.
 ```
