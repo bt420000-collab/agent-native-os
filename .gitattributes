@@ -3,3 +3,28 @@
 *.bat text eol=crlf
 *.cmd text eol=crlf
 *.ps1 text eol=crlf
+
+# GitHub Linguist / repository identity override
+#
+# Agent-Native OS is a spec-first, natural-language-first architecture project.
+# Python files in /scripts are reference helpers and validators, not the primary implementation language.
+
+# Make Markdown and YAML visible as the primary project materials.
+*.md linguist-detectable
+*.md linguist-language=Markdown
+*.yaml linguist-detectable
+*.yml linguist-detectable
+
+# Reference scripts are helper tooling, not the core implementation.
+scripts/*.py linguist-documentation
+scripts/** linguist-documentation
+
+# Demo workspaces and examples are documentation/spec artifacts.
+examples/** linguist-documentation
+
+# Visual assets should not affect project identity.
+docs/assets/** linguist-generated
+*.png linguist-generated
+*.jpg linguist-generated
+*.jpeg linguist-generated
+*.webp linguist-generated

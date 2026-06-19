@@ -25,6 +25,18 @@ It is a native operating layer for large-model agents: a governed workspace wher
 
 Informally, you can think of it as **the Windows layer for AI agents**.
 
+## Repository identity
+
+Agent-Native OS is **spec-first** and **natural-language-first**.
+
+This repository is primarily a set of Markdown/YAML architecture specifications, workspace protocols, and demo contracts. Its core idea is not "Python code runs agents." Its core idea is:
+
+> Contracted natural language is source code.  
+> Context Kernel is the runtime.  
+> Structured output is the Context ABI.
+
+The small Python scripts in `scripts/` are reference helpers for demo checks and workspace validation. They are not the main implementation language of Agent-Native OS.
+
 ## Why this project exists
 
 Most AI tooling today is focused on making agents better at using human computers: browsers, terminals, GUIs, APIs, and app workflows.

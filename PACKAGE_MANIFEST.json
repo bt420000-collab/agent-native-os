@@ -1,11 +1,11 @@
 ﻿{
     "name":  "agent-native-os",
     "version":  "0.1.0",
-    "updated_at":  "2026-06-19T04:58:12.6483971Z",
+    "updated_at":  "2026-06-19T05:13:38.7072974Z",
     "description":  "A context-native operating system architecture for long-running AI agents and installable Skill Apps.",
     "files":  [
                   {
-                      "bytes":  80,
+                      "bytes":  926,
                       "path":  ".gitattributes"
                   },
                   {
@@ -27,6 +27,10 @@
                   {
                       "bytes":  401,
                       "path":  ".gitignore"
+                  },
+                  {
+                      "bytes":  1216,
+                      "path":  "AI_SUMMARY_HINT.md"
                   },
                   {
                       "bytes":  186,
@@ -59,6 +63,10 @@
                   {
                       "bytes":  1639,
                       "path":  "CODEX_HOMEPAGE_UPDATE_INSTRUCTIONS.md"
+                  },
+                  {
+                      "bytes":  1229,
+                      "path":  "CODEX_IDENTITY_FIX_INSTRUCTIONS.md"
                   },
                   {
                       "bytes":  784,
@@ -257,7 +265,7 @@
                       "path":  "NAMING_STRATEGY.md"
                   },
                   {
-                      "bytes":  1401,
+                      "bytes":  14046,
                       "path":  "PACKAGE_MANIFEST.json"
                   },
                   {
@@ -265,12 +273,20 @@
                       "path":  "private-editions.md"
                   },
                   {
-                      "bytes":  5221,
+                      "bytes":  5795,
                       "path":  "README.md"
                   },
                   {
-                      "bytes":  5266,
+                      "bytes":  5766,
                       "path":  "README.zh-CN.md"
+                  },
+                  {
+                      "bytes":  1347,
+                      "path":  "README_IDENTITY_PATCH.md"
+                  },
+                  {
+                      "bytes":  2793,
+                      "path":  "REPO_IDENTITY.md"
                   },
                   {
                       "bytes":  2340,

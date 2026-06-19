@@ -25,6 +25,18 @@ Agent-Native OS 不是给人类桌面用的操作系统。
 
 通俗说，它就是 **AI Agent 的 Windows 层**。
 
+## 仓库身份说明
+
+Agent-Native OS 是 **规范优先**、**自然语言优先** 的项目。
+
+这个仓库主要由 Markdown/YAML 架构规范、工作区协议和 demo 契约组成。它的核心不是“用 Python 代码运行 Agent”，而是：
+
+> 契约化自然语言是源代码。  
+> 上下文内核是运行时。  
+> 结构化输出是 Context ABI。
+
+`scripts/` 里的少量 Python 脚本只是 demo 检查和工作区验证工具，不是 Agent-Native OS 的主体实现语言。
+
 ## 为什么要做这个项目
 
 今天很多 AI 工具都在解决同一个方向的问题：
