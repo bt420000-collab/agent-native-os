@@ -14,6 +14,15 @@ A context-native operating system architecture for long-running AI agents and in
   </a>
 </p>
 
+<p align="center">
+  <a href="./docs/assets/homepage/poster-token-effective-work.png">
+    <img src="./docs/assets/homepage/poster-token-effective-work.png" alt="Spend tokens on effective work" width="43%" />
+  </a>
+  <a href="./docs/assets/homepage/poster-robot-os-standard.png">
+    <img src="./docs/assets/homepage/poster-robot-os-standard.png" alt="Build operating system standards for the next generation of intelligent robots" width="43%" />
+  </a>
+</p>
+
 > **Not teaching AI to use human desktops.**  
 > **Giving AI a computer of its own.**
 
@@ -73,6 +82,38 @@ Skill Apps may be developed by official maintainers, community developers, priva
 The system provides order.
 Apps provide capability.
 ```
+
+## Visual overview
+
+### 1) From code-for-machines to context-for-agents
+
+<p align="center">
+  <a href="./docs/assets/homepage/diagram-from-code-to-agents.png">
+    <img src="./docs/assets/homepage/diagram-from-code-to-agents.png" alt="From code for machines to context for agents" width="82%" />
+  </a>
+</p>
+
+### 2) System architecture and operating loop
+
+<p align="center">
+  <a href="./docs/assets/homepage/diagram-core-architecture.png">
+    <img src="./docs/assets/homepage/diagram-core-architecture.png" alt="Core architecture" width="46%" />
+  </a>
+  <a href="./docs/assets/homepage/diagram-operating-loop.png">
+    <img src="./docs/assets/homepage/diagram-operating-loop.png" alt="Operating loop" width="46%" />
+  </a>
+</p>
+
+### 3) Agent-native system and workspace layout
+
+<p align="center">
+  <a href="./docs/assets/homepage/diagram-agent-native-system.png">
+    <img src="./docs/assets/homepage/diagram-agent-native-system.png" alt="Agent-native system" width="46%" />
+  </a>
+  <a href="./docs/assets/homepage/diagram-workspace-layout.png">
+    <img src="./docs/assets/homepage/diagram-workspace-layout.png" alt="Workspace layout" width="46%" />
+  </a>
+</p>
 
 ## Quick start
 

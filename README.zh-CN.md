@@ -14,6 +14,15 @@
   </a>
 </p>
 
+<p align="center">
+  <a href="./docs/assets/homepage/poster-token-effective-work.png">
+    <img src="./docs/assets/homepage/poster-token-effective-work.png" alt="让 Token 花在有效工作上" width="43%" />
+  </a>
+  <a href="./docs/assets/homepage/poster-robot-os-standard.png">
+    <img src="./docs/assets/homepage/poster-robot-os-standard.png" alt="给下一代智能机器人建立操作系统规范" width="43%" />
+  </a>
+</p>
+
 > **不是让 AI 接管电脑。**  
 > **是给 AI 装一台自己的电脑。**
 
@@ -73,6 +82,38 @@ Skill App 可以由官方、社区、私有团队或商业开发者开发。App 
 系统提供秩序。
 App 提供能力。
 ```
+
+## 视觉总览
+
+### 1）从 code-for-machines 到 context-for-agents
+
+<p align="center">
+  <a href="./docs/assets/homepage/diagram-from-code-to-agents.png">
+    <img src="./docs/assets/homepage/diagram-from-code-to-agents.png" alt="从代码到 Agent 原生工作" width="82%" />
+  </a>
+</p>
+
+### 2）系统架构与最小工作闭环
+
+<p align="center">
+  <a href="./docs/assets/homepage/diagram-core-architecture.png">
+    <img src="./docs/assets/homepage/diagram-core-architecture.png" alt="系统架构图" width="46%" />
+  </a>
+  <a href="./docs/assets/homepage/diagram-operating-loop.png">
+    <img src="./docs/assets/homepage/diagram-operating-loop.png" alt="最小工作闭环图" width="46%" />
+  </a>
+</p>
+
+### 3）Agent 原生系统与工作区布局
+
+<p align="center">
+  <a href="./docs/assets/homepage/diagram-agent-native-system.png">
+    <img src="./docs/assets/homepage/diagram-agent-native-system.png" alt="Agent 原生系统图" width="46%" />
+  </a>
+  <a href="./docs/assets/homepage/diagram-workspace-layout.png">
+    <img src="./docs/assets/homepage/diagram-workspace-layout.png" alt="工作区布局图" width="46%" />
+  </a>
+</p>
 
 ## 快速开始
 

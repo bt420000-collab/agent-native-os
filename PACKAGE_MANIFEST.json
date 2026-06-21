@@ -1,7 +1,7 @@
 ﻿{
     "name":  "agent-native-os",
     "version":  "0.2.8",
-    "updated_at":  "2026-06-21T12:02:47.8947791Z",
+    "updated_at":  "2026-06-21T12:10:29.0244672Z",
     "description":  "A context-native operating system architecture for long-running AI agents and installable Skill Apps.",
     "files":  [
                   {
@@ -213,11 +213,11 @@
                       "path":  "private-editions.md"
                   },
                   {
-                      "bytes":  6829,
+                      "bytes":  8459,
                       "path":  "README.md"
                   },
                   {
-                      "bytes":  5963,
+                      "bytes":  7554,
                       "path":  "README.zh-CN.md"
                   },
                   {
