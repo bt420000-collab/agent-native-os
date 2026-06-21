@@ -1,0 +1,46 @@
+runtime_context_request:
+  request_id: cpr_example_0001
+  task_id: TASK-001
+  app_id: ano.skill.example
+  requested_mode: normal
+
+  purpose: >
+    Explain what the app wants to do in this run.
+
+  subagents:
+    - role: example.coordinator
+      count: 1
+      context_budget: low
+    - role: example.worker
+      count: 1
+      context_budget: low
+
+  context_budget:
+    requested_level: medium
+    max_tokens_hint: null
+    allow_long_context: false
+    allow_full_project_scan: false
+
+  workspace_scope:
+    read:
+      - ano/runtime/apps/ano.skill.example/inbox/
+    write:
+      - ano/runtime/apps/ano.skill.example/outbox/
+    denied:
+      - ano/kernel/
+      - ano/runtime/apps/*/private/
+
+  cross_app:
+    bridge_required: false
+    intended_receiver: null
+    read_from_bridge: null
+
+  output_contract:
+    produces:
+      - output.md
+      - handoff_report.md
+
+  user_context:
+    may_write_customization: true
+    customization_paths:
+      - user/apps/ano.skill.example/

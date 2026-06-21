@@ -1,64 +1,93 @@
 # Skill App Runtime
 
-A Skill App is an installable capability package for agents.
+A Skill App is an installable capability package for Agent-Native OS.
 
-It is not just a prompt.
+It is not a prompt collection. It is not a separate operating system. It is not the Host.
+
+## Rule
+
+```txt
+The Host belongs to Agent-Native OS.
+A Skill App may define a Coordinator, but not a Host.
+```
+
+## What a Skill App declares
 
 A Skill App declares:
 
 - what it does
-- what it needs
-- what it can read
-- what it can write
+- how it should be installed
+- whether it is free or paid
+- what coordinator it uses
+- what subagents it may request
+- what context budget it needs
+- what workspace paths it can read
+- what workspace paths it can write
 - what it must not touch
-- what it outputs
+- what outputs it produces
 - whether it needs audit
-- how it reports uncertainty
-- what other skills it depends on
+- whether it may request cross-app bridges
 
 ## Standard package
 
 ```txt
-skill-app/
+ano-<domain>-skill-app/
   manifest.yaml
-  instructions.md
-  input_contract.md
-  output_contract.md
-  permissions.yaml
-  source_policy.md
-  examples/
+  INSTALL_CARD.md
+  README.md
+  CHANGELOG.md
+  LICENSE
+  app_actions/
+  roles/
+  protocols/
+  templates/
   tests/
-  changelog.md
 ```
 
 ## Runtime actions
 
 The Skill App Runtime should support:
 
-- install
 - inspect
+- install
 - enable
 - disable
-- run
-- compose
+- request_context
+- print_runtime_approval_card
+- run_after_host_approval
+- pause
+- resume
 - audit
 - remove
 - lock version
 
-## Skill registry
+## Registry
 
-The registry records installed skills:
+The registry records installed apps:
 
 ```txt
-.agent-os/
+ano/
   registry/
-    installed_skills.yaml
-    skill_lock.yaml
-    permissions.lock
+    installed_apps.json
+    apps/
+      ano.skill.example.json
+    mounts/
+      ano.skill.example.mount.json
 ```
+
+## Runtime data
+
+App package code and app runtime data are separate.
+
+```txt
+apps/ano-example-skill-app/              # installed package
+ano/runtime/apps/ano.skill.example/          # runtime data
+```
+
+This separation prevents app updates from destroying project data.
 
 ## Philosophy
 
 Developers should not rebuild agent workflows from scratch.
 
-They should install Skill Apps into an agent-native OS and compose governed workflows.
+They should build Skill Apps that can be installed into Agent-Native OS and governed by the OS Host.

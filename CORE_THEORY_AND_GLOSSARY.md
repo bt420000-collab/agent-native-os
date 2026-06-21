@@ -915,3 +915,43 @@ Chinese:
 ```txt
 Agent-Native OS 把自然语言指令变成可执行上下文，把 Agent 输出变成可可靠接力的结构化状态。
 ```
+
+---
+
+# v0.2 Addendum: Single Host Runtime
+
+## Single Host
+
+Agent-Native OS has exactly one Host.
+
+```txt
+Host = the persistent OS-level controller owned by the mother system.
+```
+
+A Skill App must not define itself as Host. It may define an app coordinator or workflow controller, but subagent lifecycle authority belongs to the OS Host.
+
+## Context Permission Request
+
+A Context Permission Request is an app's pre-run application for memory, context, subagents, workspace permissions, and cross-app bridge access.
+
+```txt
+Apps do not own context. Apps request context.
+```
+
+## Runtime Approval Card
+
+A Runtime Approval Card is the user-facing printout of the proposed app run. It shows the agent roster, context budget, permissions, bridge requests, user customizations, and commercial status before execution.
+
+## User-Defined Agent Topology
+
+User-Defined Agent Topology is the user's ability to modify an app's proposed agent roster in natural language and persist the approved change as user context.
+
+Example:
+
+```txt
+Add a troll simulator agent before publishing each chapter.
+```
+
+## Cross-App Bridge
+
+A Cross-App Bridge is an OS-approved, scoped, revocable data channel between two apps. Apps must not directly read another app's private workspace.

@@ -1,0 +1,33 @@
+app_id: ano.skill.example
+profile_name: default
+scope: app
+
+user_agent_overrides:
+  added_agents:
+    - role_id: example.custom_reviewer
+      display_name: Custom Reviewer Agent
+      enabled: true
+      trigger:
+        - before_final_output
+      responsibilities:
+        - Review output for user-specific risks.
+      output:
+        - custom_review.md
+      permissions:
+        read:
+          - drafts/
+          - outputs/
+        write:
+          - reviews/custom/
+        denied:
+          - ano/kernel/
+
+  modified_agents:
+    - role_id: example.worker
+      extra_instruction:
+        - Respect the user's preferred style and project constraints.
+
+approval:
+  approved_by_user: true
+  approved_at: null
+  source: natural_language_runtime_override

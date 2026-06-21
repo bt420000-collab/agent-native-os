@@ -1,0 +1,90 @@
+app_id: ano.skill.example
+package_name: ano-example-skill-app
+display_name: ANO Example Skill App
+version: 0.1.0
+type: skill_app
+standard: agent-native-os
+standard_version: 0.2.2
+runtime: ano
+
+summary: >
+  One-sentence description of what this app does.
+
+install:
+  user_prompt_zh: >
+    即将安装一个示例 Skill App。它会在运行前提交上下文权限申请，并由 ANO Host 审批后启动。
+  user_prompt_en: >
+    You are about to install an example Skill App. It will submit a Context Permission Request before running.
+
+commercial:
+  pricing_model: free
+  license: Apache-2.0
+  payment_required: false
+  trial_available: false
+  offline_available: true
+
+compatibility:
+  min_ano_version: 0.2.2
+  max_ano_version: null
+
+agent_policy:
+  app_controller:
+    role_id: example.coordinator
+    display_name: Example Coordinator
+    can_request_subagents: true
+    is_host: false
+
+  subagents:
+    - role_id: example.worker
+      display_name: Example Worker Agent
+      max_instances: 1
+      context_budget: low
+      permissions:
+        - read_task_sources
+        - write_outputs
+
+context_permission_request:
+  default_mode: normal
+  context_budget:
+    requested_level: medium
+    allow_long_context: false
+    allow_full_project_scan: false
+  subagent_quota:
+    coordinator: 1
+    max_concurrent_subagents: 1
+  workspace_permissions:
+    read:
+      - apps/ano-example-skill-app/
+      - ano/runtime/apps/ano.skill.example/inbox/
+    write:
+      - ano/runtime/apps/ano.skill.example/desktop/
+      - ano/runtime/apps/ano.skill.example/outbox/
+      - ano/runtime/apps/ano.skill.example/logs/
+    denied:
+      - ano/kernel/
+      - ano/runtime/apps/*/private/
+      - ano/runtime/process_table.json
+  cross_app_permissions:
+    can_request_cross_app_bridge: false
+    default_cross_app_access: denied
+  user_context:
+    may_write_user_customizations: true
+    paths:
+      - user/apps/ano.skill.example/
+
+lifecycle:
+  persistent: false
+  allow_pause: true
+  allow_resume: true
+  allow_kill: true
+  safe_to_archive_after_completion: true
+
+outputs:
+  - name: primary_output
+    type: markdown
+    path: ano/runtime/apps/ano.skill.example/outbox/output.md
+
+audit:
+  required: true
+  required_by:
+    - ano.host

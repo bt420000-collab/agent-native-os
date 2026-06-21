@@ -1,0 +1,18 @@
+cross_app_bridge_request:
+  bridge_id: bridge_example_0001
+  task_id: TASK-001
+  from_app: ano.skill.source
+  to_app: ano.skill.receiver
+  requested_by: ano.skill.receiver
+  purpose: >
+    Explain why the receiving app needs access to the source app output packet.
+
+  read_scope:
+    - ano/runtime/apps/ano.skill.source/outbox/packet/
+
+  write_scope:
+    - ano/runtime/apps/ano.skill.receiver/inbox/packet/
+
+  expires_after_task: true
+  approval_required: true
+  approved_by: ano.host

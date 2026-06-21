@@ -1,11 +1,11 @@
 ﻿{
     "name":  "agent-native-os",
-    "version":  "0.1.0",
-    "updated_at":  "2026-06-19T05:13:38.7072974Z",
+    "version":  "0.2.8",
+    "updated_at":  "2026-06-21T12:02:47.8947791Z",
     "description":  "A context-native operating system architecture for long-running AI agents and installable Skill Apps.",
     "files":  [
                   {
-                      "bytes":  926,
+                      "bytes":  380,
                       "path":  ".gitattributes"
                   },
                   {
@@ -25,23 +25,35 @@
                       "path":  ".github/PULL_REQUEST_TEMPLATE.md"
                   },
                   {
-                      "bytes":  401,
+                      "bytes":  405,
                       "path":  ".gitignore"
                   },
                   {
-                      "bytes":  1216,
+                      "bytes":  1555,
                       "path":  "AI_SUMMARY_HINT.md"
+                  },
+                  {
+                      "bytes":  7084,
+                      "path":  "APP_DEVELOPER_GUIDE.md"
+                  },
+                  {
+                      "bytes":  19519,
+                      "path":  "app_packages/official/ano-calculator-skill-app_v0.1.2.zip"
+                  },
+                  {
+                      "bytes":  117431,
+                      "path":  "app_packages/official/ano-tiandao-furnace-skill-app_v0.4.0.zip"
                   },
                   {
                       "bytes":  186,
                       "path":  "AUTHORS.md"
                   },
                   {
-                      "bytes":  8927,
+                      "bytes":  1467,
                       "path":  "BILINGUAL_POLICY.md"
                   },
                   {
-                      "bytes":  192,
+                      "bytes":  7302,
                       "path":  "CHANGELOG.md"
                   },
                   {
@@ -53,27 +65,15 @@
                       "path":  "CODEX_COMPLETION_REPORT_TEMPLATE.md"
                   },
                   {
-                      "bytes":  1403,
-                      "path":  "CODEX_COPY_INSTRUCTIONS.md"
-                  },
-                  {
-                      "bytes":  2212,
+                      "bytes":  1450,
                       "path":  "CODEX_HANDOFF.md"
-                  },
-                  {
-                      "bytes":  1639,
-                      "path":  "CODEX_HOMEPAGE_UPDATE_INSTRUCTIONS.md"
-                  },
-                  {
-                      "bytes":  1229,
-                      "path":  "CODEX_IDENTITY_FIX_INSTRUCTIONS.md"
                   },
                   {
                       "bytes":  784,
                       "path":  "CONTRIBUTING.md"
                   },
                   {
-                      "bytes":  24291,
+                      "bytes":  25549,
                       "path":  "CORE_THEORY_AND_GLOSSARY.md"
                   },
                   {
@@ -89,7 +89,7 @@
                       "path":  "docs/03_context_kernel.md"
                   },
                   {
-                      "bytes":  998,
+                      "bytes":  1750,
                       "path":  "docs/04_skill_app_runtime.md"
                   },
                   {
@@ -101,7 +101,7 @@
                       "path":  "docs/06_failure_modes.md"
                   },
                   {
-                      "bytes":  807,
+                      "bytes":  881,
                       "path":  "docs/07_open_core_private_editions.md"
                   },
                   {
@@ -113,8 +113,40 @@
                       "path":  "docs/09_security_and_governance.md"
                   },
                   {
-                      "bytes":  1119,
+                      "bytes":  1103,
                       "path":  "docs/10_implementation_notes.md"
+                  },
+                  {
+                      "bytes":  1023,
+                      "path":  "docs/11_single_host_runtime.md"
+                  },
+                  {
+                      "bytes":  853,
+                      "path":  "docs/12_context_permission_runtime.md"
+                  },
+                  {
+                      "bytes":  1078,
+                      "path":  "docs/13_user_defined_agent_topology.md"
+                  },
+                  {
+                      "bytes":  799,
+                      "path":  "docs/14_cross_app_bridge.md"
+                  },
+                  {
+                      "bytes":  1948,
+                      "path":  "docs/15_workspace_filesystem_standard.md"
+                  },
+                  {
+                      "bytes":  1401,
+                      "path":  "docs/16_app_package_inbox.md"
+                  },
+                  {
+                      "bytes":  1358,
+                      "path":  "docs/17_current_root_installation.md"
+                  },
+                  {
+                      "bytes":  1751,
+                      "path":  "docs/18_os_host_command_gate.md"
                   },
                   {
                       "bytes":  1759606,
@@ -149,104 +181,8 @@
                       "path":  "docs/assets/homepage/poster-token-effective-work.png"
                   },
                   {
-                      "bytes":  1008,
-                      "path":  "examples/docs-brief-demo/.agent-os/contracts/CONTRACT-TASK-001.yaml"
-                  },
-                  {
-                      "bytes":  0,
-                      "path":  "examples/docs-brief-demo/.agent-os/handoffs/.gitkeep"
-                  },
-                  {
-                      "bytes":  1172,
-                      "path":  "examples/docs-brief-demo/.agent-os/mounts/MOUNT-001.yaml"
-                  },
-                  {
-                      "bytes":  0,
-                      "path":  "examples/docs-brief-demo/.agent-os/outputs/TASK-001/.gitkeep"
-                  },
-                  {
-                      "bytes":  0,
-                      "path":  "examples/docs-brief-demo/.agent-os/reviews/.gitkeep"
-                  },
-                  {
-                      "bytes":  487,
-                      "path":  "examples/docs-brief-demo/.agent-os/sources/current_requirements.md"
-                  },
-                  {
-                      "bytes":  801,
-                      "path":  "examples/docs-brief-demo/.agent-os/sources/project_notes.md"
-                  },
-                  {
-                      "bytes":  1448,
-                      "path":  "examples/docs-brief-demo/.agent-os/tasks/TASK-001.md"
-                  },
-                  {
-                      "bytes":  3180,
-                      "path":  "examples/docs-brief-demo/EXPECTED_OUTPUT_SAMPLE.md"
-                  },
-                  {
-                      "bytes":  1904,
-                      "path":  "examples/docs-brief-demo/PROMPT_FOR_AGENT.md"
-                  },
-                  {
-                      "bytes":  1920,
-                      "path":  "examples/docs-brief-demo/README.md"
-                  },
-                  {
-                      "bytes":  1915,
-                      "path":  "examples/docs-brief-demo/README.zh-CN.md"
-                  },
-                  {
-                      "bytes":  686,
-                      "path":  "examples/docs-brief-demo/skills/documentation-brief/instructions.md"
-                  },
-                  {
-                      "bytes":  1189,
-                      "path":  "examples/docs-brief-demo/skills/documentation-brief/manifest.yaml"
-                  },
-                  {
-                      "bytes":  508,
-                      "path":  "examples/docs-brief-demo/skills/documentation-brief/output_contract.md"
-                  },
-                  {
-                      "bytes":  610,
-                      "path":  "examples/docs-brief-demo/skills/documentation-brief/permissions.yaml"
-                  },
-                  {
-                      "bytes":  116,
-                      "path":  "examples/docs-workspace/.agent-os/registry/installed_skills.yaml"
-                  },
-                  {
-                      "bytes":  178,
-                      "path":  "examples/docs-workspace/.agent-os/sources/current_requirements.md"
-                  },
-                  {
-                      "bytes":  729,
-                      "path":  "examples/docs-workspace/.agent-os/tasks/TASK-001.md"
-                  },
-                  {
-                      "bytes":  210,
-                      "path":  "examples/docs-workspace/README.md"
-                  },
-                  {
-                      "bytes":  280,
-                      "path":  "examples/docs-workspace/skills/research-summary/instructions.md"
-                  },
-                  {
-                      "bytes":  841,
-                      "path":  "examples/docs-workspace/skills/research-summary/manifest.yaml"
-                  },
-                  {
-                      "bytes":  110,
-                      "path":  "examples/research-workspace/.agent-os/registry/installed_skills.yaml"
-                  },
-                  {
-                      "bytes":  107,
-                      "path":  "examples/research-workspace/README.md"
-                  },
-                  {
-                      "bytes":  632,
-                      "path":  "examples/research-workspace/skills/source-digest/manifest.yaml"
+                      "bytes":  1844,
+                      "path":  "ECOSYSTEM.md"
                   },
                   {
                       "bytes":  1158,
@@ -265,7 +201,11 @@
                       "path":  "NAMING_STRATEGY.md"
                   },
                   {
-                      "bytes":  14046,
+                      "bytes":  2628,
+                      "path":  "OFFICIAL_APPS.md"
+                  },
+                  {
+                      "bytes":  13749,
                       "path":  "PACKAGE_MANIFEST.json"
                   },
                   {
@@ -273,35 +213,39 @@
                       "path":  "private-editions.md"
                   },
                   {
-                      "bytes":  5795,
+                      "bytes":  6829,
                       "path":  "README.md"
                   },
                   {
-                      "bytes":  5766,
+                      "bytes":  5963,
                       "path":  "README.zh-CN.md"
                   },
                   {
-                      "bytes":  1347,
-                      "path":  "README_IDENTITY_PATCH.md"
-                  },
-                  {
-                      "bytes":  2793,
+                      "bytes":  2340,
                       "path":  "REPO_IDENTITY.md"
                   },
                   {
-                      "bytes":  2340,
+                      "bytes":  2381,
                       "path":  "ROADMAP.md"
                   },
                   {
-                      "bytes":  1843,
+                      "bytes":  10791,
+                      "path":  "scripts/ano_host.py"
+                  },
+                  {
+                      "bytes":  18915,
                       "path":  "scripts/init_workspace.py"
                   },
                   {
-                      "bytes":  2706,
-                      "path":  "scripts/run_docs_brief_demo.py"
+                      "bytes":  8965,
+                      "path":  "scripts/install_app_package.py"
                   },
                   {
-                      "bytes":  2796,
+                      "bytes":  3786,
+                      "path":  "scripts/list_app_packages.py"
+                  },
+                  {
+                      "bytes":  5567,
                       "path":  "scripts/validate_workspace.py"
                   },
                   {
@@ -309,23 +253,39 @@
                       "path":  "SECURITY.md"
                   },
                   {
-                      "bytes":  3880,
+                      "bytes":  6101,
                       "path":  "SPEC.md"
                   },
                   {
-                      "bytes":  631,
+                      "bytes":  687,
+                      "path":  "spec/app-package-inbox.schema.md"
+                  },
+                  {
+                      "bytes":  617,
                       "path":  "spec/audit-gate.schema.md"
+                  },
+                  {
+                      "bytes":  782,
+                      "path":  "spec/context-permission-request.schema.md"
+                  },
+                  {
+                      "bytes":  524,
+                      "path":  "spec/cross-app-bridge.schema.md"
                   },
                   {
                       "bytes":  542,
                       "path":  "spec/handoff-report.schema.md"
                   },
                   {
-                      "bytes":  883,
+                      "bytes":  603,
+                      "path":  "spec/os-host-command-gate.schema.md"
+                  },
+                  {
+                      "bytes":  852,
                       "path":  "spec/output-contract.schema.md"
                   },
                   {
-                      "bytes":  547,
+                      "bytes":  533,
                       "path":  "spec/recovery-point.schema.md"
                   },
                   {
@@ -333,20 +293,44 @@
                       "path":  "spec/role-runtime.schema.md"
                   },
                   {
-                      "bytes":  1178,
+                      "bytes":  567,
+                      "path":  "spec/runtime-plan.schema.md"
+                  },
+                  {
+                      "bytes":  1302,
                       "path":  "spec/skill-manifest.schema.md"
                   },
                   {
-                      "bytes":  975,
+                      "bytes":  950,
                       "path":  "spec/source-mount.schema.md"
                   },
                   {
-                      "bytes":  827,
+                      "bytes":  807,
                       "path":  "spec/task-card.schema.md"
+                  },
+                  {
+                      "bytes":  896,
+                      "path":  "spec/workspace-filesystem.schema.md"
+                  },
+                  {
+                      "bytes":  892,
+                      "path":  "templates/AGENT_RUNTIME_APPROVAL_CARD.md"
+                  },
+                  {
+                      "bytes":  2231,
+                      "path":  "templates/APP_MANIFEST.yaml"
                   },
                   {
                       "bytes":  374,
                       "path":  "templates/AUDIT_REPORT.md"
+                  },
+                  {
+                      "bytes":  983,
+                      "path":  "templates/CONTEXT_PERMISSION_REQUEST.yaml"
+                  },
+                  {
+                      "bytes":  485,
+                      "path":  "templates/CROSS_APP_BRIDGE_REQUEST.yaml"
                   },
                   {
                       "bytes":  201,
@@ -365,7 +349,7 @@
                       "path":  "templates/ROLE_CARD.md"
                   },
                   {
-                      "bytes":  823,
+                      "bytes":  851,
                       "path":  "templates/SKILL_MANIFEST.yaml"
                   },
                   {
@@ -381,8 +365,16 @@
                       "path":  "templates/TASK_CARD.md"
                   },
                   {
+                      "bytes":  760,
+                      "path":  "templates/USER_AGENT_CUSTOMIZATION.yaml"
+                  },
+                  {
                       "bytes":  6,
                       "path":  "VERSION"
+                  },
+                  {
+                      "bytes":  1972,
+                      "path":  "VERSIONING.md"
                   }
               ]
 }

@@ -23,10 +23,10 @@ task_id: TASK-001
 outputs:
   - name: research_brief
     type: markdown
-    path: .agent-os/outputs/TASK-001/research_brief.md
+    path: out/TASK-001/research_brief.md
   - name: handoff_report
     type: markdown
-    path: .agent-os/handoffs/HANDOFF-TASK-001.md
+    path: out/handoffs/HANDOFF-TASK-001.md
 
 required_sections:
   - Summary
@@ -36,8 +36,8 @@ required_sections:
   - Next Steps
 
 forbidden_changes:
-  - .agent-os/sources/
-  - .agent-os/registry/
+  - user/imports/
+  - ano/registry/
 
 validation:
   method: checklist

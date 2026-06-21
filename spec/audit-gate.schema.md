@@ -22,7 +22,7 @@ audit_id: AUDIT-001
 task_id: TASK-001
 
 target_outputs:
-  - .agent-os/outputs/TASK-001/research_brief.md
+  - out/TASK-001/research_brief.md
 
 auditor_role: host
 status: pending

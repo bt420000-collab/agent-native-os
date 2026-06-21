@@ -17,7 +17,7 @@ A reference implementation can begin with:
 
 ```bash
 agent-os init
-agent-os skill install ./skills/research-summary
+ano app install ./apps/research-summary
 agent-os skill list
 agent-os task create
 agent-os mount check TASK-001
@@ -36,15 +36,17 @@ Python is suitable for a reference implementation because it is simple, portable
 Start with files:
 
 ```txt
-.agent-os/
+ano/
+  kernel/
   registry/
-  sources/
-  tasks/
-  outputs/
-  handoffs/
-  reviews/
-  archive/
-  recovery/
+  runtime/
+user/
+  projects/
+  imports/
+  memory/
+apps/
+res/
+out/
 ```
 
 A database can be added later.

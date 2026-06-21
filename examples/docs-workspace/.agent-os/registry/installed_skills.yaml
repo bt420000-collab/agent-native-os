@@ -1,5 +1,0 @@
-installed_skills:
-  - name: research-summary
-    version: 0.1.0
-    path: skills/research-summary
-    enabled: true

@@ -29,11 +29,11 @@ build/
 *.p12
 *.pfx
 
-# Agent OS runtime artifacts
-.agent-os/runtime/
-.agent-os/tmp/
-.agent-os/cache/
-.agent-os/secrets/
+# Agent Native OS runtime artifacts
+ano/runtime/tmp/
+ano/runtime/cache/
+ano/runtime/secrets/
+ano/logs/
 *.local.yaml
 *.local.json
 

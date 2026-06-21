@@ -1,13 +1,13 @@
-# Agent-Native OS Specification v0.1
+# Agent-Native OS Specification v0.2
 
 Status: Draft  
-Codename: Context Kernel
+Codename: Single Host Runtime
 
 ## 0. Normative foundation
 
-This specification is grounded in `CORE_THEORY_AND_GLOSSARY.md`, which is the vocabulary authority for the public project.
+Agent-Native OS is a context-native operating system architecture for long-running AI agents and installable Skill Apps.
 
-Agent-Native OS is built on five principles:
+The public core is grounded in five principles:
 
 1. Context is the first-class resource.
 2. Contracted natural language is source code.
@@ -15,196 +15,230 @@ Agent-Native OS is built on five principles:
 4. Structured output is the Context ABI.
 5. Skill Apps are installable applications.
 
-The specification must preserve the distinction between:
+## 1. Single Host principle
 
-- loose natural-language intent and contracted natural language
-- ordinary files and authority-bearing sources
-- human-facing output and structured continuation state
-- prompt templates and installable, permissioned Skill Apps
-- workflow automation and governable agent-native work
+Agent-Native OS has exactly one Host.
 
-## 1. System layers
+```txt
+Host = the persistent OS-level controller owned by the mother system.
+```
+
+Skill Apps must not claim Host authority. They may define coordinators or workflow controllers, but only the OS Host owns lifecycle control over app runs, subagents, runtime permissions, context allocations, process state, and cross-app bridges.
+
+## 2. System layers
 
 ```txt
 Agent-Native OS
 │
+├─ OS Host
 ├─ Context Kernel
+├─ Context Permission Manager
 ├─ Skill App Runtime
-├─ Source File System
-├─ Role & Permission System
-├─ Task Scheduler
+├─ Subagent Scheduler
+├─ Workspace Permission Sandbox
+├─ Cross-App Bridge Manager
+├─ Process Table
+├─ Event Bus
 ├─ Output Contract Engine
 ├─ Audit Gate
-├─ Handoff Bus
 ├─ Memory & Archive Layer
 └─ Recovery System
 ```
 
-## 2. Context Kernel
-
-The Context Kernel decides what an agent can know, do, change, and hand off during a task.
-
-Responsibilities:
-
-- load task context
-- mount source bundles
-- apply source priority
-- enforce role permissions
-- check output contracts
-- write handoff reports
-- trigger audit gates
-- create recovery points
-- archive stale materials
-
-## 3. Skill App Runtime
-
-The Skill App Runtime installs, loads, executes, composes, audits, and disables Skill Apps.
-
-A Skill App is a standard package containing:
+## 3. Runtime hierarchy
 
 ```txt
-skill-app/
+User
+  ↓
+ANO Host
+  ↓
+Skill App / App Coordinator
+  ↓
+Subagents
+```
+
+The user is the highest instruction source. The OS Host is the persistent controller. Apps are mounted capability packages. Subagents are temporary or semi-persistent workers created only through OS authorization.
+
+## 4. Context Permission Request
+
+Before an app runs, it must submit a Context Permission Request.
+
+The request declares:
+
+- app id
+- task id
+- requested mode
+- requested agent roster
+- context budget
+- workspace read/write scope
+- denied paths
+- cross-app bridge needs
+- output contracts
+- lifecycle expectations
+- persistent user context writes
+
+The OS Host may approve, deny, reduce, defer, pause, or kill the resulting Runtime Plan.
+
+## 5. Skill App Runtime
+
+A Skill App is an installable capability package.
+
+Recommended package layout:
+
+```txt
+ano-<domain>-skill-app/
   manifest.yaml
-  instructions.md
-  input_contract.md
-  output_contract.md
-  permissions.yaml
-  source_policy.md
-  examples/
+  INSTALL_CARD.md
+  README.md
+  CHANGELOG.md
+  LICENSE
+  app_actions/
+  roles/
+  protocols/
+  templates/
   tests/
-  changelog.md
 ```
 
-## 4. Source File System
-
-Sources are not ordinary files. They have authority.
-
-Recommended source levels:
+Recommended naming:
 
 ```txt
-source_law/
-  level_0_constitution/
-  level_1_confirmed_requirements/
-  level_2_current_design/
-  level_3_current_outputs/
-  level_4_review_feedback/
-  level_5_old_versions/
-  level_6_brainstorm/
-  level_7_deprecated/
+package_name: ano-<domain>-skill-app
+app_id: ano.skill.<domain>
 ```
 
-The OS must prevent deprecated or unconfirmed materials from silently entering hot context.
+A Skill App may define an app coordinator, but the coordinator is not the OS Host.
 
-## 5. Role Runtime
+## 6. Subagent lifecycle
 
-Roles are runtime permissions, not cosmetic names.
-
-Recommended roles:
-
-- Host
-- Planner
-- Researcher
-- Writer
-- Auditor
-- Archivist
-- Operator
-- Integrator
-
-Each role should declare:
-
-- read permissions
-- write permissions
-- mutation restrictions
-- audit authority
-- allowed Skill Apps
-
-## 6. Task Card
-
-Every unit of work should start from a Task Card.
-
-A Task Card specifies:
-
-- goal
-- role
-- mounted sources
-- constraints
-- output contract
-- audit requirement
-- recovery requirement
-- handoff requirement
-
-## 7. Output Contract
-
-Agent output must be contract-bound.
-
-An Output Contract defines:
-
-- output type
-- path
-- required sections
-- forbidden changes
-- validation method
-- completion checklist
-
-## 8. Handoff Protocol
-
-Every completed task should produce a Handoff Report.
-
-A Handoff Report should include:
-
-- task id
-- role
-- skill app
-- sources used
-- outputs created
-- decisions made
-- uncertainties
-- risks
-- next steps
-- audit status
-
-## 9. Audit Gate
-
-Important work does not enter the mainline until it passes an audit gate.
-
-Audit gates can be:
-
-- manual
-- agent-assisted
-- automated checklist
-- hybrid
-
-## 10. Recovery Point
-
-Any task that modifies core sources or mainline outputs should create a recovery point.
-
-A recovery point records:
-
-- timestamp
-- task id
-- actor role
-- changed files
-- reason
-- rollback hint
-- incident link if applicable
-
-## 11. Minimum viable kernel
+Recommended states:
 
 ```txt
-Agent OS MVP
-= Skill Manifest
-+ Source Mount
-+ Task Card
+CREATED
+READY
+RUNNING
+WAITING
+PAUSED
+COMPLETED
+FAILED
+KILLED
+ARCHIVED
+```
+
+Only the OS Host may transition a subagent into `RUNNING`, `PAUSED`, `KILLED`, or `ARCHIVED`.
+
+## 7. User-defined Agent Topology
+
+Before execution, the OS should display an Agent Runtime Approval Card. The user may modify the proposed agent roster in natural language.
+
+Approved modifications are persisted as user-defined context.
+
+Example:
+
+```txt
+Add a troll simulator agent because this novel may explode in the comments.
+```
+
+The OS should write the approved customization into the relevant user context profile and merge it into future Runtime Plans.
+
+## 8. Cross-App Bridge
+
+Apps must not directly read another app's private workspace.
+
+When app cooperation is required, the OS Host creates a scoped Cross-App Bridge.
+
+```txt
+from_app/outbox/<packet>/
+  ↓ approved bridge
+to_app/inbox/<packet>/
+```
+
+Bridge access is task-scoped, path-scoped, and revocable.
+
+## 9. Workspace structure
+
+Agent-Native OS v0.2.2 defines a clean installed workspace root:
+
+```txt
+README.md
+USER_LOG.md
+ano/
+user/
+apps/
+res/
+out/
+```
+
+Directory roles:
+
+```txt
+ano/   system internals: Host policy, kernel docs, runtime, registry, scheduler state, events, locks, bridges
+user/  user data: profiles, preferences, memory, projects, imports, app-specific customization
+apps/  installed Skill App packages
+res/   shared resources
+out/   final user-facing outputs and exports
+```
+
+App install mapping:
+
+```txt
+apps/<package_name>/              # app package code
+ano/runtime/apps/<app_id>/        # system-managed app runtime home
+user/apps/<app_id>/               # user-defined app customization
+ano/registry/apps/<app_id>.json   # registry record
+out/<domain-or-app>/              # final outputs
+```
+
+Installed workspaces must not use the legacy v0.2.1 roots:
+
+```txt
+.agent-os/  # legacy forbidden
+skills/     # legacy forbidden
+```
+
+Unknown root entries should be moved to `user/imports/_unsorted/` during installation or cleanup.
+
+## 10. Ecosystem model
+
+The Agent-Native OS core should remain open-source and free. Skill Apps may be free, open-source, paid, freemium, subscription-based, enterprise-licensed, or privately deployed.
+
+Every app must declare its commercial model before installation.
+
+## 11. Minimum viable v0.2 kernel
+
+```txt
+Agent OS v0.2 MVP
+= Single Host
++ Skill App Manifest
++ Context Permission Request
++ Runtime Approval Card
++ Process Table
++ Workspace Permission Sandbox
 + Output Contract
 + Handoff Report
++ Event Bus
 ```
 
 Recommended extensions:
 
 ```txt
++ Cross-App Bridge
++ User-defined Agent Topology
++ App Registry
++ Permission Lock
++ Context Allocation Log
 + Audit Gate
 + Recovery Point
-+ Role Runtime
-+ Skill Registry
-+ Source Policy
 ```
+
+## App Package Inbox
+
+The mother system may bundle optional Skill App ZIP packages, but must not auto-install them. A freshly initialized workspace stages pending packages under `apps/_inbox/official/` or `apps/_inbox/community/`. The user installs each app explicitly after reviewing its install card.
+
+
+## Current-root installation
+
+ANO v0.2.8 installs into the current authorized workspace root only. The OS installer must not create a child workspace directory. OS initialization is a hard stop point: bundled app packages may be staged, but no Skill App may be auto-installed.
+
+## OS Host Command Gate
+
+In v0.2.8+, all post-install user instructions are mediated by `ano.host`. Apps cannot be directly launched by user-facing agents. A compliant App must support a permission-preview/open stage and must not run its main workflow until the Host-mediated approval is complete.

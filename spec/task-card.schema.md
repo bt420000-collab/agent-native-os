@@ -36,8 +36,8 @@ constraints:
   - Use only mounted sources.
 
 outputs:
-  - path: .agent-os/outputs/TASK-001/research_brief.md
-  - path: .agent-os/handoffs/HANDOFF-TASK-001.md
+  - path: out/TASK-001/research_brief.md
+  - path: out/handoffs/HANDOFF-TASK-001.md
 
 audit_required: true
 handoff_required: true

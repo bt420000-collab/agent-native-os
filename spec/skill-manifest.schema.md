@@ -1,72 +1,69 @@
-# Skill Manifest Schema
+# Skill App Manifest Schema v0.2
 
-A Skill Manifest declares an installable Skill App.
+A Skill App Manifest declares an installable app for Agent-Native OS.
 
 ## Required fields
 
 ```yaml
-name: string
+app_id: string
+package_name: string
+display_name: string
 version: semver
-type: skill-app
-description: string
-runtime:
-  agent_role: string
-  requires_audit: boolean
-inputs: list
+type: skill_app
+standard: agent-native-os
+standard_version: semver
+runtime: ano
+install: object
+commercial: object
+compatibility: object
+agent_policy: object
+context_permission_request: object
+lifecycle: object
 outputs: list
-permissions: object
-policies: object
 audit: object
 ```
 
-## Example
+## Important rule
+
+The manifest must not declare the app as the Host.
+
+Allowed:
 
 ```yaml
-name: research-summary
-version: 0.1.0
-type: skill-app
-
-description: >
-  Summarize mounted source materials into a structured research brief.
-
-runtime:
-  agent_role: researcher
-  requires_audit: true
-
-inputs:
-  - name: source_bundle
-    type: mounted_sources
-    required: true
-  - name: task_card
-    type: task_contract
-    required: true
-
-outputs:
-  - name: research_brief
-    type: markdown
-    path: outputs/research_brief.md
-  - name: handoff_report
-    type: markdown
-    path: handoffs/research_handoff.md
-
-permissions:
-  read:
-    - mounted_sources
-    - task_card
-  write:
-    - outputs/
-    - handoffs/
-  forbidden:
-    - source_law/
-    - system_kernel/
-    - archive/cold/
-
-policies:
-  source_priority: strict
-  hallucination_policy: cite_or_mark_unknown
-  mutation_policy: no_core_source_mutation
-
-audit:
-  required_by:
-    - host
+agent_policy:
+  app_controller:
+    role_id: novel.coordinator
+    is_host: false
 ```
+
+Forbidden:
+
+```yaml
+agent_policy:
+  app_controller:
+    role_id: novel.host
+    is_host: true
+```
+
+## Naming
+
+Recommended:
+
+```yaml
+package_name: ano-<domain>-skill-app
+app_id: ano.skill.<domain>
+```
+
+## Commercial declaration
+
+Apps may choose their own model, but must declare it.
+
+```yaml
+commercial:
+  pricing_model: free | open_source | paid | freemium | subscription | one_time_purchase | enterprise_license | private_deployment
+  payment_required: boolean
+```
+
+## Context request
+
+Every app must declare a default context permission request. Runtime requests may be smaller than the default but must not exceed the app's declared maximum without user and Host approval.

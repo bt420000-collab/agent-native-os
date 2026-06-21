@@ -1,33 +1,78 @@
 #!/usr/bin/env python3
-"""Validate a minimal Agent-Native OS workspace skeleton.
+"""Validate an Agent-Native OS v0.2.8 clean workspace skeleton.
 
 Usage:
-    python scripts/validate_workspace.py [workspace-path]
-
-The validator uses only the Python standard library.
+    python ano/scripts/validate_workspace.py
+    python scripts/validate_workspace.py
 """
 
 from __future__ import annotations
 
 from pathlib import Path
+import json
 import sys
 
+VERSION = "0.2.8"
+ROOT_ALLOWED = {"README.md", "USER_LOG.md", "ano", "user", "apps", "res", "out"}
+LEGACY_ROOTS = {".agent-os", "skills"}
+FORBIDDEN_ROOT_DIRS = {"ano-workspace", "my-workspace"}
 
-REQUIRED_AGENT_OS_DIRS = [
-    "sources",
-    "tasks",
-    "outputs",
-    "handoffs",
-    "reviews",
+REQUIRED_DIRS = [
+    "ano/kernel",
+    "ano/registry/apps",
+    "ano/registry/mounts",
+    "ano/runtime/apps",
+    "ano/runtime/sessions",
+    "ano/runtime/locks",
+    "ano/runtime/bridges",
+    "ano/scripts",
+    "ano/logs",
+    "user/profile",
+    "user/preferences",
+    "user/memory",
+    "user/apps",
+    "user/projects",
+    "user/imports/_unsorted",
+    "apps/_inbox/official",
+    "apps/_inbox/community",
+    "apps/_inbox/installed",
+    "res",
+    "out",
 ]
 
-OPTIONAL_AGENT_OS_DIRS = [
-    "mounts",
-    "contracts",
-    "archive",
-    "recovery",
-    "registry",
+REQUIRED_FILES = [
+    "README.md",
+    "USER_LOG.md",
+    "ano/VERSION",
+    "ano/kernel/HOST.md",
+    "ano/kernel/FILESYSTEM_STANDARD.md",
+    "ano/kernel/APP_PACKAGE_INBOX.md",
+    "ano/kernel/CONTEXT_PERMISSION_MODEL.md",
+    "ano/kernel/SCHEDULER.md",
+    "ano/registry/installed_apps.json",
+    "ano/runtime/process_table.json",
+    "ano/runtime/context_allocations.json",
+    "ano/runtime/events.jsonl",
+    "ano/scripts/list_app_packages.py",
+    "ano/scripts/install_app_package.py",
+    "ano/scripts/validate_workspace.py",
+    "user/profile/global_profile.yaml",
 ]
+
+JSON_FILES = [
+    "ano/registry/installed_apps.json",
+    "ano/runtime/process_table.json",
+    "ano/runtime/context_allocations.json",
+]
+
+RESERVED_APP_DIRS = {"_inbox"}
+
+
+def validate_json(path: Path, errors: list[str]) -> None:
+    try:
+        json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:  # noqa: BLE001
+        errors.append(f"Invalid JSON: {path} ({exc})")
 
 
 def validate_workspace(workspace: Path) -> tuple[bool, list[str], list[str]]:
@@ -38,37 +83,63 @@ def validate_workspace(workspace: Path) -> tuple[bool, list[str], list[str]]:
         errors.append(f"Workspace does not exist: {workspace}")
         return False, errors, warnings
 
-    agent_os = workspace / ".agent-os"
-    if not agent_os.exists():
-        errors.append(f"Missing .agent-os directory: {agent_os}")
-        return False, errors, warnings
+    if workspace.name in FORBIDDEN_ROOT_DIRS:
+        errors.append(f"Forbidden workspace root name: {workspace.name}. Install ANO into the current authorized root, not a child workspace folder.")
 
-    for dirname in REQUIRED_AGENT_OS_DIRS:
-        path = agent_os / dirname
+    for legacy in LEGACY_ROOTS:
+        if (workspace / legacy).exists():
+            errors.append(f"Legacy root directory is forbidden in v0.2.2+ clean workspace: {legacy}")
+
+    root_entries = {p.name for p in workspace.iterdir()}
+    unknown = sorted(root_entries - ROOT_ALLOWED)
+    if unknown:
+        errors.append("Unexpected root entries found: " + ", ".join(unknown))
+
+    for forbidden in FORBIDDEN_ROOT_DIRS:
+        if (workspace / forbidden).exists():
+            errors.append(f"Nested workspace directory is forbidden: {forbidden}")
+
+    for dirname in REQUIRED_DIRS:
+        path = workspace / dirname
         if not path.exists() or not path.is_dir():
-            errors.append(f"Missing required directory: .agent-os/{dirname}")
+            errors.append(f"Missing required directory: {dirname}")
 
-    for dirname in OPTIONAL_AGENT_OS_DIRS:
-        path = agent_os / dirname
-        if not path.exists():
-            warnings.append(f"Optional directory not found: .agent-os/{dirname}")
+    for filename in REQUIRED_FILES:
+        path = workspace / filename
+        if not path.exists() or not path.is_file():
+            errors.append(f"Missing required file: {filename}")
 
-    tasks_dir = agent_os / "tasks"
-    if tasks_dir.exists():
-        task_files = sorted(tasks_dir.glob("*.md"))
-        if not task_files:
-            errors.append("No task files found in .agent-os/tasks")
-        else:
-            for task_file in task_files:
-                text = task_file.read_text(encoding="utf-8", errors="replace")
-                if "Task ID" not in text and "task_id" not in text:
-                    warnings.append(f"Task file may be missing Task ID: {task_file}")
+    for filename in JSON_FILES:
+        path = workspace / filename
+        if path.exists():
+            validate_json(path, errors)
 
-    sources_dir = agent_os / "sources"
-    if sources_dir.exists():
-        source_files = [p for p in sources_dir.rglob("*") if p.is_file()]
-        if not source_files:
-            warnings.append("No source files found in .agent-os/sources")
+    process_table = workspace / "ano/runtime/process_table.json"
+    if process_table.exists():
+        try:
+            table = json.loads(process_table.read_text(encoding="utf-8"))
+            host = table.get("host", {})
+            if host.get("id") != "ano.host":
+                warnings.append("process_table.json host.id should be ano.host")
+            if not host.get("persistent"):
+                warnings.append("process_table.json host.persistent should be true")
+        except Exception:
+            pass
+
+    pending = list((workspace / "apps/_inbox/official").glob("*.zip")) + list((workspace / "apps/_inbox/community").glob("*.zip"))
+    if pending:
+        warnings.append(f"Pending Skill App packages detected: {len(pending)}. They are not installed until user approval.")
+
+    installed_dirs = []
+    apps_root = workspace / "apps"
+    if apps_root.exists():
+        installed_dirs = [p for p in apps_root.iterdir() if p.is_dir() and p.name not in RESERVED_APP_DIRS]
+
+    registry_records = list((workspace / "ano/registry/apps").glob("*.json")) if (workspace / "ano/registry/apps").exists() else []
+    if not registry_records:
+        warnings.append("No installed app registry records found yet. This is normal before optional app installation.")
+    if not installed_dirs:
+        warnings.append("No Skill Apps installed yet. This is normal before optional app installation.")
 
     return not errors, errors, warnings
 
@@ -79,8 +150,8 @@ def main(argv: list[str]) -> int:
 
     ok, errors, warnings = validate_workspace(workspace)
 
-    print("Agent-Native OS Workspace Validator")
-    print("=" * 42)
+    print("Agent-Native OS v0.2.8 Workspace Validator")
+    print("=" * 48)
     print(f"Workspace: {workspace}")
 
     if errors:

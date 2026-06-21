@@ -1,38 +1,45 @@
-# Open Core and Private Editions
+# Open Core and App Ecosystem
 
-Agent-Native OS should remain a domain-neutral open architecture.
+Agent-Native OS Core should remain open-source, free, and continuously updated.
 
-## Open core
+The core defines:
 
-The open core includes:
+- the Single Host principle
+- Context Kernel
+- Context Permission Request
+- Skill App Runtime
+- Subagent Scheduler
+- Workspace Permission Sandbox
+- Cross-App Bridge
+- Process Table
+- Event Bus
+- Output Contract
+- Handoff and Audit standards
 
-- Context Kernel concepts
-- Skill App Runtime specification
-- Source Mount protocol
-- Task Card protocol
-- Output Contract protocol
-- Handoff Report protocol
-- Audit Gate protocol
-- Recovery Point protocol
-- generic examples
-- validation tools
+Skill Apps are the ecosystem layer.
 
-## Private editions
+## App commercial freedom
 
-Private editions may include:
+Skill Apps may choose their own model:
 
-- domain craft
-- proprietary workflows
-- business scoring systems
-- expert heuristics
-- specialized Skill Apps
-- private templates
-- internal benchmarks
+```txt
+free
+open_source
+paid
+freemium
+subscription
+one_time_purchase
+enterprise_license
+private_deployment
+```
 
-## Boundary rule
+The OS does not set app prices. It requires apps to disclose pricing and permissions before installation and execution.
 
-Open the stove design.
+## Trust boundary
 
-Do not accidentally open the secret soup base.
+The public OS core provides order and interoperability. Apps provide domain capability.
 
-The open repository should teach developers how to build governed agent workspaces, not reveal any specific private workflow.
+```txt
+The system provides order.
+Apps provide capability.
+```

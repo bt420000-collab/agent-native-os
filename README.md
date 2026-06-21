@@ -4,148 +4,137 @@ Languages: [English](README.md) | [简体中文](README.zh-CN.md)
 
 A context-native operating system architecture for long-running AI agents and installable Skill Apps.
 
-![Spec](https://img.shields.io/badge/spec-v0.2-blue)
+![Spec](https://img.shields.io/badge/spec-v0.2.8-blue)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green)
 ![Status](https://img.shields.io/badge/status-draft-orange)
 
 <p align="center">
-  <img src="docs/assets/homepage/poster-not-human-desktop.png" alt="Not letting AI take over human computers, but giving AI its own computer" width="88%" />
-</p>
-
-<p align="center">
-  <img src="docs/assets/homepage/poster-token-effective-work.png" alt="Spend tokens on effective work" width="43%" />
-  <img src="docs/assets/homepage/poster-robot-os-standard.png" alt="Build operating system standards for the next generation of intelligent robots" width="43%" />
+  <a href="./docs/assets/homepage/poster-not-human-desktop.png">
+    <img src="./docs/assets/homepage/poster-not-human-desktop.png" alt="Not letting AI take over human computers, but giving AI its own computer" width="88%" />
+  </a>
 </p>
 
 > **Not teaching AI to use human desktops.**  
 > **Giving AI a computer of its own.**
 
-Agent-Native OS is not an operating system for humans.
-It is a native operating layer for large-model agents: a governed workspace where agents can install Skill Apps, manage context, isolate tasks, enforce permissions, hand off state, and keep long-running work coherent.
+Agent-Native OS is not an operating system for humans. It is a native operating layer for AI agents: a governed workspace where agents can install Skill Apps, request context, isolate workspaces, start subagents through the OS Host, hand off state, and keep long-running work coherent.
 
-Informally, you can think of it as **the Windows layer for AI agents**.
+Informally, you can think of it as **the operating system layer for AI agents**.
 
-## Repository identity
+## v0.2 focus: Single Host Runtime
 
-Agent-Native OS is **spec-first** and **natural-language-first**.
-
-This repository is primarily a set of Markdown/YAML architecture specifications, workspace protocols, and demo contracts. Its core idea is not "Python code runs agents." Its core idea is:
-
-> Contracted natural language is source code.  
-> Context Kernel is the runtime.  
-> Structured output is the Context ABI.
-
-The small Python scripts in `scripts/` are reference helpers for demo checks and workspace validation. They are not the main implementation language of Agent-Native OS.
-
-## Why this project exists
-
-Most AI tooling today is focused on making agents better at using human computers: browsers, terminals, GUIs, APIs, and app workflows.
-
-Agent-Native OS asks a deeper systems question:
-
-> **What kind of operating system does an agent need for its own work?**
-
-This project exists because agent work has its own failure modes:
-
-- context overflow
-- source pollution
-- role bleeding
-- broken handoffs
-- unaudited outputs
-- long-run degradation
-- massive token waste across messy workflows
-
-Agent-Native OS is designed to reduce that waste and make every token more likely to contribute to effective work.
-
-## What it means
-
-In a human OS, the first-class citizen is the application.
-
-In an Agent OS, the first-class citizen is the context.
-
-Agent-Native OS is an open architecture for:
-
-- Context Kernel
-- Skill App Runtime
-- Source File System
-- Role & Permission System
-- Task Scheduler
-- Output Contract Engine
-- Audit Gate
-- Handoff Bus
-- Memory & Archive Layer
-- Recovery System
-
-## Five principles
-
-1. **Context is the first-class resource.**
-2. **Contracted natural language is source code.**
-3. **Context Kernel is the runtime.**
-4. **Structured output is the Context ABI.**
-5. **Skill Apps are installable applications.**
-
-## Why it matters beyond software
-
-Agent-Native OS is not only about documentation or coding agents.
-It points toward a broader infrastructure layer for the next generation of intelligent systems.
-
-Potential impact areas:
-
-- more efficient AI work pipelines
-- lower token waste through governed context use
-- more reliable multi-agent collaboration
-- clearer standards for permissions, audits, and recovery
-- foundational norms for future embodied or robotic operating systems
-
-## Visual overview
-
-### 1) From code-for-machines to context-for-agents
-
-<p align="center">
-  <img src="docs/assets/homepage/diagram-from-code-to-agents.png" alt="From code for machines to context for agents" width="82%" />
-</p>
-
-### 2) System architecture and operating loop
-
-<p align="center">
-  <img src="docs/assets/homepage/diagram-core-architecture.png" alt="Core architecture" width="46%" />
-  <img src="docs/assets/homepage/diagram-operating-loop.png" alt="Operating loop" width="46%" />
-</p>
-
-### 3) Agent-native system and workspace layout
-
-<p align="center">
-  <img src="docs/assets/homepage/diagram-agent-native-system.png" alt="Agent-native system" width="46%" />
-  <img src="docs/assets/homepage/diagram-workspace-layout.png" alt="Workspace layout" width="46%" />
-</p>
-
-## Try the demo
-
-Run:
-
-```bash
-python scripts/run_docs_brief_demo.py
-```
-
-Then open:
+Agent-Native OS v0.2 defines a cleaner ecosystem boundary:
 
 ```txt
-examples/docs-brief-demo/PROMPT_FOR_AGENT.md
+Agent-Native OS Core = the persistent Host, runtime, scheduler, permissions, and standards
+Skill App = an installable capability package mounted by the OS
+Subagent = a worker started, paused, killed, or archived by the OS Host
 ```
 
-Copy the prompt into your coding agent or LLM and let it produce governed outputs.
+The Host belongs to the mother system. Apps are not Hosts. Apps may define coordinators, but only the OS Host owns subagent lifecycle authority and global context scheduling.
 
-Validate the workspace:
-
-```bash
-python scripts/validate_workspace.py examples/docs-brief-demo
-```
-
-The demo shows the minimal operating loop:
+## Core doctrine
 
 ```txt
-Source -> Task -> Mount -> Output Contract -> Agent Prompt -> Handoff -> Audit
+Apps do not own context. Apps request context.
+The Host owns context, agents, workspace permissions, and scheduling.
 ```
+
+Before a Skill App runs, it must submit a **Context Permission Request**. The OS prints an **Agent Runtime Approval Card** showing the proposed agent roster, context budget, workspace permissions, cross-app bridges, and commercial status. The user can approve, reject, or modify the plan in natural language.
+
+Example user override:
+
+```txt
+This novel may explode in the comments. Add a troll simulator agent.
+```
+
+The OS can persist that approved change as user-defined context and inherit it in future runs.
+
+## What Agent-Native OS manages
+
+- Single persistent OS Host
+- Context Permission Requests
+- Skill App installation and mounting
+- Subagent scheduling and lifecycle
+- Workspace permission sandboxing
+- Process table and context allocations
+- Event bus and recovery records
+- Cross-App Bridges
+- Output contracts and handoff reports
+- User-defined Agent Topology
+
+## Ecosystem model
+
+Agent-Native OS Core should remain open-source, free, and continuously updated.
+
+Skill Apps may be developed by official maintainers, community developers, private teams, or commercial vendors. Apps may be free, open-source, paid, freemium, subscription-based, enterprise-licensed, or privately deployed.
+
+```txt
+The system provides order.
+Apps provide capability.
+```
+
+## Quick start
+
+### Current-root rule
+
+ANO v0.2.8 installs into the current authorized directory only. Do not create a child workspace directory. After OS initialization, stop and wait for the user before installing any Skill App.
+
+
+
+Initialize a blank v0.2 workspace:
+
+```bash
+python scripts/init_workspace.py
+```
+
+Validate it:
+
+```bash
+python ano/scripts/validate_workspace.py
+```
+
+After initialization, list optional app packages staged in the workspace:
+
+```bash
+python ano/scripts/list_app_packages.py
+```
+
+Install an optional official app only after reviewing its install card:
+
+```bash
+python ano/scripts/install_app_package.py apps/_inbox/official/ano-calculator-skill-app_v0.1.2.zip
+python ano/scripts/install_app_package.py apps/_inbox/official/ano-calculator-skill-app_v0.1.2.zip --yes
+```
+
+
+This repository does not auto-install demos. Official demo apps are staged as optional ZIP packages and must be installed by user approval after workspace initialization.
+
+
+## v0.2.8 installed workspace filesystem, app inbox, and host gate
+
+The development repository may contain docs, scripts, specs, templates, and official app ZIP packages. A user-installed ANO workspace must stay clean:
+
+```txt
+README.md
+USER_LOG.md
+ano/
+user/
+apps/
+res/
+out/
+```
+
+`ano/` is the system engine room, `user/` is user data, `apps/` contains installed Skill Apps and `apps/_inbox/` contains pending app packages, `res/` contains shared resources, and `out/` contains final exports. Legacy installed paths `.agent-os/` and `skills/` are forbidden after the clean workspace standard.
+
+## Developer entry points
+
+- [APP_DEVELOPER_GUIDE.md](APP_DEVELOPER_GUIDE.md) - standard Skill App development guide
+- [SPEC.md](SPEC.md) - core v0.2 specification
+- [VERSIONING.md](VERSIONING.md) - version definition and release rules
+- [ECOSYSTEM.md](ECOSYSTEM.md) - open core and app ecosystem model
+- [templates/APP_MANIFEST.yaml](templates/APP_MANIFEST.yaml) - app manifest template
+- [templates/CONTEXT_PERMISSION_REQUEST.yaml](templates/CONTEXT_PERMISSION_REQUEST.yaml) - runtime resource request template
 
 ## Repository map
 
@@ -153,26 +142,20 @@ Source -> Task -> Mount -> Output Contract -> Agent Prompt -> Handoff -> Audit
 agent-native-os/
   README.md
   README.zh-CN.md
-  MANIFESTO.md
   SPEC.md
   ROADMAP.md
+  CHANGELOG.md
+  VERSIONING.md
+  ECOSYSTEM.md
+  APP_DEVELOPER_GUIDE.md
   CORE_THEORY_AND_GLOSSARY.md
-  NAMING_STRATEGY.md
-  BILINGUAL_POLICY.md
   docs/
   spec/
   templates/
-  examples/
   scripts/
+  app_packages/
+    official/
 ```
-
-## Public core, private editions
-
-This repository defines the open architecture.
-
-Domain-specific private editions can be built on top of it. Private editions may contain domain craft, business logic, specialized scoring systems, or proprietary workflows, and are intentionally not included.
-
-**Open the architecture. Keep private editions private.**
 
 ## Suggested GitHub description
 
@@ -198,3 +181,29 @@ ai-native
 ## License
 
 Apache-2.0. See `LICENSE`.
+
+## Official App Packages
+
+The OS release may bundle optional official demo app ZIP packages under `app_packages/official/`. During workspace initialization they are staged into `apps/_inbox/official/`, but they are not installed automatically.
+
+Current official packages:
+
+- `ano-calculator-skill-app_v0.1.2.zip`
+- `ano-tiandao-furnace-skill-app_v0.4.0.zip`
+
+See [OFFICIAL_APPS.md](OFFICIAL_APPS.md).
+
+## v0.2.8 OS Host Command Gate
+
+After installation, every user instruction must be handled by the ANO Host/Admin Agent first. Do not bypass the OS by directly running app internals. Use:
+
+```bash
+python ano/scripts/ano_host.py "打开 ANO Tiandao Furnace Skill AppAgent"
+```
+
+The Host will resolve installation status, show permission/approval cards, and stop for user approval.
+
+
+## Tiandao Furnace v0.4.0
+
+The official multi-agent demo now starts with previous-draw intake, supports ANO Host web/weather lookup requests, handles overflow user choices without blocking, and adds feng-shui direction/weather/geography top-up. It remains entertainment-only and does not provide prediction or betting advice.

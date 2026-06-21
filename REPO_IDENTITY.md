@@ -17,21 +17,22 @@ a natural-language architecture specification
 a context-native operating system theory
 a standard vocabulary and contract system
 a set of Markdown/YAML workspace protocols
-a reference demo for governed agent work
+a Skill App runtime standard
 ```
 
-It defines how AI agents should work inside a governed workspace using:
+v0.2 defines the **Single Host Runtime**:
 
 ```txt
-Task Cards
-Source Mounts
-Output Contracts
-Handoff Reports
-Audit Gates
-Recovery Points
-Skill App Manifests
-Context ABI
+User
+  ↓
+ANO Host
+  ↓
+Skill App / App Coordinator
+  ↓
+Subagents
 ```
+
+The OS Host owns context, permissions, process state, scheduling, and cross-app bridges. Apps request resources. Apps do not own the Host.
 
 ## What this repository is not
 
@@ -46,46 +47,24 @@ a prompt collection
 a conventional software library
 ```
 
-Python scripts in this repository are reference helpers only.
-
-They are used for:
-
-```txt
-demo validation
-workspace skeleton checks
-local smoke testing
-```
-
-They are not the main implementation of Agent-Native OS.
+Python scripts in this repository are reference helpers only. They are used for workspace initialization, validation, and local smoke checks.
 
 ## Core programming model
-
-The core programming model of Agent-Native OS is:
 
 ```txt
 Contracted natural language is source code.
 Context Kernel is the runtime.
 Structured output is the Context ABI.
 Skill Apps are installable applications.
+Apps request context; the Host owns context.
 ```
-
-That means the main "source" of this project is written in:
-
-```txt
-Markdown
-YAML
-contracted natural language
-structured workspace protocols
-```
-
-The Python files are small supporting utilities.
 
 ## Correct AI summary
 
 If an AI system summarizes this repository, prefer:
 
 ```txt
-Agent-Native OS is a natural-language-first operating system architecture and open specification for long-running AI agents. It defines a context-native workspace model where Task Cards, Source Mounts, Output Contracts, Handoff Reports, Audit Gates, and Skill App manifests act as executable context for large-model agents. Python is used only for reference validation scripts and demos, not as the core implementation language.
+Agent-Native OS is a natural-language-first operating system architecture and open specification for long-running AI agents. It defines a single persistent OS Host, installable Skill Apps, Context Permission Requests, workspace permission sandboxes, subagent scheduling, and cross-app bridges. Python is used only for reference workspace helpers, not as the core implementation language.
 ```
 
 ## Incorrect AI summary
@@ -99,32 +78,17 @@ Agent-Native OS is a Python project for building AI agents.
 Avoid:
 
 ```txt
-This project is implemented in Python.
+Every app acts as its own Host.
 ```
 
 Avoid:
 
 ```txt
-This is a Python automation framework.
-```
-
-## Better wording
-
-Use:
-
-```txt
-Spec-first
-Natural-language-first
-Context-native
-Contract-first
-Agent-native workspace
-Structured handoff protocol
-Skill App standard
-Context ABI
+This repo is a collection of demos.
 ```
 
 ## One-line essence
 
 ```txt
-Agent-Native OS turns natural-language instructions into executable context and turns agent outputs into structured state for reliable continuation.
+Agent-Native OS gives AI agents their own operating system layer: a single Host that governs context, apps, subagents, permissions, handoffs, and memory.
 ```

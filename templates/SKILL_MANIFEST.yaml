@@ -1,47 +1,38 @@
-name: example-skill
+# Deprecated alias kept for compatibility.
+# New apps should use templates/APP_MANIFEST.yaml.
+
+app_id: ano.skill.example
+package_name: ano-example-skill-app
+display_name: ANO Example Skill App
 version: 0.1.0
-type: skill-app
+type: skill_app
+standard: agent-native-os
+standard_version: 0.2.2
+runtime: ano
 
-description: >
-  Describe what this Skill App does.
+install:
+  user_prompt_zh: 即将安装一个示例 Skill App。
+  user_prompt_en: You are about to install an example Skill App.
 
-runtime:
-  agent_role: researcher
-  requires_audit: true
+commercial:
+  pricing_model: free
+  license: Apache-2.0
+  payment_required: false
 
-inputs:
-  - name: task_card
-    type: task_contract
-    required: true
-  - name: source_bundle
-    type: mounted_sources
-    required: true
+agent_policy:
+  app_controller:
+    role_id: example.coordinator
+    display_name: Example Coordinator
+    can_request_subagents: true
+    is_host: false
+  subagents: []
 
-outputs:
-  - name: primary_output
-    type: markdown
-    path: .agent-os/outputs/{task_id}/output.md
-  - name: handoff_report
-    type: markdown
-    path: .agent-os/handoffs/HANDOFF-{task_id}.md
-
-permissions:
-  read:
-    - mounted_sources
-    - task_card
-  write:
-    - outputs/
-    - handoffs/
-  forbidden:
-    - sources/source_law/
-    - registry/
-    - archive/cold/
-
-policies:
-  source_priority: strict
-  uncertainty_policy: mark_unknown
-  mutation_policy: no_core_source_mutation
-
-audit:
-  required_by:
-    - host
+context_permission_request:
+  default_mode: normal
+  context_budget:
+    requested_level: low
+  workspace_permissions:
+    read: []
+    write: []
+    denied:
+      - ano/kernel/

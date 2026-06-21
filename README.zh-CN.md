@@ -4,149 +4,123 @@
 
 面向长任务 AI Agent 与可安装 Skill App 的上下文原生操作系统架构。
 
-![Spec](https://img.shields.io/badge/spec-v0.2-blue)
+![Spec](https://img.shields.io/badge/spec-v0.2.8-blue)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green)
 ![Status](https://img.shields.io/badge/status-draft-orange)
 
 <p align="center">
-  <img src="docs/assets/homepage/poster-not-human-desktop.png" alt="不是让 AI 接管电脑，是给 AI 装一台自己的电脑" width="88%" />
-</p>
-
-<p align="center">
-  <img src="docs/assets/homepage/poster-token-effective-work.png" alt="让 Token 花在有效工作上" width="43%" />
-  <img src="docs/assets/homepage/poster-robot-os-standard.png" alt="给下一代智能机器人建立操作系统规范" width="43%" />
+  <a href="./docs/assets/homepage/poster-not-human-desktop.png">
+    <img src="./docs/assets/homepage/poster-not-human-desktop.png" alt="不是让 AI 接管电脑，是给 AI 装一台自己的电脑" width="88%" />
+  </a>
 </p>
 
 > **不是让 AI 接管电脑。**  
 > **是给 AI 装一台自己的电脑。**
 
-Agent-Native OS 不是给人类桌面用的操作系统。
-它是给大模型 Agent 用的原生工作系统：一个可治理的工作空间，让 Agent 可以安装 Skill App、管理上下文、隔离任务、执行权限、交接状态，并维持长任务工作的稳定秩序。
+Agent-Native OS 不是给人类桌面用的操作系统。它是给 AI Agent 用的原生工作系统：一个可治理的工作空间，让 Agent 可以安装 Skill App、申请上下文、隔离工作区、通过系统 Host 启动子 Agent、交接状态，并维持长任务工作的稳定秩序。
 
-通俗说，它就是 **AI Agent 的 Windows 层**。
+通俗说，它就是 **AI Agent 的操作系统层**。
 
-## 仓库身份说明
+## v0.2 重点：唯一 Host 运行时
 
-Agent-Native OS 是 **规范优先**、**自然语言优先** 的项目。
-
-这个仓库主要由 Markdown/YAML 架构规范、工作区协议和 demo 契约组成。它的核心不是“用 Python 代码运行 Agent”，而是：
-
-> 契约化自然语言是源代码。  
-> 上下文内核是运行时。  
-> 结构化输出是 Context ABI。
-
-`scripts/` 里的少量 Python 脚本只是 demo 检查和工作区验证工具，不是 Agent-Native OS 的主体实现语言。
-
-## 为什么要做这个项目
-
-今天很多 AI 工具都在解决同一个方向的问题：
-让 Agent 更会使用人类电脑，例如浏览器、终端、GUI、API 和现成的应用工作流。
-
-而 Agent-Native OS 问的是一个更底层的问题：
-
-> **Agent 自己工作时，到底需要什么样的操作系统？**
-
-因为 Agent 的工作天然会出现一整套系统病：
-
-- 上下文爆炸
-- 法源污染
-- 角色串线
-- 交接失忆
-- 输出失审
-- 长程退化
-- 工作流混乱导致的大量 token 浪费
-
-Agent-Native OS 的目标，就是减少这些浪费，让每一个 token 更接近真正有效的工作。
-
-## 它的核心判断
-
-在人类 OS 里，第一公民是应用。
-
-在 Agent OS 里，第一公民是上下文。
-
-Agent-Native OS 是一种开放架构，核心包括：
-
-- Context Kernel（上下文内核）
-- Skill App Runtime（技能应用运行时）
-- Source File System（法源文件系统）
-- Role & Permission System（角色权限系统）
-- Task Scheduler（任务调度器）
-- Output Contract Engine（输出契约引擎）
-- Audit Gate（审查门禁）
-- Handoff Bus（交接总线）
-- Memory & Archive Layer（记忆与归档层）
-- Recovery System（恢复系统）
-
-## 五大原则
-
-1. **上下文是第一资源。**
-2. **契约化自然语言是源代码。**
-3. **上下文内核是运行时。**
-4. **结构化输出是 Context ABI。**
-5. **Skill App 是可安装应用。**
-
-## 为什么它不只是一个小工具
-
-Agent-Native OS 不只是给文档整理或代码 Agent 用的。
-它指向的是一层更大的基础设施：未来 Agent 世界的工作秩序层。
-
-它的价值包括：
-
-- 更高效的 AI 有效工作流
-- 更少的上下文浪费与 token 浪费
-- 更稳定的多 Agent 协作
-- 更清晰的权限、审查、交接与恢复规范
-- 为未来具身智能与机器人操作系统建立基础规则
-
-## 视觉总览
-
-### 1）从 code-for-machines 到 context-for-agents
-
-<p align="center">
-  <img src="docs/assets/homepage/diagram-from-code-to-agents.png" alt="从代码到代理的未来" width="82%" />
-</p>
-
-### 2）系统架构与最小工作闭环
-
-<p align="center">
-  <img src="docs/assets/homepage/diagram-core-architecture.png" alt="系统架构图" width="46%" />
-  <img src="docs/assets/homepage/diagram-operating-loop.png" alt="最小工作闭环图" width="46%" />
-</p>
-
-### 3）Agent 原生系统与工作区布局
-
-<p align="center">
-  <img src="docs/assets/homepage/diagram-agent-native-system.png" alt="Agent 原生系统图" width="46%" />
-  <img src="docs/assets/homepage/diagram-workspace-layout.png" alt="工作区布局图" width="46%" />
-</p>
-
-## 试跑 Demo
-
-运行：
-
-```bash
-python scripts/run_docs_brief_demo.py
-```
-
-然后打开：
+Agent-Native OS v0.2 明确了更干净的生态边界：
 
 ```txt
-examples/docs-brief-demo/PROMPT_FOR_AGENT.md
+Agent-Native OS Core = 常驻 Host、运行时、调度器、权限与标准
+Skill App = 由 OS 挂载的可安装能力包
+Subagent = 由 OS Host 启动、暂停、关闭、归档的工作进程
 ```
 
-把提示词复制给 Codex、ChatGPT、Claude 或其他 Agent，让它按 Agent-Native OS 的任务契约生成产物。
+Host 属于母系统。App 不是 Host。App 可以有 Coordinator，但只有 OS Host 拥有子 Agent 生命周期主权和全局上下文调度权。
+
+## 核心原则
+
+```txt
+App 不拥有上下文，App 只能申请上下文。
+上下文、Agent、工作区权限和调度权，全部归 Host 管理。
+```
+
+Skill App 运行前，必须提交 **上下文权限申请表**。系统打印 **Agent 运行审批卡**，展示计划启动的 Agent 阵容、上下文预算、工作区权限、跨 App 桥接和商业状态。用户可以批准、拒绝，或用自然语言修改方案。
+
+例如用户可以说：
+
+```txt
+这小说评论区会炸，再给我加个喷子模拟 Agent。
+```
+
+系统可以将这个经用户批准的修改写入用户自定义上下文配置，并在后续运行中继承。
+
+## Agent-Native OS 管什么
+
+- 唯一常驻 OS Host
+- 上下文权限申请
+- Skill App 安装与挂载
+- Subagent 调度与生命周期
+- 工作区权限沙箱
+- 进程表与上下文分配表
+- 事件总线与恢复记录
+- 跨 App Bridge
+- 输出契约与交接报告
+- 用户自定义 Agent 拓扑
+
+## 生态模型
+
+Agent-Native OS Core 应永久免费开源并持续更新。
+
+Skill App 可以由官方、社区、私有团队或商业开发者开发。App 可以免费、开源、付费、免费增值、订阅、企业授权或私有部署。
+
+```txt
+系统提供秩序。
+App 提供能力。
+```
+
+## 快速开始
+
+### 当前目录安装规则
+
+ANO v0.2.8 只能安装到当前获得用户授权的工作目录根目录，不准再创建 `ano-workspace/` 之类子目录。OS 初始化完成后必须停止，等待用户下一条指令，不能自动继续安装 Skill App。
+
+
+
+初始化一个空白 v0.2 工作区：
+
+```bash
+python scripts/init_workspace.py
+```
 
 验证工作区：
 
 ```bash
-python scripts/validate_workspace.py examples/docs-brief-demo
+python ano/scripts/validate_workspace.py
 ```
 
-这个 Demo 展示最小可治理闭环：
+本仓库不再内置旧 demo。后续 demo 应全部按 `ano-<domain>-skill-app` 格式制作成标准可安装 App。
+
+
+## v0.2.2 安装后工作区文件系统
+
+开发仓库可以保留 docs、scripts、spec、templates 和官方 App 源码包。用户安装后的 ANO 工作区必须保持干净：
 
 ```txt
-Source -> Task -> Mount -> Output Contract -> Agent Prompt -> Handoff -> Audit
+README.md
+USER_LOG.md
+ano/
+user/
+apps/
+res/
+out/
 ```
+
+`ano/` 是系统发动机舱，`user/` 是用户数据，`apps/` 是已安装 Skill App，`res/` 是共享资源，`out/` 是最终导出。v0.2.2 起，安装后工作区禁止继续使用旧路径 `.agent-os/` 和 `skills/`。
+
+## 开发者入口
+
+- [APP_DEVELOPER_GUIDE.md](APP_DEVELOPER_GUIDE.md) - Skill App 标准开发说明
+- [SPEC.md](SPEC.md) - v0.2 核心规范
+- [VERSIONING.md](VERSIONING.md) - 版本定义与发布规则
+- [ECOSYSTEM.md](ECOSYSTEM.md) - 开源母系统与 App 生态模型
+- [templates/APP_MANIFEST.yaml](templates/APP_MANIFEST.yaml) - App manifest 模板
+- [templates/CONTEXT_PERMISSION_REQUEST.yaml](templates/CONTEXT_PERMISSION_REQUEST.yaml) - 运行时资源申请模板
 
 ## 仓库结构
 
@@ -154,26 +128,18 @@ Source -> Task -> Mount -> Output Contract -> Agent Prompt -> Handoff -> Audit
 agent-native-os/
   README.md
   README.zh-CN.md
-  MANIFESTO.md
   SPEC.md
   ROADMAP.md
+  CHANGELOG.md
+  VERSIONING.md
+  ECOSYSTEM.md
+  APP_DEVELOPER_GUIDE.md
   CORE_THEORY_AND_GLOSSARY.md
-  NAMING_STRATEGY.md
-  BILINGUAL_POLICY.md
   docs/
   spec/
   templates/
-  examples/
   scripts/
 ```
-
-## 开放内核，私有发行版
-
-本仓库定义的是开放架构。
-
-领域专用发行版可以基于本架构构建。私有发行版可能包含行业工艺、商业逻辑、评分系统和专有工作流，不包含在本仓库之内。
-
-**开放架构，保留私有发行版。**
 
 ## 建议 GitHub 简介
 
@@ -199,3 +165,29 @@ ai-native
 ## 协议
 
 Apache-2.0。见 `LICENSE`。
+
+## 官方 App 安装包
+
+主系统发布包可以在 `app_packages/official/` 中附带官方免费 demo app 的 ZIP 安装包。初始化工作区时，系统会把它们暂存到 `apps/_inbox/official/`，但不会自动安装。
+
+当前官方包：
+
+- `ano-calculator-skill-app_v0.1.2.zip`
+- `ano-tiandao-furnace-skill-app_v0.4.0.zip`
+
+详见 [OFFICIAL_APPS.md](OFFICIAL_APPS.md)。
+
+## v0.2.8 OS Host Command Gate
+
+After installation, every user instruction must be handled by the ANO Host/Admin Agent first. Do not bypass the OS by directly running app internals. Use:
+
+```bash
+python ano/scripts/ano_host.py "打开 ANO Tiandao Furnace Skill AppAgent"
+```
+
+The Host will resolve installation status, show permission/approval cards, and stop for user approval.
+
+
+## Tiandao Furnace v0.4.0
+
+The official multi-agent demo now starts with previous-draw intake, supports ANO Host web/weather lookup requests, handles overflow user choices without blocking, and adds feng-shui direction/weather/geography top-up. It remains entertainment-only and does not provide prediction or betting advice.

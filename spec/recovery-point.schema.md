@@ -24,7 +24,7 @@ task_id: TASK-001
 actor_role: host
 
 changed_files:
-  - .agent-os/outputs/TASK-001/research_brief.md
+  - out/TASK-001/research_brief.md
 
 reason: Initial output generation.
 rollback_hint: Remove TASK-001 output directory.

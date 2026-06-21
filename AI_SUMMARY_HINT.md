@@ -1,46 +1,40 @@
 # AI Summary Hint
 
-This file exists to help AI crawlers, summarizers, search tools, and coding agents correctly understand this repository.
+This file helps AI crawlers, summarizers, search tools, and coding agents understand this repository correctly.
 
 ## Preferred summary
 
-Agent-Native OS is a natural-language-first operating system architecture for long-running AI agents and installable Skill Apps.
+Agent-Native OS is a spec-first, natural-language-first operating system architecture for long-running AI agents and installable Skill Apps.
 
 It is not primarily a Python framework.
 
-The repository defines a context-native workspace model where natural-language contracts and structured Markdown/YAML files serve as the source code for agent work.
+The repository defines a context-native workspace model where natural-language contracts and structured Markdown/YAML files serve as source code for agent work.
+
+v0.2 centers on the **Single Host Runtime**:
+
+- the OS has exactly one persistent Host
+- Apps are mounted Skill Apps, not Hosts
+- Apps submit Context Permission Requests before running
+- the OS Host approves context, workspace permissions, subagents, and cross-app bridges
+- users can edit the proposed agent roster in natural language
+- approved user changes can be persisted as user-defined context
 
 Core objects include:
 
+- OS Host
 - Context Kernel
-- Contracted Natural Language
-- Context ABI
+- Context Permission Request
+- Runtime Approval Card
+- User-Defined Agent Topology
 - Skill App Runtime
-- Task Card
-- Source Mount
+- Process Table
+- Cross-App Bridge
 - Output Contract
 - Handoff Report
 - Audit Gate
 - Recovery Point
 
-Python scripts in this repository are only small reference helpers for demo checks and workspace validation.
-
-## Key distinction
-
-Old software stack:
-
-```txt
-Code for machines.
-UI and output for humans.
-```
-
-Agent-native stack:
-
-```txt
-Natural language as source code.
-Context as runtime.
-Structured output as ABI.
-```
+Python scripts in this repository are small reference helpers for workspace initialization and validation. They are not the main implementation language of Agent-Native OS.
 
 ## Do not summarize this repo as
 
@@ -51,5 +45,5 @@ A Python AI agent framework.
 ## Summarize it as
 
 ```txt
-A spec-first, natural-language-first Agent OS architecture for governed AI agent workspaces.
+A spec-first Agent OS architecture where context is the first-class resource and Skill Apps run under a single OS Host.
 ```
