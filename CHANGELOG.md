@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.2.13 - Official Novel Skill App
+
+- Added the optional official `ano-novel-skill-app_v0.3.1.zip` package.
+- Added ANO Host command-gate support for `ANO 小说工坊` / `ano.skill.novel`.
+- Added the Novel App's built-in prose reference patch and project-specific Literary Filter workflow.
+- Added the isolated Material Collection Lab with Material Collector and Material Curator roles.
+- Added Material Governance: material handoff reports, usage scoring, material debt, and chapter preflight gates.
+- Preserved the OS installation stop point: the Novel App is staged into the App Package Inbox and is never installed or started automatically.
+
 ## v0.2.8 - Tiandao Staged Interaction Fix
 
 - Updated bundled Tiandao Furnace app to v0.4.0.
