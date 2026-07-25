@@ -6,7 +6,8 @@ A context-native operating system architecture for long-running AI agents and in
 
 ![Spec](https://img.shields.io/badge/spec-v0.2.13-blue)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![Status](https://img.shields.io/badge/status-draft-orange)
+![Status](https://img.shields.io/badge/status-experimental-orange)
+[![Smoke Test](https://github.com/bt420000-collab/agent-native-os/actions/workflows/smoke-test.yml/badge.svg)](https://github.com/bt420000-collab/agent-native-os/actions/workflows/smoke-test.yml)
 
 <p align="center">
   <a href="./docs/assets/homepage/poster-not-human-desktop.png">
@@ -53,6 +54,19 @@ Agent-Native OS Core remains free, open-source, and continuously updated. Skill 
 The system provides order.
 Apps provide capability.
 ```
+
+## Runnable reference surface
+
+v0.2.13 is an experimental but runnable reference release. The repository currently provides:
+
+- a current-root workspace initializer;
+- a workspace validator with version and Host-gate checks;
+- preview-first Skill App installation;
+- a lightweight ANO Host command gate;
+- three optional official App packages;
+- machine-readable manifests, templates, governance documents, and App developer guidance.
+
+The CI smoke test initializes a fresh workspace, validates it, lists staged App packages, previews an installation card, and exercises the Host command gate. This repository is not presented as a production-ready general-purpose OS.
 
 ## Visual overview
 
@@ -155,6 +169,8 @@ See [OFFICIAL_APPS.md](OFFICIAL_APPS.md).
 - [SPEC.md](SPEC.md)
 - [VERSIONING.md](VERSIONING.md)
 - [ECOSYSTEM.md](ECOSYSTEM.md)
+- [CONTRIBUTING.md](CONTRIBUTING.md)
+- [SECURITY.md](SECURITY.md)
 - [templates/APP_MANIFEST.yaml](templates/APP_MANIFEST.yaml)
 - [templates/CONTEXT_PERMISSION_REQUEST.yaml](templates/CONTEXT_PERMISSION_REQUEST.yaml)
 

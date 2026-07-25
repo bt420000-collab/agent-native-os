@@ -1,0 +1,67 @@
+name: Smoke Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Compile reference helpers
+        run: python -m compileall -q scripts
+
+      - name: Verify release metadata
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          expected = "0.2.13"
+          manifest = json.loads(Path("PACKAGE_MANIFEST.json").read_text(encoding="utf-8"))
+          assert manifest["version"] == expected, manifest["version"]
+
+          active_files = [
+              "scripts/init_workspace.py",
+              "scripts/validate_workspace.py",
+              "scripts/install_app_package.py",
+              "scripts/ano_host.py",
+          ]
+          for filename in active_files:
+              text = Path(filename).read_text(encoding="utf-8")
+              assert expected in text, f"{filename} does not reference {expected}"
+          PY
+
+      - name: Initialize and validate a fresh workspace
+        run: |
+          REPO_ROOT="$GITHUB_WORKSPACE"
+          WORKSPACE="$(mktemp -d)"
+          cd "$WORKSPACE"
+
+          python "$REPO_ROOT/scripts/init_workspace.py"
+          test "$(cat ano/VERSION)" = "0.2.13"
+
+          python ano/scripts/validate_workspace.py
+          python ano/scripts/list_app_packages.py
+          python ano/scripts/install_app_package.py \
+            apps/_inbox/official/ano-calculator-skill-app_v0.1.2.zip
+          python ano/scripts/ano_host.py "列出应用"
+
+          test -f apps/_inbox/official/ano-calculator-skill-app_v0.1.2.zip
+          test -f apps/_inbox/official/ano-tiandao-furnace-skill-app_v0.4.0.zip
+          test -f apps/_inbox/official/ano-novel-skill-app_v0.3.1.zip

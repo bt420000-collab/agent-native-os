@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
-"""Validate an Agent-Native OS v0.2.8 clean workspace skeleton.
+"""Validate an Agent-Native OS v0.2.13 clean workspace skeleton.
 
 Usage:
     python ano/scripts/validate_workspace.py
     python scripts/validate_workspace.py
 """
-
 from __future__ import annotations
 
-from pathlib import Path
 import json
 import sys
+from pathlib import Path
 
-VERSION = "0.2.8"
+VERSION = "0.2.13"
 ROOT_ALLOWED = {"README.md", "USER_LOG.md", "ano", "user", "apps", "res", "out"}
 LEGACY_ROOTS = {".agent-os", "skills"}
 FORBIDDEN_ROOT_DIRS = {"ano-workspace", "my-workspace"}
@@ -47,6 +46,7 @@ REQUIRED_FILES = [
     "ano/kernel/HOST.md",
     "ano/kernel/FILESYSTEM_STANDARD.md",
     "ano/kernel/APP_PACKAGE_INBOX.md",
+    "ano/kernel/OS_AGENT_COMMAND_GATE.md",
     "ano/kernel/CONTEXT_PERMISSION_MODEL.md",
     "ano/kernel/SCHEDULER.md",
     "ano/registry/installed_apps.json",
@@ -56,6 +56,7 @@ REQUIRED_FILES = [
     "ano/scripts/list_app_packages.py",
     "ano/scripts/install_app_package.py",
     "ano/scripts/validate_workspace.py",
+    "ano/scripts/ano_host.py",
     "user/profile/global_profile.yaml",
 ]
 
@@ -71,7 +72,7 @@ RESERVED_APP_DIRS = {"_inbox"}
 def validate_json(path: Path, errors: list[str]) -> None:
     try:
         json.loads(path.read_text(encoding="utf-8"))
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         errors.append(f"Invalid JSON: {path} ({exc})")
 
 
@@ -84,13 +85,16 @@ def validate_workspace(workspace: Path) -> tuple[bool, list[str], list[str]]:
         return False, errors, warnings
 
     if workspace.name in FORBIDDEN_ROOT_DIRS:
-        errors.append(f"Forbidden workspace root name: {workspace.name}. Install ANO into the current authorized root, not a child workspace folder.")
+        errors.append(
+            f"Forbidden workspace root name: {workspace.name}. "
+            "Install ANO into the current authorized root."
+        )
 
     for legacy in LEGACY_ROOTS:
         if (workspace / legacy).exists():
-            errors.append(f"Legacy root directory is forbidden in v0.2.2+ clean workspace: {legacy}")
+            errors.append(f"Legacy root directory is forbidden: {legacy}")
 
-    root_entries = {p.name for p in workspace.iterdir()}
+    root_entries = {path.name for path in workspace.iterdir()}
     unknown = sorted(root_entries - ROOT_ALLOWED)
     if unknown:
         errors.append("Unexpected root entries found: " + ", ".join(unknown))
@@ -101,18 +105,24 @@ def validate_workspace(workspace: Path) -> tuple[bool, list[str], list[str]]:
 
     for dirname in REQUIRED_DIRS:
         path = workspace / dirname
-        if not path.exists() or not path.is_dir():
+        if not path.is_dir():
             errors.append(f"Missing required directory: {dirname}")
 
     for filename in REQUIRED_FILES:
         path = workspace / filename
-        if not path.exists() or not path.is_file():
+        if not path.is_file():
             errors.append(f"Missing required file: {filename}")
 
     for filename in JSON_FILES:
         path = workspace / filename
         if path.exists():
             validate_json(path, errors)
+
+    version_file = workspace / "ano/VERSION"
+    if version_file.exists():
+        actual = version_file.read_text(encoding="utf-8").strip()
+        if actual != VERSION:
+            errors.append(f"Workspace version mismatch: expected {VERSION}, found {actual}")
 
     process_table = workspace / "ano/runtime/process_table.json"
     if process_table.exists():
@@ -126,32 +136,41 @@ def validate_workspace(workspace: Path) -> tuple[bool, list[str], list[str]]:
         except Exception:
             pass
 
-    pending = list((workspace / "apps/_inbox/official").glob("*.zip")) + list((workspace / "apps/_inbox/community").glob("*.zip"))
+    pending = (
+        list((workspace / "apps/_inbox/official").glob("*.zip"))
+        + list((workspace / "apps/_inbox/community").glob("*.zip"))
+    )
     if pending:
-        warnings.append(f"Pending Skill App packages detected: {len(pending)}. They are not installed until user approval.")
+        warnings.append(
+            f"Pending Skill App packages detected: {len(pending)}. "
+            "They remain uninstalled until user approval."
+        )
 
-    installed_dirs = []
     apps_root = workspace / "apps"
+    installed_dirs = []
     if apps_root.exists():
-        installed_dirs = [p for p in apps_root.iterdir() if p.is_dir() and p.name not in RESERVED_APP_DIRS]
+        installed_dirs = [
+            path
+            for path in apps_root.iterdir()
+            if path.is_dir() and path.name not in RESERVED_APP_DIRS
+        ]
 
-    registry_records = list((workspace / "ano/registry/apps").glob("*.json")) if (workspace / "ano/registry/apps").exists() else []
+    registry_root = workspace / "ano/registry/apps"
+    registry_records = list(registry_root.glob("*.json")) if registry_root.exists() else []
     if not registry_records:
-        warnings.append("No installed app registry records found yet. This is normal before optional app installation.")
+        warnings.append("No installed App registry records found yet. This is normal before installation.")
     if not installed_dirs:
-        warnings.append("No Skill Apps installed yet. This is normal before optional app installation.")
+        warnings.append("No Skill Apps installed yet. This is normal before optional installation.")
 
     return not errors, errors, warnings
 
 
 def main(argv: list[str]) -> int:
-    workspace = Path(argv[1]) if len(argv) > 1 else Path.cwd()
-    workspace = workspace.resolve()
-
+    workspace = (Path(argv[1]) if len(argv) > 1 else Path.cwd()).resolve()
     ok, errors, warnings = validate_workspace(workspace)
 
-    print("Agent-Native OS v0.2.8 Workspace Validator")
-    print("=" * 48)
+    print(f"Agent-Native OS v{VERSION} Workspace Validator")
+    print("=" * 50)
     print(f"Workspace: {workspace}")
 
     if errors:
