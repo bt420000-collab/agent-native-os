@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Initialize Agent-Native OS v0.2.8 in the current authorized workspace root.
+Initialize Agent-Native OS v0.2.13 in the current authorized workspace root.
 
 Hard rule:
   ANO installs into the current working directory only.
@@ -11,17 +11,16 @@ Usage:
   python path/to/agent-native-os-main/scripts/init_workspace.py
   python scripts/init_workspace.py --no-bundled-apps
 """
-
 from __future__ import annotations
 
-from pathlib import Path
 import argparse
 import datetime
 import json
 import shutil
 import sys
+from pathlib import Path
 
-VERSION = "0.2.8"
+VERSION = "0.2.13"
 ROOT_ALLOWED = {"README.md", "USER_LOG.md", "ano", "user", "apps", "res", "out"}
 LEGACY_ROOTS = {".agent-os", "skills"}
 FORBIDDEN_WORKSPACE_NAMES = {"ano-workspace", "my-workspace"}
@@ -64,7 +63,12 @@ RUNTIME_SCRIPTS = [
 
 
 def iso_now() -> str:
-    return datetime.datetime.now(datetime.UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    return (
+        datetime.datetime.now(datetime.UTC)
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
 
 
 def write(path: Path, text: str) -> None:
@@ -74,8 +78,8 @@ def write(path: Path, text: str) -> None:
 
 def append(path: Path, text: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("a", encoding="utf-8") as f:
-        f.write(text.rstrip() + "\n")
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(text.rstrip() + "\n")
 
 
 def write_json(path: Path, obj: object) -> None:
@@ -90,24 +94,24 @@ def repo_root() -> Path:
 def assert_current_root(target_arg: str | None) -> Path:
     cwd = Path.cwd().resolve()
     if target_arg is None:
-        return cwd
-    target = Path(target_arg).resolve()
-    if target != cwd:
+        target = cwd
+    else:
+        target = Path(target_arg).resolve()
+        if target != cwd:
+            raise SystemExit(
+                f"ANO v{VERSION} installs into the current authorized workspace root only.\n"
+                f"Current directory: {cwd}\n"
+                f"Rejected target:   {target}\n"
+                "cd into the user-authorized directory, then run:\n"
+                "  python scripts/init_workspace.py"
+            )
+
+    if target.name in FORBIDDEN_WORKSPACE_NAMES:
         raise SystemExit(
-            "ANO v0.2.8 installs into the current authorized workspace root only.\n"
-            f"Current directory: {cwd}\n"
-            f"Rejected target:   {target}\n"
-            "Do not create a child workspace directory. cd into the directory that the user authorized, then run:\n"
-            "  python scripts/init_workspace.py\n"
-            "or from an extracted source folder:\n"
-            "  python agent-native-os-main/scripts/init_workspace.py"
+            f"Refusing to install into deprecated workspace folder name: {target.name}\n"
+            "Use the user-authorized project root itself."
         )
-    if cwd.name in FORBIDDEN_WORKSPACE_NAMES:
-        raise SystemExit(
-            f"Refusing to install into deprecated workspace folder name: {cwd.name}\n"
-            "Use the user-authorized project root itself, not ano-workspace/ or my-workspace/."
-        )
-    return cwd
+    return target
 
 
 def copy_runtime_scripts(target: Path) -> list[str]:
@@ -115,102 +119,88 @@ def copy_runtime_scripts(target: Path) -> list[str]:
     scripts_src = repo_root() / "scripts"
     for name in RUNTIME_SCRIPTS:
         src = scripts_src / name
-        if src.exists():
-            dst = target / "ano" / "scripts" / name
-            dst.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(src, dst)
-            copied.append(name)
+        if not src.exists():
+            continue
+        dst = target / "ano" / "scripts" / name
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, dst)
+        copied.append(name)
     return copied
 
 
 def copy_static_templates_and_specs(target: Path) -> tuple[list[str], list[str]]:
     copied_templates: list[str] = []
     copied_specs: list[str] = []
-    for source_dir_name, target_dir_name, out_list in [
+    mappings = [
         ("templates", "ano/templates", copied_templates),
         ("spec", "ano/spec", copied_specs),
-    ]:
-        src_dir = repo_root() / source_dir_name
-        dst_dir = target / target_dir_name
+    ]
+    for source_name, target_name, output in mappings:
+        src_dir = repo_root() / source_name
+        dst_dir = target / target_name
         if not src_dir.exists():
             continue
         dst_dir.mkdir(parents=True, exist_ok=True)
         for src in sorted(src_dir.glob("*")):
             if src.is_file():
                 shutil.copy2(src, dst_dir / src.name)
-                out_list.append(src.name)
+                output.append(src.name)
     return copied_templates, copied_specs
 
 
 def stage_bundled_app_packages(target: Path, include: bool = True) -> list[str]:
-    """Copy bundled official app ZIP packages into apps/_inbox/official/.
-
-    This does not install apps. ANO must stop after OS initialization and wait for
-    the user's next instruction.
-    """
+    """Stage official ZIP packages without installing them."""
     staged: list[str] = []
     if not include:
         return staged
+
     src_dir = repo_root() / "app_packages" / "official"
     dst_dir = target / "apps" / "_inbox" / "official"
     if not src_dir.exists():
         return staged
+
     dst_dir.mkdir(parents=True, exist_ok=True)
     for src in sorted(src_dir.glob("*.zip")):
-        dst = dst_dir / src.name
-        shutil.copy2(src, dst)
+        shutil.copy2(src, dst_dir / src.name)
         staged.append(src.name)
     return staged
 
 
 def cleanup_root(target: Path, now: str) -> list[str]:
-    """Move non-standard root entries into user/imports/_unsorted/<timestamp>/.
-
-    This runs after runtime scripts and official app packages have been staged, so
-    an extracted source folder can be safely moved out of the workspace root.
-    """
+    """Move non-standard root entries into user imports after installation."""
     moved: list[str] = []
-    target.mkdir(parents=True, exist_ok=True)
     staging = target / "user" / "imports" / "_unsorted" / now.replace(":", "").replace("-", "")
     for entry in list(target.iterdir()):
         if entry.name in ROOT_ALLOWED:
             continue
         staging.mkdir(parents=True, exist_ok=True)
         destination = staging / entry.name
-        if destination.exists():
-            suffix = 1
-            while (staging / f"{entry.name}.{suffix}").exists():
-                suffix += 1
+        suffix = 1
+        while destination.exists():
             destination = staging / f"{entry.name}.{suffix}"
+            suffix += 1
         shutil.move(str(entry), str(destination))
         moved.append(entry.name)
     return moved
 
 
-def init_workspace(target: Path, no_bundled_apps: bool = False) -> dict:
-    target.mkdir(parents=True, exist_ok=True)
-    now = iso_now()
-
-    for d in SKELETON_DIRS:
-        (target / d).mkdir(parents=True, exist_ok=True)
-
-    copied_scripts = copy_runtime_scripts(target)
-    copied_templates, copied_specs = copy_static_templates_and_specs(target)
-    staged_packages = stage_bundled_app_packages(target, include=not no_bundled_apps)
-
-    write(target / "ano/VERSION", VERSION)
-    write(target / "ano/kernel/HOST.md", """
+def write_kernel_documents(target: Path) -> None:
+    write(
+        target / "ano/kernel/HOST.md",
+        """
 # OS Host
 
-Agent-Native OS has exactly one Host.
+Agent-Native OS has exactly one persistent Host.
 
-The Host belongs to the mother system. Apps may define coordinators, but apps are not Hosts.
-""")
-
-    write(target / "ano/kernel/FILESYSTEM_STANDARD.md", """
+The Host belongs to the mother system. Apps may define coordinators, but Apps are not Hosts.
+""",
+    )
+    write(
+        target / "ano/kernel/FILESYSTEM_STANDARD.md",
+        """
 # Workspace Filesystem Standard
 
-Installed Agent-Native OS workspaces use the current authorized directory as the root. The installer must not create child workspace folders.
+Installed Agent-Native OS workspaces use the current authorized directory as the root.
 
 ```txt
 README.md
@@ -224,119 +214,80 @@ out/
 
 Rules:
 
-1. The current directory is the workspace root. Do not create `ano-workspace/`, `my-workspace/`, or any other child workspace folder.
-2. Root is for the user, not for system clutter.
-3. `ano/` stores system internals: Host policy, runtime, registry, scheduler state, logs, templates, scripts, and specs.
-4. `user/` stores user data, preferences, memory, projects, and imported materials.
-5. `apps/` stores installed Skill Apps. `apps/_inbox/` stores pending app ZIP packages awaiting user approval.
-6. `res/` stores shared resources.
-7. `out/` stores final user-facing outputs.
-8. Apps and subagents must not write arbitrary files to the workspace root.
-9. Legacy `.agent-os/` and `skills/` directories are forbidden in v0.2.2+ clean workspaces.
-10. Unknown root files are moved to `user/imports/_unsorted/` during installation or cleanup.
-""")
-
-    write(target / "ano/kernel/APP_PACKAGE_INBOX.md", """
+1. Do not create a nested workspace folder.
+2. `ano/` stores system internals.
+3. `user/` stores user data, preferences, memory, projects, and imports.
+4. `apps/` stores installed Apps and the pending App Package Inbox.
+5. `res/` stores shared resources.
+6. `out/` stores final user-facing outputs.
+7. Apps and subagents must not write arbitrary files to the workspace root.
+8. Legacy `.agent-os/` and `skills/` roots are forbidden.
+""",
+    )
+    write(
+        target / "ano/kernel/APP_PACKAGE_INBOX.md",
+        """
 # App Package Inbox
 
-The mother system may stage Skill App packages in `apps/_inbox/` but must not auto-install them.
-
-```txt
-apps/_inbox/official/    Official free demo packages bundled with the OS release.
-apps/_inbox/community/   User-added or community app packages.
-apps/_inbox/installed/   Packages already installed through OS approval.
-```
-
-Packages in `_inbox` are install candidates. They become installed apps only after the user explicitly asks the OS to install them.
-
-After OS installation, the agent must stop and return control to the user. It must not continue into app installation automatically.
-""")
-
-    write(target / "ano/kernel/OS_AGENT_COMMAND_GATE.md", """
-# OS Agent Command Gate
-
-Hard rule: after Agent-Native OS is installed, every user instruction is addressed to the ANO Host/Admin Agent first.
-
-The user does not directly talk to or run app agents. A request such as `打开 ANO Tiandao Furnace Skill AppAgent` must be handled as:
-
-1. ANO Host acknowledges it is the OS administrator handling the request.
-2. ANO Host identifies the target app by user-facing name, for example `天道哈希炉 / ANO Tiandao Furnace Skill App`.
-3. ANO Host checks whether the app is installed or only staged in `apps/_inbox/`.
-4. If not installed, ANO Host shows the install card and stops for user approval.
-5. If installed, ANO Host shows the Context Permission Request and Agent Runtime Approval Card.
-6. ANO Host stops and waits for the user's next instruction.
-7. App internal runtime commands may only run after OS-mediated approval.
-
-Do not bypass the OS by `cd apps/<app>/` and running internal scripts directly unless ANO Host has already approved that exact step.
-
-Command gate helper:
-
-```bash
-python ano/scripts/ano_host.py "打开 ANO Tiandao Furnace Skill AppAgent"
-python ano/scripts/ano_host.py "列出应用"
-```
-""")
-
-    write(target / "ano/kernel/CONTEXT_PERMISSION_MODEL.md", """
-# Context Permission Model
-
-Apps do not own context. Apps request context.
-
-Every app run should begin with a Context Permission Request approved by the OS Host.
-""")
-
-    write(target / "ano/kernel/SCHEDULER.md", """
-# Scheduler
-
-The OS Host owns subagent lifecycle control, process state, context allocation, and cross-app bridge approval.
-""")
-
-    write_json(target / "ano/registry/installed_apps.json", {"installed_apps": []})
-    write_json(target / "ano/runtime/process_table.json", {
-        "host": {
-            "id": "ano.host",
-            "type": "system_host",
-            "status": "running",
-            "persistent": True,
-            "created_at": now,
-        },
-        "processes": [],
-    })
-    write_json(target / "ano/runtime/context_allocations.json", {"allocations": []})
-    write(target / "ano/runtime/events.jsonl", json.dumps({
-        "event": "workspace.initialized",
-        "version": VERSION,
-        "filesystem": "current_root_clean_v1",
-        "app_package_inbox": True,
-        "staged_packages": staged_packages,
-        "time": now,
-    }, ensure_ascii=False))
-
-    write(target / "user/profile/global_profile.yaml", """
-profile_id: global
-user_defined_agent_topology: {}
-preferences: {}
-""")
-
-    write(target / "user/imports/README.md", "# Imports\n\nPut source materials or raw user files here.")
-    write(target / "user/projects/README.md", "# Projects\n\nUser projects live here.")
-    write(target / "out/README.md", "# Output\n\nFinal user-facing outputs live here.")
-    write(target / "res/README.md", "# Resources\n\nShared static resources live here.")
-    write(target / "apps/README.md", """
-# Apps
-
-Installed Skill Apps live directly under `apps/<package_name>/`.
-
-Pending app packages live under:
+Pending Skill App ZIP packages live under:
 
 ```txt
 apps/_inbox/official/
 apps/_inbox/community/
+apps/_inbox/installed/
 ```
 
-A package in `_inbox` is not installed yet.
+Packages in `official/` and `community/` are install candidates only. They require explicit user approval.
+After OS initialization, the Host must stop and return control to the user.
+""",
+    )
+    write(
+        target / "ano/kernel/OS_AGENT_COMMAND_GATE.md",
+        """
+# OS Agent Command Gate
 
-Basic commands:
+Every user instruction is mediated by the ANO Host/Admin Agent after installation.
+
+The Host checks App installation state, displays the install or runtime approval card,
+and stops for user approval before an App can run. Do not bypass the Host by directly
+executing files under `apps/<app>/runtime/`.
+""",
+    )
+    write(
+        target / "ano/kernel/CONTEXT_PERMISSION_MODEL.md",
+        """
+# Context Permission Model
+
+Apps do not own context. Apps request context.
+
+Every App run begins with a Context Permission Request approved by the OS Host.
+""",
+    )
+    write(
+        target / "ano/kernel/SCHEDULER.md",
+        """
+# Scheduler
+
+The OS Host owns subagent lifecycle control, process state, context allocation, and Cross-App Bridge approval.
+""",
+    )
+
+
+def write_workspace_support_files(target: Path, now: str, staged_packages: list[str], copied_scripts: list[str]) -> None:
+    write(target / "user/profile/global_profile.yaml", "profile_id: global\nuser_defined_agent_topology: {}\npreferences: {}")
+    write(target / "user/imports/README.md", "# Imports\n\nPut source materials or raw user files here.")
+    write(target / "user/projects/README.md", "# Projects\n\nUser projects live here.")
+    write(target / "out/README.md", "# Output\n\nFinal user-facing outputs live here.")
+    write(target / "res/README.md", "# Resources\n\nShared static resources live here.")
+    write(
+        target / "apps/README.md",
+        """
+# Apps
+
+Installed Skill Apps live under `apps/<package_name>/`.
+
+Pending packages live under `apps/_inbox/official/` and `apps/_inbox/community/`.
+A package in `_inbox` is not installed.
 
 ```bash
 python ano/scripts/list_app_packages.py
@@ -344,33 +295,31 @@ python ano/scripts/install_app_package.py apps/_inbox/official/<package>.zip
 python ano/scripts/install_app_package.py apps/_inbox/official/<package>.zip --yes
 python ano/scripts/validate_workspace.py
 ```
-
-The installer command without `--yes` only previews the install card and exits. It does not prompt or block.
-""")
-    write(target / "apps/_inbox/README.md", """
+""",
+    )
+    write(
+        target / "apps/_inbox/README.md",
+        """
 # Skill App Package Inbox
 
-This folder stores pending app ZIP packages awaiting user approval.
+- `official/`: bundled official reference packages
+- `community/`: user-added or third-party packages
+- `installed/`: archived packages that were installed through OS approval
+""",
+    )
+    write(target / "apps/_inbox/official/README.md", "# Official App Packages\n\nOfficial reference packages staged for optional installation.")
+    write(target / "apps/_inbox/community/README.md", "# Community App Packages\n\nPlace third-party Skill App ZIP packages here before installation.")
+    write(target / "apps/_inbox/installed/README.md", "# Installed App Package Archive\n\nPackages are moved here after successful installation.")
 
-- `official/`: official free demo packages bundled with ANO.
-- `community/`: packages added by the user or third-party developers.
-- `installed/`: packages already installed through OS approval.
-
-Packages in `official/` and `community/` are not installed apps. Installed packages are moved to `installed/` after success.
-""")
-    write(target / "apps/_inbox/official/README.md", "# Official App Packages\n\nOfficial demo app packages staged for optional installation.")
-    write(target / "apps/_inbox/community/README.md", "# Community App Packages\n\nDrop third-party Skill App ZIP packages here before installation.")
-    write(target / "apps/_inbox/installed/README.md", "# Installed App Package Archive\n\nPackages are moved here after successful installation so they no longer appear as pending.")
-
-    package_text = "No bundled app packages were staged."
     if staged_packages:
-        package_text = "Detected pending official Skill App packages:\n" + "\n".join(f"- `apps/_inbox/official/{name}`" for name in staged_packages)
+        package_text = "\n".join(f"- `apps/_inbox/official/{name}`" for name in staged_packages)
+    else:
+        package_text = "- No bundled App packages were staged."
 
-    script_text = ""
-    if copied_scripts:
-        script_text = "Runtime scripts copied to `ano/scripts/`: " + ", ".join(f"`{x}`" for x in copied_scripts)
-
-    write(target / "README.md", f"""
+    script_text = ", ".join(f"`{name}`" for name in copied_scripts) or "none"
+    write(
+        target / "README.md",
+        f"""
 # Agent-Native OS Workspace
 
 Initialized: {now}  
@@ -378,7 +327,7 @@ Version: {VERSION}
 Filesystem: current root clean v1  
 App package inbox: enabled
 
-This workspace follows the Agent-Native OS v0.2.8 filesystem standard.
+This workspace follows the Agent-Native OS v{VERSION} filesystem and Host-gate contract.
 
 ```txt
 README.md
@@ -390,105 +339,106 @@ res/
 out/
 ```
 
-Key rules:
-
-```txt
-Host is the OS. Apps are not Hosts.
-The current directory is the workspace root.
-Do not create ano-workspace/ or any child workspace folder.
-Apps live in apps/. System internals live in ano/.
-Pending app packages live in apps/_inbox/ and require user approval.
-Final user-facing outputs live in out/.
-```
-
 ## Installation is complete
 
-ANO OS installation stops here. The agent must not automatically install any app package after this point. Wait for the user's next instruction.
+ANO initialization stops here. Do not auto-install or auto-start a Skill App.
 
 ## OS Host command gate
 
-Hard rule: after installation, all user instructions are handled by the ANO Host/Admin Agent first. Do not jump into `apps/<app>/runtime/` directly.
-
-Handle a user instruction through the OS Host:
-
 ```bash
-python ano/scripts/ano_host.py "打开 ANO Tiandao Furnace Skill AppAgent"
+python ano/scripts/ano_host.py "列出应用"
+python ano/scripts/ano_host.py "打开 ANO 小说工坊"
 ```
 
-The Host will check installation status, print the app runtime permission request, and stop for user approval.
+The Host checks installation state and displays the required approval card before continuing.
 
 ## Pending Skill App packages
 
 {package_text}
 
-## App installation guide
-
-List staged packages:
+## App installation
 
 ```bash
 python ano/scripts/list_app_packages.py
-```
-
-Preview one package's install card without installing:
-
-```bash
 python ano/scripts/install_app_package.py apps/_inbox/official/<package>.zip
-```
-
-Install only after the user explicitly approves:
-
-```bash
 python ano/scripts/install_app_package.py apps/_inbox/official/<package>.zip --yes
 ```
 
-## Basic operation commands
+The command without `--yes` is preview-only.
 
-Handle any user instruction through ANO Host:
-
-```bash
-python ano/scripts/ano_host.py "列出应用"
-python ano/scripts/ano_host.py "打开 ANO Tiandao Furnace Skill AppAgent"
-```
-
-Validate this workspace:
+## Validation
 
 ```bash
 python ano/scripts/validate_workspace.py
 ```
 
-View user log:
+Runtime scripts copied into this workspace: {script_text}
+""",
+    )
 
-```bash
-cat USER_LOG.md
-```
+    log_lines = [
+        "# User Log",
+        "",
+        f"- {now}: Initialized Agent-Native OS workspace v{VERSION} in the current directory.",
+        f"- {now}: App Package Inbox enabled at `apps/_inbox/`.",
+        f"- {now}: OS initialization completed and stopped. No App was auto-installed.",
+    ]
+    log_lines.extend(
+        f"- {now}: Detected pending official Skill App package `{name}`. User approval required before installation."
+        for name in staged_packages
+    )
+    write(target / "USER_LOG.md", "\n".join(log_lines))
 
-Check installed apps registry:
 
-```bash
-cat ano/registry/installed_apps.json
-```
+def init_workspace(target: Path, no_bundled_apps: bool = False) -> dict:
+    target.mkdir(parents=True, exist_ok=True)
+    now = iso_now()
 
-{script_text}
-""")
+    for dirname in SKELETON_DIRS:
+        (target / dirname).mkdir(parents=True, exist_ok=True)
 
-    package_log = ""
-    if staged_packages:
-        package_log = "\n" + "\n".join(f"- {now}: Detected pending official Skill App package `{name}`. User approval required before install." for name in staged_packages)
+    copied_scripts = copy_runtime_scripts(target)
+    copied_templates, copied_specs = copy_static_templates_and_specs(target)
+    staged_packages = stage_bundled_app_packages(target, include=not no_bundled_apps)
 
-    write(target / "USER_LOG.md", f"""
-# User Log
-
-- {now}: Initialized Agent-Native OS workspace v{VERSION} in the current directory.
-- {now}: App package inbox enabled at `apps/_inbox/`.
-- {now}: OS installation completed and stopped. No app was auto-installed.
-{package_log}
-""")
+    write(target / "ano/VERSION", VERSION)
+    write_kernel_documents(target)
+    write_json(target / "ano/registry/installed_apps.json", {"installed_apps": []})
+    write_json(
+        target / "ano/runtime/process_table.json",
+        {
+            "host": {
+                "id": "ano.host",
+                "type": "system_host",
+                "status": "running",
+                "persistent": True,
+                "created_at": now,
+            },
+            "processes": [],
+        },
+    )
+    write_json(target / "ano/runtime/context_allocations.json", {"allocations": []})
+    write(
+        target / "ano/runtime/events.jsonl",
+        json.dumps(
+            {
+                "event": "workspace.initialized",
+                "version": VERSION,
+                "filesystem": "current_root_clean_v1",
+                "app_package_inbox": True,
+                "staged_packages": staged_packages,
+                "time": now,
+            },
+            ensure_ascii=False,
+        ),
+    )
+    write_workspace_support_files(target, now, staged_packages, copied_scripts)
 
     moved = cleanup_root(target, now)
     if moved:
-        moved_note = "\nRoot cleanup moved these entries to `user/imports/_unsorted/`: " + ", ".join(f"`{x}`" for x in moved) + "\n"
-        append(target / "README.md", moved_note)
-        append(target / "USER_LOG.md", f"- {now}: Root cleanup moved entries into `user/imports/_unsorted/`: " + ", ".join(f"`{x}`" for x in moved) + ".")
+        moved_text = ", ".join(f"`{name}`" for name in moved)
+        append(target / "README.md", f"\nRoot cleanup moved these entries to `user/imports/_unsorted/`: {moved_text}")
+        append(target / "USER_LOG.md", f"- {now}: Root cleanup moved entries into `user/imports/_unsorted/`: {moved_text}.")
 
     return {
         "version": VERSION,
@@ -505,35 +455,33 @@ def print_final_notice(result: dict) -> None:
     print(f"Initialized Agent-Native OS v{VERSION} in current workspace root: {result['workspace']}")
     print("\nWorkspace root layout:")
     print("  README.md  USER_LOG.md  ano/  user/  apps/  res/  out/")
-    print("\nPending official app packages staged:")
+    print("\nPending official App packages staged:")
     staged = result.get("staged_packages", [])
     if staged:
         for name in staged:
             print(f"  - apps/_inbox/official/{name}")
     else:
         print("  - none")
-    print("\nSTOP: OS installation is complete.")
-    print("Do not auto-install Skill Apps. Return control to the user and wait for the next instruction.")
-    print("After installation, every user instruction must be handled by ANO Host/Admin Agent first.")
-    print("Do not cd into apps/<app>/runtime and run app internals directly.")
-    print("\nOS Host command gate:")
-    print("  python ano/scripts/ano_host.py \"列出应用\"")
-    print("  python ano/scripts/ano_host.py \"打开 ANO Tiandao Furnace Skill AppAgent\"")
-    print("\nApp installation guide:")
-    print("  python ano/scripts/list_app_packages.py")
-    print("  python ano/scripts/install_app_package.py apps/_inbox/official/<package>.zip")
-    print("  python ano/scripts/install_app_package.py apps/_inbox/official/<package>.zip --yes")
-    print("\nBasic operation commands:")
-    print("  python ano/scripts/ano_host.py \"列出应用\"")
+    print("\nSTOP: OS initialization is complete.")
+    print("Do not auto-install Skill Apps. Return control to the user.")
+    print("\nNext commands:")
+    print('  python ano/scripts/ano_host.py "列出应用"')
     print("  python ano/scripts/validate_workspace.py")
-    print("  cat USER_LOG.md")
-    print("  cat ano/registry/installed_apps.json")
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("workspace_path", nargs="?", default=None, help="Must be omitted or '.'; ANO installs into the current directory only.")
-    parser.add_argument("--no-bundled-apps", action="store_true", help="Do not stage bundled official app packages into apps/_inbox/official/.")
+    parser.add_argument(
+        "workspace_path",
+        nargs="?",
+        default=None,
+        help="Must be omitted or '.'; ANO installs into the current directory only.",
+    )
+    parser.add_argument(
+        "--no-bundled-apps",
+        action="store_true",
+        help="Do not stage bundled official App packages.",
+    )
     args = parser.parse_args(argv)
     target = assert_current_root(args.workspace_path)
     result = init_workspace(target, no_bundled_apps=args.no_bundled_apps)
