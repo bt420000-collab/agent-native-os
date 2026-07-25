@@ -2,59 +2,61 @@
 
 Agent Native OS Core is free and open-source. Skill Apps may be free, open-source, paid, freemium, or commercial, depending on the app developer.
 
-This repository bundles first-party demo apps as **optional install packages** under:
+Official packages are stored under `app_packages/official/`. Workspace initialization stages them into `apps/_inbox/official/` and then stops. No App is auto-installed.
 
-```txt
-app_packages/official/
-```
-
-They are not installed with the OS. During workspace initialization, the OS stages these ZIP packages into:
-
-```txt
-apps/_inbox/official/
-```
-
-The user then decides which packages to install after reviewing the install card.
-
-## Full developer flow
+## Installation flow
 
 ```bash
 python scripts/init_workspace.py
 python ano/scripts/list_app_packages.py
-python ano/scripts/install_app_package.py apps/_inbox/official/ano-calculator-skill-app_v0.1.2.zip
-python ano/scripts/install_app_package.py apps/_inbox/official/ano-calculator-skill-app_v0.1.2.zip --yes
-python ano/scripts/install_app_package.py apps/_inbox/official/ano-tiandao-furnace-skill-app_v0.4.0.zip
-python ano/scripts/install_app_package.py apps/_inbox/official/ano-tiandao-furnace-skill-app_v0.4.0.zip --yes
+python ano/scripts/install_app_package.py apps/_inbox/official/<package>.zip
+python ano/scripts/install_app_package.py apps/_inbox/official/<package>.zip --yes
 python ano/scripts/validate_workspace.py
 ```
 
+The first install command previews the App installation card. Use `--yes` only after explicit user approval.
+
 ## Official free package #1: ANO Calculator Skill App
 
-- File: `app_packages/official/ano-calculator-skill-app_v0.1.2.zip`
+- File: `ano-calculator-skill-app_v0.1.2.zip`
 - App ID: `ano.skill.calculator`
-- Package: `ano-calculator-skill-app`
-- Pricing: free
+- Type: utility / zero-subagent reference App
 - License: Apache-2.0
-- Type: utility / zero-subagent reference app
 
-Demonstrates the minimum ANO Skill App standard: manifest, install card, context request, tiny permissions, runtime health check, and clean workspace installation.
+Demonstrates the minimum ANO App contract: manifest, installation card, tiny permission request, clean workspace installation, and health check.
 
 ## Official free package #2: ANO Tiandao Furnace Skill App
 
-- File: `app_packages/official/ano-tiandao-furnace-skill-app_v0.4.0.zip`
+- File: `ano-tiandao-furnace-skill-app_v0.4.0.zip`
 - App ID: `ano.skill.tiandao`
-- Package: `ano-tiandao-furnace-skill-app`
-- Pricing: free
-- Type: multi-agent reference app
-- Safety: entertainment-only symbolic random lab; no prediction claims, no betting advice, no probability-improvement claims.
+- Type: interactive multi-agent reference App
+- Safety: entertainment-only symbolic random lab
 
-Demonstrates a multi-agent ritual flow: visible agent roster, dynamic question batches, furnace heat gate, oracle-style entertainment interpretation, safety auditing, collision review, and experiment archiving.
+Demonstrates visible Agent rosters, staged user interaction, dynamic question batches, furnace heat gating, Host-mediated web/weather requests, feng-shui entertainment interpretation, safety auditing, and experiment archiving.
 
+## Official free package #3: ANO Novel Skill App
 
-## v0.2.8 rule
+- File: `ano-novel-skill-app_v0.3.1.zip`
+- App ID: `ano.skill.novel`
+- Chinese display name: `ANO 小说工坊`
+- Type: long-form novel production multi-agent App
 
-Official app packages are staged only. OS installation stops after staging. The app installer previews install cards by default and requires `--yes` after explicit user approval to install.
+Major capabilities:
 
-## Tiandao Furnace v0.4.0
+- opening and context approval mediated by the single ANO Host
+- source-law archive and project initialization
+- built-in base prose/craft reference patch
+- project-specific Literary Filter layer
+- isolated Material Collection Lab
+- Material Collector and Material Curator workflow
+- material usage reports, handoff reports, material debt, and chapter preflight gates
 
-The official multi-agent demo now enforces OS-hosted opening, previous-draw intake first, overflow-safe user choices, Host-mediated web/weather lookup requests, and feng-shui top-up. Direct `ritual` execution remains blocked. Use ANO Host command gate first.
+The Novel App is optional. Installing the mother OS never installs or starts it automatically.
+
+To preview and install it after OS initialization:
+
+```bash
+python ano/scripts/install_app_package.py apps/_inbox/official/ano-novel-skill-app_v0.3.1.zip
+python ano/scripts/install_app_package.py apps/_inbox/official/ano-novel-skill-app_v0.3.1.zip --yes
+python ano/scripts/ano_host.py "打开 ANO 小说工坊"
+```
