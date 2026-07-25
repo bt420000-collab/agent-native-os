@@ -4,7 +4,7 @@
 
 面向长任务 AI Agent 与可安装 Skill App 的上下文原生操作系统架构。
 
-![Spec](https://img.shields.io/badge/spec-v0.2.8-blue)
+![Spec](https://img.shields.io/badge/spec-v0.2.13-blue)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green)
 ![Status](https://img.shields.io/badge/status-draft-orange)
 
@@ -26,57 +26,28 @@
 > **不是让 AI 接管电脑。**  
 > **是给 AI 装一台自己的电脑。**
 
-Agent-Native OS 不是给人类桌面用的操作系统。它是给 AI Agent 用的原生工作系统：一个可治理的工作空间，让 Agent 可以安装 Skill App、申请上下文、隔离工作区、通过系统 Host 启动子 Agent、交接状态，并维持长任务工作的稳定秩序。
+Agent-Native OS 是给 AI Agent 使用的原生工作系统：提供唯一常驻 Host、干净工作区、可安装 Skill App、上下文权限申请、Subagent 生命周期管理、跨 App Bridge、用户自定义 Agent 阵容，以及可恢复的长任务运行秩序。
 
-通俗说，它就是 **AI Agent 的操作系统层**。
-
-## v0.2 重点：唯一 Host 运行时
-
-Agent-Native OS v0.2 明确了更干净的生态边界：
+## 核心架构
 
 ```txt
 Agent-Native OS Core = 常驻 Host、运行时、调度器、权限与标准
 Skill App = 由 OS 挂载的可安装能力包
-Subagent = 由 OS Host 启动、暂停、关闭、归档的工作进程
+Subagent = 由 OS Host 启动、暂停、关闭或归档的工作进程
 ```
-
-Host 属于母系统。App 不是 Host。App 可以有 Coordinator，但只有 OS Host 拥有子 Agent 生命周期主权和全局上下文调度权。
-
-## 核心原则
 
 ```txt
 App 不拥有上下文，App 只能申请上下文。
-上下文、Agent、工作区权限和调度权，全部归 Host 管理。
+上下文、Agent、工作区权限和调度权，全部归 ANO Host 管理。
 ```
 
-Skill App 运行前，必须提交 **上下文权限申请表**。系统打印 **Agent 运行审批卡**，展示计划启动的 Agent 阵容、上下文预算、工作区权限、跨 App 桥接和商业状态。用户可以批准、拒绝，或用自然语言修改方案。
+Host 只属于母系统。App 可以定义 Coordinator，但 App 永远不是 Host。
 
-例如用户可以说：
-
-```txt
-这小说评论区会炸，再给我加个喷子模拟 Agent。
-```
-
-系统可以将这个经用户批准的修改写入用户自定义上下文配置，并在后续运行中继承。
-
-## Agent-Native OS 管什么
-
-- 唯一常驻 OS Host
-- 上下文权限申请
-- Skill App 安装与挂载
-- Subagent 调度与生命周期
-- 工作区权限沙箱
-- 进程表与上下文分配表
-- 事件总线与恢复记录
-- 跨 App Bridge
-- 输出契约与交接报告
-- 用户自定义 Agent 拓扑
+每次 App 运行前必须提交上下文权限申请表。OS 展示 Agent 运行审批卡，列出角色阵容、上下文预算、工作区权限、跨 App 桥接和商业状态。用户可以批准、拒绝，或用自然语言修改阵容。
 
 ## 生态模型
 
-Agent-Native OS Core 应永久免费开源并持续更新。
-
-Skill App 可以由官方、社区、私有团队或商业开发者开发。App 可以免费、开源、付费、免费增值、订阅、企业授权或私有部署。
+Agent Native OS Core 永久免费开源并持续更新。Skill App 可由官方、社区、私有团队或商业开发者开发，并自由决定免费、开源、买断、订阅或企业授权模式。
 
 ```txt
 系统提供秩序。
@@ -85,7 +56,7 @@ App 提供能力。
 
 ## 视觉总览
 
-### 1）从 code-for-machines 到 context-for-agents
+### 从 code-for-machines 到 context-for-agents
 
 <p align="center">
   <a href="./docs/assets/homepage/diagram-from-code-to-agents.png">
@@ -93,7 +64,7 @@ App 提供能力。
   </a>
 </p>
 
-### 2）系统架构与最小工作闭环
+### 系统架构与最小工作闭环
 
 <p align="center">
   <a href="./docs/assets/homepage/diagram-core-architecture.png">
@@ -104,7 +75,7 @@ App 提供能力。
   </a>
 </p>
 
-### 3）Agent 原生系统与工作区布局
+### Agent 原生系统与工作区布局
 
 <p align="center">
   <a href="./docs/assets/homepage/diagram-agent-native-system.png">
@@ -117,30 +88,24 @@ App 提供能力。
 
 ## 快速开始
 
-### 当前目录安装规则
-
-ANO v0.2.8 只能安装到当前获得用户授权的工作目录根目录，不准再创建 `ano-workspace/` 之类子目录。OS 初始化完成后必须停止，等待用户下一条指令，不能自动继续安装 Skill App。
-
-
-
-初始化一个空白 v0.2 工作区：
+ANO 只能安装到当前获得授权的工作目录根目录，不准创建 `ano-workspace/` 或其他套娃子目录。
 
 ```bash
 python scripts/init_workspace.py
 ```
 
-验证工作区：
+OS 初始化完成后必须停止，不得自动安装任何 App。
 
 ```bash
+python ano/scripts/list_app_packages.py
+python ano/scripts/install_app_package.py apps/_inbox/official/<package>.zip
+python ano/scripts/install_app_package.py apps/_inbox/official/<package>.zip --yes
 python ano/scripts/validate_workspace.py
 ```
 
-本仓库不再内置旧 demo。后续 demo 应全部按 `ano-<domain>-skill-app` 格式制作成标准可安装 App。
+第一次安装命令只预览安装卡。只有用户明确批准后，才能使用 `--yes`。
 
-
-## v0.2.2 安装后工作区文件系统
-
-开发仓库可以保留 docs、scripts、spec、templates 和官方 App 源码包。用户安装后的 ANO 工作区必须保持干净：
+## 安装后的标准文件系统
 
 ```txt
 README.md
@@ -152,83 +117,47 @@ res/
 out/
 ```
 
-`ano/` 是系统发动机舱，`user/` 是用户数据，`apps/` 是已安装 Skill App，`res/` 是共享资源，`out/` 是最终导出。v0.2.2 起，安装后工作区禁止继续使用旧路径 `.agent-os/` 和 `skills/`。
+- `ano/`：Host、内核、运行时、注册表、调度器、权限、Bridge、日志
+- `user/`：用户资料、记忆、偏好、导入文件和项目
+- `apps/`：已安装 App 与待安装包收件箱
+- `res/`：共享资源
+- `out/`：用户最终可取走的输出
 
-## 开发者入口
+旧安装路径 `.agent-os/` 和 `skills/` 已禁止使用。
 
-- [APP_DEVELOPER_GUIDE.md](APP_DEVELOPER_GUIDE.md) - Skill App 标准开发说明
-- [SPEC.md](SPEC.md) - v0.2 核心规范
-- [VERSIONING.md](VERSIONING.md) - 版本定义与发布规则
-- [ECOSYSTEM.md](ECOSYSTEM.md) - 开源母系统与 App 生态模型
-- [templates/APP_MANIFEST.yaml](templates/APP_MANIFEST.yaml) - App manifest 模板
-- [templates/CONTEXT_PERMISSION_REQUEST.yaml](templates/CONTEXT_PERMISSION_REQUEST.yaml) - 运行时资源申请模板
+## OS Host 指令门禁
 
-## 仓库结构
+安装完成后，用户任意指令都必须先由 ANO Host / 管理员 Agent 接管。
 
-```txt
-agent-native-os/
-  README.md
-  README.zh-CN.md
-  SPEC.md
-  ROADMAP.md
-  CHANGELOG.md
-  VERSIONING.md
-  ECOSYSTEM.md
-  APP_DEVELOPER_GUIDE.md
-  CORE_THEORY_AND_GLOSSARY.md
-  docs/
-  spec/
-  templates/
-  scripts/
+```bash
+python ano/scripts/ano_host.py "列出应用"
+python ano/scripts/ano_host.py "打开 ANO Tiandao Furnace Skill AppAgent"
+python ano/scripts/ano_host.py "打开 ANO 小说工坊"
 ```
 
-## 建议 GitHub 简介
+Host 会检查安装状态、展示权限申请和 Agent 阵容，然后停下等待用户批准。不得直接运行 App 内部脚本绕过母系统。
 
-```txt
-A context-native operating system architecture for long-running AI agents and installable Skill Apps.
-```
+## 官方可选 App 包
 
-## 建议 topics
-
-```txt
-ai-agents
-agent-os
-agent-native
-context-engineering
-context-native
-multi-agent
-skill-apps
-workflow-automation
-agent-framework
-ai-native
-```
-
-## 协议
-
-Apache-2.0。见 `LICENSE`。
-
-## 官方 App 安装包
-
-主系统发布包可以在 `app_packages/official/` 中附带官方免费 demo app 的 ZIP 安装包。初始化工作区时，系统会把它们暂存到 `apps/_inbox/official/`，但不会自动安装。
-
-当前官方包：
+当前 `app_packages/official/` 包含：
 
 - `ano-calculator-skill-app_v0.1.2.zip`
 - `ano-tiandao-furnace-skill-app_v0.4.0.zip`
+- `ano-novel-skill-app_v0.3.1.zip`
+
+小说 App 包含基础行文参考层、文学滤镜、独立素材采集实验室，以及素材使用度、交接、素材债务和章节开工前检查。
 
 详见 [OFFICIAL_APPS.md](OFFICIAL_APPS.md)。
 
-## v0.2.8 OS Host Command Gate
+## 开发者入口
 
-After installation, every user instruction must be handled by the ANO Host/Admin Agent first. Do not bypass the OS by directly running app internals. Use:
+- [APP_DEVELOPER_GUIDE.md](APP_DEVELOPER_GUIDE.md)
+- [SPEC.md](SPEC.md)
+- [VERSIONING.md](VERSIONING.md)
+- [ECOSYSTEM.md](ECOSYSTEM.md)
+- [templates/APP_MANIFEST.yaml](templates/APP_MANIFEST.yaml)
+- [templates/CONTEXT_PERMISSION_REQUEST.yaml](templates/CONTEXT_PERMISSION_REQUEST.yaml)
 
-```bash
-python ano/scripts/ano_host.py "打开 ANO Tiandao Furnace Skill AppAgent"
-```
+## 协议
 
-The Host will resolve installation status, show permission/approval cards, and stop for user approval.
-
-
-## Tiandao Furnace v0.4.0
-
-The official multi-agent demo now starts with previous-draw intake, supports ANO Host web/weather lookup requests, handles overflow user choices without blocking, and adds feng-shui direction/weather/geography top-up. It remains entertainment-only and does not provide prediction or betting advice.
+Apache-2.0。见 [LICENSE](LICENSE)。
