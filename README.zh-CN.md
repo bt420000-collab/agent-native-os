@@ -6,7 +6,8 @@
 
 ![Spec](https://img.shields.io/badge/spec-v0.2.13-blue)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![Status](https://img.shields.io/badge/status-draft-orange)
+![Status](https://img.shields.io/badge/status-experimental-orange)
+[![Smoke Test](https://github.com/bt420000-collab/agent-native-os/actions/workflows/smoke-test.yml/badge.svg)](https://github.com/bt420000-collab/agent-native-os/actions/workflows/smoke-test.yml)
 
 <p align="center">
   <a href="./docs/assets/homepage/poster-not-human-desktop.png">
@@ -47,12 +48,25 @@ Host 只属于母系统。App 可以定义 Coordinator，但 App 永远不是 Ho
 
 ## 生态模型
 
-Agent Native OS Core 永久免费开源并持续更新。Skill App 可由官方、社区、私有团队或商业开发者开发，并自由决定免费、开源、买断、订阅或企业授权模式。
+Agent-Native OS Core 永久免费开源并持续更新。Skill App 可由官方、社区、私有团队或商业开发者开发，并自由决定免费、开源、买断、订阅或企业授权模式。
 
 ```txt
 系统提供秩序。
 App 提供能力。
 ```
+
+## 当前可运行内容
+
+v0.2.13 是实验性但可运行的参考版本。目前仓库提供：
+
+- 当前授权目录初始化器；
+- 带版本一致性和 Host 门禁检查的工作区验证器；
+- 默认只预览安装卡的 Skill App 安装器；
+- 轻量 ANO Host 指令门禁；
+- 三个可选官方 App 包；
+- 可机读清单、模板、治理文档和 App 开发指南。
+
+CI 冒烟测试会创建全新工作区、运行验证、列出待安装 App、预览安装卡并检查 Host 指令门禁。当前版本不是面向生产环境的通用操作系统成品。
 
 ## 视觉总览
 
@@ -155,6 +169,8 @@ Host 会检查安装状态、展示权限申请和 Agent 阵容，然后停下�
 - [SPEC.md](SPEC.md)
 - [VERSIONING.md](VERSIONING.md)
 - [ECOSYSTEM.md](ECOSYSTEM.md)
+- [CONTRIBUTING.md](CONTRIBUTING.md)
+- [SECURITY.md](SECURITY.md)
 - [templates/APP_MANIFEST.yaml](templates/APP_MANIFEST.yaml)
 - [templates/CONTEXT_PERMISSION_REQUEST.yaml](templates/CONTEXT_PERMISSION_REQUEST.yaml)
 
