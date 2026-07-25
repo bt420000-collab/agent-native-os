@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ANO Host/Admin Agent command gate v0.2.8.
+"""ANO Host/Admin Agent command gate v0.2.13.
 
 All user instructions after OS installation must be mediated by the OS Host.
 Users do not directly run app agents. This script is a lightweight CLI stand-in
@@ -7,6 +7,7 @@ for the persistent ANO Host/Admin Agent.
 
 Usage:
   python ano/scripts/ano_host.py "打开 ANO Tiandao Furnace Skill AppAgent"
+  python ano/scripts/ano_host.py "打开 ANO 小说工坊"
   python ano/scripts/ano_host.py "列出应用"
 """
 from __future__ import annotations
@@ -23,6 +24,7 @@ from typing import Any, Dict, List, Optional
 HOST_NAME = "ANO Host / 管理员 Agent"
 
 APP_KEYWORDS = {
+    "ano.skill.novel": ["novel", "小说", "写作", "网文", "开书", "章节", "文学滤镜", "小说工坊"],
     "ano.skill.tiandao": ["tiandao", "天道", "炉", "炉子", "hash", "furnace", "算命", "开炉"],
     "ano.skill.calculator": ["calculator", "计算器", "calc", "算数", "换算"],
 }
@@ -106,11 +108,9 @@ def pending_packages(root: Path) -> List[Dict[str, Any]]:
 
 def match_app(instruction: str, apps: List[Dict[str, Any]], packages: List[Dict[str, Any]]) -> Optional[str]:
     text = instruction.lower()
-    # First match curated domain keywords. Avoid generic words such as app/skill.
     for app_id, words in APP_KEYWORDS.items():
         if any(w.lower() in text for w in words):
             return app_id
-    # Then match exact app_id or full display/package names.
     for item in apps + packages:
         app_id = str(item.get("app_id", "")).lower()
         display = str(item.get("display_name", "")).lower()
@@ -168,6 +168,20 @@ def open_installed_app(root: Path, app: Dict[str, Any]) -> int:
     print(f"OS 处理结果：检测到已安装 App：{display}（{app_id}）。")
     print("OS 将先展示该 App 的上下文权限申请和 Agent 阵容，然后停止，等待用户下一步指令。")
     print()
+
+    if app_id == "ano.skill.novel":
+        runtime = install_path / "runtime" / "novel_runtime.py"
+        if not runtime.exists():
+            print(f"ERROR: Novel runtime not found: {runtime}")
+            return 2
+        proc = subprocess.run([sys.executable, str(runtime), "open"], cwd=str(root), text=True, capture_output=True)
+        if proc.stdout:
+            print(proc.stdout.rstrip())
+        if proc.stderr:
+            print(proc.stderr.rstrip(), file=sys.stderr)
+        print("\nOS STOP：已完成 ANO 小说工坊打开预检。不得继续 start 或写正文，除非用户下一条指令明确批准。")
+        return proc.returncode
+
     if app_id == "ano.skill.tiandao":
         runtime = install_path / "runtime" / "tiandao_furnace.py"
         if not runtime.exists():
@@ -180,6 +194,7 @@ def open_installed_app(root: Path, app: Dict[str, Any]) -> int:
             print(proc.stderr.rstrip(), file=sys.stderr)
         print("\nOS STOP：已完成 App 打开预检。不得继续 start 或 answer，除非用户下一条指令明确批准。")
         return proc.returncode
+
     if app_id == "ano.skill.calculator":
         print("计算器 App 是最小单体工具，无 Subagent。运行前仍由 OS 提示权限：tiny context, no network, no bridge。")
         print("常用命令示例：")
@@ -187,6 +202,7 @@ def open_installed_app(root: Path, app: Dict[str, Any]) -> int:
         print("  python runtime/calculator.py calc \"2 + 3 * 4\"")
         print("OS STOP：请等待用户指定具体计算表达式。")
         return 0
+
     print("该 App 尚未声明 OS 托管 open 入口。请阅读 INSTALL_CARD.md 或 README.md。")
     print("OS STOP：不要直接运行未知 App 的内部脚本。")
     return 0
