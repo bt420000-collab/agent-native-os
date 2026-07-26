@@ -46,6 +46,20 @@ A release should update:
 6. any changed templates or schemas
 7. CI smoke-test expectations
 
+The `Smoke Test` GitHub Actions workflow validates the release state after every pull request and main-branch push. After a successful non-PR run, it creates a normal GitHub Release only when the version does not already have one.
+
+A maintainer may also use **Actions → Smoke Test → Run workflow** to publish or refresh the current version. The workflow:
+
+- reads the version from `VERSION` unless a matching version is supplied manually;
+- requires `PACKAGE_MANIFEST.json`, README, Changelog, Versioning, active helpers, and bundled App assets to agree;
+- initializes and validates a clean workspace before publishing;
+- creates the `v<version>` tag and Release through the repository-scoped `GITHUB_TOKEN`;
+- extracts the matching section from `CHANGELOG.md`;
+- uploads every bundled official Skill App ZIP plus `PACKAGE_MANIFEST.json`;
+- refreshes existing notes and assets only during a manual run with refresh enabled.
+
+No personal access token or maintainer password is stored in the repository.
+
 ## 0.2.13 Official Novel Skill App
 
 Current release. Adds the optional official Novel Skill App, ANO Host support for opening it, and Material Governance workflows while preserving the initialization and approval stop points.
