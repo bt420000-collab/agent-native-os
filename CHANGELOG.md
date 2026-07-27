@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.3.0 - Context Virtual Memory
+
+- Promoted context from a preloaded prompt budget to a Host-owned virtual memory resource.
+- Added versioned Context Objects, revocable task leases, per-Agent working sets, hot/warm/cold tiers, Page Fault Requests, eviction records, and recovery snapshots.
+- Added the experimental `context_vm.py` reference helper with Host-only mutations, scope checks, budget enforcement, pinned-page protection, lease revocation, and state validation.
+- Added Context Lease and Context Page Fault templates plus the machine-readable contract specification.
+- Updated Skill App manifests and Context Permission Requests so Apps request paging policy and bootstrap frames instead of assuming full-project visibility.
+- Updated clean-workspace initialization, validation, Host status commands, and CI smoke tests for the Context VM runtime skeleton.
+- Preserved the Single Host rule: Apps request context; only `ano.host` grants, mounts, evicts, snapshots, or revokes it.
+
+
 ## v0.2.13 - Official Novel Skill App
 
 - Added the optional official `ano-novel-skill-app_v0.3.1.zip` package.
