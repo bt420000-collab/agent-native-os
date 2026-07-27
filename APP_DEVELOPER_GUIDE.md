@@ -1,6 +1,6 @@
 # Agent-Native OS Skill App Developer Guide
 
-This guide defines the standard format for developing Skill Apps for Agent-Native OS v0.2.
+This guide defines the standard format for developing Skill Apps for Agent-Native OS v0.3.
 
 ## 1. Mental model
 
@@ -82,6 +82,8 @@ Every app must declare:
 - install prompt
 - commercial model
 - default context permission request
+- Context Lease and paging policy
+- bootstrap working-set frames
 - agent policy
 - workspace permissions
 - lifecycle policy
@@ -107,6 +109,20 @@ The request tells the OS:
 The OS Host may approve, deny, reduce, pause, or kill the requested runtime plan.
 
 Apps do not own context. Apps request context.
+
+## 5.1 Context Virtual Memory contract
+
+Apps must assume that most project material is initially invisible. Each run requests a revocable Context Lease and declares:
+
+- three pinned bootstrap frames: task, authoritative laws, and output contract;
+- readable and denied backing-store scopes;
+- maximum visible-context budget;
+- whether Page Fault Requests are allowed;
+- eviction and recovery expectations.
+
+When evidence is missing, the App emits a Context Page Fault Request. It must not silently expand to a full-project scan. Only the Host resolves the fault and mounts the smallest sufficient authorized Context Object.
+
+Registration is not permission. Permission is not mounting. Mounting is not ownership.
 
 ## 6. Agent Runtime Approval Card
 
@@ -230,6 +246,9 @@ Before release, verify:
 [ ] INSTALL_CARD.md explains the app clearly
 [ ] agent_policy has no Host role
 [ ] context_permission_request is declared
+[ ] Context Lease declares bootstrap frames and token budget
+[ ] missing evidence produces a Page Fault Request, not a silent full scan
+[ ] recovery records backing source versions
 [ ] workspace permissions are least-privilege
 [ ] commercial model is declared
 [ ] output contracts are documented
@@ -271,7 +290,7 @@ Official demo packages are staged in `apps/_inbox/official/` during workspace in
 
 ## Current-root user install flow
 
-Developers should test apps against the v0.2.8 current-root workflow:
+Developers should test apps against the v0.3.0 current-root workflow:
 
 ```bash
 python scripts/init_workspace.py
