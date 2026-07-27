@@ -2,11 +2,11 @@
 
 Languages: [English](README.md) | [简体中文](README.zh-CN.md)
 
-A context-native operating system architecture for long-running AI agents and installable Skill Apps.
+A context-virtualized operating system architecture for long-running AI agents and installable Skill Apps.
 
 **Website:** [https://agent-native-os.semelo.chatgpt.site](https://agent-native-os.semelo.chatgpt.site)
 
-![Spec](https://img.shields.io/badge/spec-v0.2.13-blue)
+![Spec](https://img.shields.io/badge/spec-v0.3.0-blue)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green)
 ![Status](https://img.shields.io/badge/status-experimental-orange)
 [![Smoke Test](https://github.com/bt420000-collab/agent-native-os/actions/workflows/smoke-test.yml/badge.svg)](https://github.com/bt420000-collab/agent-native-os/actions/workflows/smoke-test.yml)
@@ -29,7 +29,7 @@ A context-native operating system architecture for long-running AI agents and in
 > **Not teaching AI to use human desktops.**  
 > **Giving AI a computer of its own.**
 
-Agent-Native OS is a governed operating layer for AI agents. It gives agents a persistent Host, clean workspace, installable Skill Apps, context permission requests, subagent lifecycle control, cross-App bridges, user-defined Agent topology, and recoverable long-running workflows.
+Agent-Native OS is a governed operating layer for AI agents. It gives agents a persistent Host, clean workspace, installable Skill Apps, Host-owned Context Virtual Memory, subagent lifecycle control, cross-App bridges, user-defined Agent topology, and recoverable long-running workflows.
 
 ## Core doctrine
 
@@ -46,6 +46,18 @@ The Host owns context, agents, workspace permissions, and scheduling.
 
 The Host belongs to the mother system. Apps may define coordinators, but Apps are never Hosts.
 
+## Context Virtual Memory
+
+ANO v0.3.0 turns context into a demand-paged OS resource:
+
+```txt
+Context Catalog → Task Lease → Agent Working Set → Page Fault → Mount/Evict → Snapshot/Resume
+```
+
+The Host pins only the task, authoritative laws, and output contract. Other material is mounted on demand, reduced to a cold reference when inactive, and restored by source version. Registration is not permission; permission is not visibility. Apps cannot widen their own lease or resolve their own Page Faults.
+
+See [CONTEXT_VIRTUAL_MEMORY.md](CONTEXT_VIRTUAL_MEMORY.md).
+
 Before an App runs, it submits a Context Permission Request. The OS displays an Agent Runtime Approval Card with the proposed roles, context budget, workspace permissions, bridge requests, and commercial status. The user may approve, reject, or modify the roster in natural language.
 
 ## Ecosystem model
@@ -59,12 +71,13 @@ Apps provide capability.
 
 ## Runnable reference surface
 
-v0.2.13 is an experimental but runnable reference release. The repository currently provides:
+v0.3.0 is an experimental but runnable reference release. The repository currently provides:
 
 - a current-root workspace initializer;
 - a workspace validator with version and Host-gate checks;
 - preview-first Skill App installation;
 - a lightweight ANO Host command gate;
+- an experimental Context VM catalog, lease, working-set, Page Fault, eviction, and snapshot helper;
 - three optional official App packages;
 - machine-readable manifests, templates, governance documents, and App developer guidance.
 
@@ -117,6 +130,8 @@ python ano/scripts/list_app_packages.py
 python ano/scripts/install_app_package.py apps/_inbox/official/<package>.zip
 python ano/scripts/install_app_package.py apps/_inbox/official/<package>.zip --yes
 python ano/scripts/validate_workspace.py
+python ano/scripts/context_vm.py status
+python ano/scripts/context_vm.py validate
 ```
 
 The first install command previews the installation card. Use `--yes` only after explicit user approval.
@@ -133,7 +148,7 @@ res/
 out/
 ```
 
-- `ano/`: Host, kernel, runtime, registry, scheduler, permissions, bridges, logs
+- `ano/`: Host, kernel, Context VM, runtime, registry, scheduler, permissions, bridges, logs
 - `user/`: user profile, memory, preferences, imports, and projects
 - `apps/`: installed Apps and the App Package Inbox
 - `res/`: shared resources
@@ -167,6 +182,7 @@ See [OFFICIAL_APPS.md](OFFICIAL_APPS.md).
 
 ## Developer entry points
 
+- [CONTEXT_VIRTUAL_MEMORY.md](CONTEXT_VIRTUAL_MEMORY.md)
 - [APP_DEVELOPER_GUIDE.md](APP_DEVELOPER_GUIDE.md)
 - [SPEC.md](SPEC.md)
 - [VERSIONING.md](VERSIONING.md)
@@ -175,6 +191,8 @@ See [OFFICIAL_APPS.md](OFFICIAL_APPS.md).
 - [SECURITY.md](SECURITY.md)
 - [templates/APP_MANIFEST.yaml](templates/APP_MANIFEST.yaml)
 - [templates/CONTEXT_PERMISSION_REQUEST.yaml](templates/CONTEXT_PERMISSION_REQUEST.yaml)
+- [templates/CONTEXT_LEASE.yaml](templates/CONTEXT_LEASE.yaml)
+- [templates/CONTEXT_PAGE_FAULT_REQUEST.yaml](templates/CONTEXT_PAGE_FAULT_REQUEST.yaml)
 
 ## License
 
