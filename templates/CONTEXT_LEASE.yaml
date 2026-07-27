@@ -1,0 +1,62 @@
+context_lease:
+  lease_id: lease_TASK-001_writer_001
+  task_id: TASK-001
+  app_id: ano.skill.example
+  agent_id: example.worker
+  granted_by: ano.host
+  status: proposed
+  revocable: true
+
+  purpose: >
+    State the bounded work this lease allows.
+
+  budget:
+    max_visible_tokens: 12000
+    max_page_fault_tokens: 3000
+    full_project_scan: denied
+
+  scope:
+    read:
+      - user/projects/example/current/
+      - apps/ano-example-skill-app/
+    denied:
+      - ano/kernel/
+      - ano/runtime/apps/*/private/
+      - user/projects/example/obsolete/
+
+  bootstrap_frames:
+    - frame: task_instruction
+      source: ano/runtime/tasks/TASK-001/task.md
+      tier: hot
+      pinned: true
+    - frame: authoritative_laws
+      source: user/projects/example/current/laws/
+      tier: hot
+      pinned: true
+    - frame: output_contract
+      source: ano/runtime/tasks/TASK-001/output_contract.yaml
+      tier: hot
+      pinned: true
+
+  paging:
+    on_missing_evidence: page_fault_required
+    mount_policy: smallest_sufficient_object
+    default_new_tier: warm
+    eviction_policy: checkpoint_then_lru
+    denied_path_precedence: true
+
+  lifecycle:
+    valid_until: task_end
+    revoke_on:
+      - user_cancel
+      - app_killed
+      - scope_violation
+      - task_completed
+
+  recovery:
+    snapshot_on:
+      - pause
+      - handoff
+      - compaction
+      - app_stop
+    source_version_mismatch: stop_for_recovery_resolution
