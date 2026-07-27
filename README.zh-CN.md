@@ -2,11 +2,11 @@
 
 语言：[English](README.md) | [简体中文](README.zh-CN.md)
 
-面向长任务 AI Agent 与可安装 Skill App 的上下文原生操作系统架构。
+面向长任务 AI Agent 与可安装 Skill App 的上下文虚拟化操作系统架构。
 
 **官方网站：** [https://agent-native-os.semelo.chatgpt.site](https://agent-native-os.semelo.chatgpt.site)
 
-![Spec](https://img.shields.io/badge/spec-v0.2.13-blue)
+![Spec](https://img.shields.io/badge/spec-v0.3.0-blue)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green)
 ![Status](https://img.shields.io/badge/status-experimental-orange)
 [![Smoke Test](https://github.com/bt420000-collab/agent-native-os/actions/workflows/smoke-test.yml/badge.svg)](https://github.com/bt420000-collab/agent-native-os/actions/workflows/smoke-test.yml)
@@ -29,7 +29,7 @@
 > **不是让 AI 接管电脑。**  
 > **是给 AI 装一台自己的电脑。**
 
-Agent-Native OS 是给 AI Agent 使用的原生工作系统：提供唯一常驻 Host、干净工作区、可安装 Skill App、上下文权限申请、Subagent 生命周期管理、跨 App Bridge、用户自定义 Agent 阵容，以及可恢复的长任务运行秩序。
+Agent-Native OS 是给 AI Agent 使用的原生工作系统：提供唯一常驻 Host、干净工作区、可安装 Skill App、由 Host 管理的上下文虚拟内存、Subagent 生命周期管理、跨 App Bridge、用户自定义 Agent 阵容，以及可恢复的长任务运行秩序。
 
 ## 核心架构
 
@@ -46,6 +46,18 @@ App 不拥有上下文，App 只能申请上下文。
 
 Host 只属于母系统。App 可以定义 Coordinator，但 App 永远不是 Host。
 
+## 上下文虚拟内存
+
+ANO v0.3.0 不再把“整包上下文”一次塞给 Agent，而是把上下文变成按需调页的系统资源：
+
+```txt
+上下文目录 → 任务租约 → Agent 工作集 → 缺页请求 → 挂载/换出 → 快照/恢复
+```
+
+Host 只固定挂载当前任务、权威法源和输出契约。其他资料需要时才装入，不活跃时降为冷引用，恢复时核对来源版本。登记不等于授权，授权不等于可见；App 不能自行扩大租约，也不能自己批准缺页请求。
+
+详见 [CONTEXT_VIRTUAL_MEMORY.md](CONTEXT_VIRTUAL_MEMORY.md)。
+
 每次 App 运行前必须提交上下文权限申请表。OS 展示 Agent 运行审批卡，列出角色阵容、上下文预算、工作区权限、跨 App 桥接和商业状态。用户可以批准、拒绝，或用自然语言修改阵容。
 
 ## 生态模型
@@ -59,12 +71,13 @@ App 提供能力。
 
 ## 当前可运行内容
 
-v0.2.13 是实验性但可运行的参考版本。目前仓库提供：
+v0.3.0 是实验性但可运行的参考版本。目前仓库提供：
 
 - 当前授权目录初始化器；
 - 带版本一致性和 Host 门禁检查的工作区验证器；
 - 默认只预览安装卡的 Skill App 安装器；
 - 轻量 ANO Host 指令门禁；
+- 实验性的上下文目录、权限租约、工作集、缺页、换出与快照参考运行时；
 - 三个可选官方 App 包；
 - 可机读清单、模板、治理文档和 App 开发指南。
 
@@ -117,6 +130,8 @@ python ano/scripts/list_app_packages.py
 python ano/scripts/install_app_package.py apps/_inbox/official/<package>.zip
 python ano/scripts/install_app_package.py apps/_inbox/official/<package>.zip --yes
 python ano/scripts/validate_workspace.py
+python ano/scripts/context_vm.py status
+python ano/scripts/context_vm.py validate
 ```
 
 第一次安装命令只预览安装卡。只有用户明确批准后，才能使用 `--yes`。
@@ -133,7 +148,7 @@ res/
 out/
 ```
 
-- `ano/`：Host、内核、运行时、注册表、调度器、权限、Bridge、日志
+- `ano/`：Host、内核、上下文虚拟内存、运行时、注册表、调度器、权限、Bridge、日志
 - `user/`：用户资料、记忆、偏好、导入文件和项目
 - `apps/`：已安装 App 与待安装包收件箱
 - `res/`：共享资源
@@ -167,6 +182,7 @@ Host 会检查安装状态、展示权限申请和 Agent 阵容，然后停下�
 
 ## 开发者入口
 
+- [CONTEXT_VIRTUAL_MEMORY.md](CONTEXT_VIRTUAL_MEMORY.md)
 - [APP_DEVELOPER_GUIDE.md](APP_DEVELOPER_GUIDE.md)
 - [SPEC.md](SPEC.md)
 - [VERSIONING.md](VERSIONING.md)
@@ -175,6 +191,8 @@ Host 会检查安装状态、展示权限申请和 Agent 阵容，然后停下�
 - [SECURITY.md](SECURITY.md)
 - [templates/APP_MANIFEST.yaml](templates/APP_MANIFEST.yaml)
 - [templates/CONTEXT_PERMISSION_REQUEST.yaml](templates/CONTEXT_PERMISSION_REQUEST.yaml)
+- [templates/CONTEXT_LEASE.yaml](templates/CONTEXT_LEASE.yaml)
+- [templates/CONTEXT_PAGE_FAULT_REQUEST.yaml](templates/CONTEXT_PAGE_FAULT_REQUEST.yaml)
 
 ## 协议
 
