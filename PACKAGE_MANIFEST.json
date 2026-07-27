@@ -1,7 +1,7 @@
 {
   "package": "agent-native-os-main",
-  "version": "0.2.13",
-  "codename": "Official Novel Skill App",
+  "version": "0.3.0",
+  "codename": "Context Virtual Memory",
   "core_principles": [
     "single_os_host",
     "skill_apps_are_not_hosts",
@@ -10,7 +10,11 @@
     "clean_workspace_filesystem",
     "optional_app_package_inbox",
     "host_tool_requests_for_app_web_lookup",
-    "user_defined_agent_topology"
+    "user_defined_agent_topology",
+    "host_owned_context_virtual_memory",
+    "revocable_context_leases",
+    "demand_paged_agent_working_sets",
+    "versioned_context_snapshots"
   ],
   "bundled_app_packages": [
     {

@@ -4,7 +4,7 @@ display_name: ANO Example Skill App
 version: 0.1.0
 type: skill_app
 standard: agent-native-os
-standard_version: 0.2.2
+standard_version: 0.3.0
 runtime: ano
 
 summary: >
@@ -24,7 +24,7 @@ commercial:
   offline_available: true
 
 compatibility:
-  min_ano_version: 0.2.2
+  min_ano_version: 0.3.0
   max_ano_version: null
 
 agent_policy:
@@ -42,9 +42,24 @@ agent_policy:
       permissions:
         - read_task_sources
         - write_outputs
+        - request_context_page
 
 context_permission_request:
   default_mode: normal
+  lease:
+    required: true
+    revocable: true
+    valid_until: task_end
+  context_vm:
+    full_project_scan: denied
+    missing_evidence: page_fault_required
+    mount_policy: smallest_sufficient_object
+    eviction_policy: checkpoint_then_lru
+    source_version_mismatch: stop_for_recovery_resolution
+    bootstrap_frames:
+      - task_instruction
+      - authoritative_laws
+      - output_contract
   context_budget:
     requested_level: medium
     allow_long_context: false

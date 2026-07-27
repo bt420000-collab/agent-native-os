@@ -57,6 +57,7 @@ jobs:
               "scripts/validate_workspace.py",
               "scripts/install_app_package.py",
               "scripts/ano_host.py",
+              "scripts/context_vm.py",
           ]
           for filename in active_files:
               text = Path(filename).read_text(encoding="utf-8")
@@ -80,6 +81,8 @@ jobs:
           test "$(cat ano/VERSION)" = "$EXPECTED"
 
           python ano/scripts/validate_workspace.py
+          python ano/scripts/context_vm.py status
+          python ano/scripts/context_vm.py validate
           python ano/scripts/list_app_packages.py
           python ano/scripts/install_app_package.py \
             apps/_inbox/official/ano-calculator-skill-app_v0.1.2.zip

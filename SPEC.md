@@ -1,19 +1,20 @@
-# Agent-Native OS Specification v0.2
+# Agent-Native OS Specification v0.3
 
 Status: Draft  
-Codename: Single Host Runtime
+Codename: Context Virtual Memory
 
 ## 0. Normative foundation
 
 Agent-Native OS is a context-native operating system architecture for long-running AI agents and installable Skill Apps.
 
-The public core is grounded in five principles:
+The public core is grounded in six principles:
 
 1. Context is the first-class resource.
 2. Contracted natural language is source code.
 3. Context Kernel is the runtime.
 4. Structured output is the Context ABI.
 5. Skill Apps are installable applications.
+6. Context visibility is leased, paged, versioned, and recoverable.
 
 ## 1. Single Host principle
 
@@ -32,6 +33,9 @@ Agent-Native OS
 │
 ├─ OS Host
 ├─ Context Kernel
+├─ Context Virtual Memory Manager
+├─ Context Catalog & Page Table
+├─ Context Lease Manager
 ├─ Context Permission Manager
 ├─ Skill App Runtime
 ├─ Subagent Scheduler
@@ -76,8 +80,29 @@ The request declares:
 - output contracts
 - lifecycle expectations
 - persistent user context writes
+- requested bootstrap frames
+- paging and eviction policy
+- recovery snapshot expectations
 
 The OS Host may approve, deny, reduce, defer, pause, or kill the resulting Runtime Plan.
+
+## 4.1 Context Virtual Memory
+
+The Host manages context through six separate objects:
+
+```txt
+Context Object → Context Lease → Working Set → Page Fault → Eviction Record → Snapshot
+```
+
+Registration, permission, and visibility are distinct. A registered Context Object is not visible until an active lease authorizes its source and the Host mounts it into an Agent working set.
+
+Every executable run begins with three pinned logical frames: current task, authoritative laws, and output contract. Other material is mounted on demand. Agents report missing evidence through a Context Page Fault Request; Apps may not widen their own scope or approve the fault.
+
+Context tiers are `hot`, `warm`, `cold reference`, and `archived`. Dirty state must be checkpointed or handed off before eviction. Resume must compare recorded source versions and stop on mismatch.
+
+Only the OS Host may grant, reduce, revoke, mount, evict, or restore Context VM state.
+
+See `CONTEXT_VIRTUAL_MEMORY.md` and `spec/context-virtual-memory.schema.md`.
 
 ## 5. Skill App Runtime
 
@@ -156,7 +181,7 @@ Bridge access is task-scoped, path-scoped, and revocable.
 
 ## 9. Workspace structure
 
-Agent-Native OS v0.2.2 defines a clean installed workspace root:
+Agent-Native OS v0.3.0 preserves the clean installed workspace root:
 
 ```txt
 README.md
@@ -225,6 +250,10 @@ Recommended extensions:
 + User-defined Agent Topology
 + App Registry
 + Permission Lock
++ Context Catalog
++ Context Lease
++ Demand Paging and Page Faults
++ Working-Set Eviction
 + Context Allocation Log
 + Audit Gate
 + Recovery Point

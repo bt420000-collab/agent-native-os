@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ANO Host/Admin Agent command gate v0.2.13.
+"""ANO Host/Admin Agent command gate v0.3.0.
 
 All user instructions after OS installation must be mediated by the OS Host.
 Users do not directly run app agents. This script is a lightweight CLI stand-in
@@ -208,11 +208,33 @@ def open_installed_app(root: Path, app: Dict[str, Any]) -> int:
     return 0
 
 
+def show_context_vm(root: Path) -> int:
+    helper = root / "ano/scripts/context_vm.py"
+    if not helper.exists():
+        print(f"ERROR: Context VM helper not found: {helper}")
+        return 2
+    proc = subprocess.run(
+        [sys.executable, str(helper), "status"],
+        cwd=str(root),
+        text=True,
+        capture_output=True,
+    )
+    if proc.stdout:
+        print(proc.stdout.rstrip())
+    if proc.stderr:
+        print(proc.stderr.rstrip(), file=sys.stderr)
+    print("\n说明：上下文由 Host 按租约和工作集管理；App 不能自行扩权或全量扫描。")
+    return proc.returncode
+
+
 def handle_instruction(root: Path, instruction: str) -> int:
     host_header(instruction)
     apps = installed_apps(root)
     packages = pending_packages(root)
     low = instruction.lower()
+
+    if any(k in low for k in ["上下文状态", "上下文虚拟内存", "context vm", "context status"]):
+        return show_context_vm(root)
 
     if any(k in low for k in ["列表", "列出", "有哪些", "list", "app packages", "应用"]):
         show_apps(root)

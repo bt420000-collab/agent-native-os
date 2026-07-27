@@ -1,0 +1,24 @@
+context_page_fault:
+  request_id: cpf_TASK-001_0001
+  lease_id: lease_TASK-001_writer_001
+  task_id: TASK-001
+  app_id: ano.skill.example
+  agent_id: example.worker
+
+  missing_need: >
+    Describe the exact fact, rule, source, or prior decision required to continue.
+
+  evidence_of_need: >
+    Explain which current step is blocked or unsafe without this context.
+
+  requested_query:
+    candidate_context_ids: []
+    source_hint: user/projects/example/current/
+    keywords: []
+    max_tokens: 3000
+    full_project_scan: false
+
+  fallback_if_denied: >
+    State what the Agent will do if the Host does not mount more context.
+
+  status: pending_host_resolution

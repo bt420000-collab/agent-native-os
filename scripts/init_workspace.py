@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Initialize Agent-Native OS v0.2.13 in the current authorized workspace root.
+Initialize Agent-Native OS v0.3.0 in the current authorized workspace root.
 
 Hard rule:
   ANO installs into the current working directory only.
@@ -20,7 +20,7 @@ import shutil
 import sys
 from pathlib import Path
 
-VERSION = "0.2.13"
+VERSION = "0.3.0"
 ROOT_ALLOWED = {"README.md", "USER_LOG.md", "ano", "user", "apps", "res", "out"}
 LEGACY_ROOTS = {".agent-os", "skills"}
 FORBIDDEN_WORKSPACE_NAMES = {"ano-workspace", "my-workspace"}
@@ -29,11 +29,15 @@ SKELETON_DIRS = [
     "ano/kernel",
     "ano/registry/apps",
     "ano/registry/mounts",
+    "ano/registry/context_objects",
     "ano/runtime/apps",
     "ano/runtime/sessions",
     "ano/runtime/locks",
     "ano/runtime/bridges",
     "ano/runtime/tmp",
+    "ano/runtime/context_vm/working_sets",
+    "ano/runtime/context_vm/cold_refs",
+    "ano/runtime/context_vm/snapshots",
     "ano/logs",
     "ano/scripts",
     "ano/templates",
@@ -59,6 +63,7 @@ RUNTIME_SCRIPTS = [
     "install_app_package.py",
     "validate_workspace.py",
     "ano_host.py",
+    "context_vm.py",
 ]
 
 
@@ -264,6 +269,18 @@ Every App run begins with a Context Permission Request approved by the OS Host.
 """,
     )
     write(
+        target / "ano/kernel/CONTEXT_VIRTUAL_MEMORY.md",
+        """
+# Context Virtual Memory
+
+ANO Host owns the Context Catalog, revocable task leases, Agent working sets,
+Page Fault resolution, eviction, and recovery snapshots.
+
+Apps request context. They do not mount sources, widen leases, or approve their
+own Page Fault Requests.
+""",
+    )
+    write(
         target / "ano/kernel/SCHEDULER.md",
         """
 # Scheduler
@@ -294,6 +311,8 @@ python ano/scripts/list_app_packages.py
 python ano/scripts/install_app_package.py apps/_inbox/official/<package>.zip
 python ano/scripts/install_app_package.py apps/_inbox/official/<package>.zip --yes
 python ano/scripts/validate_workspace.py
+python ano/scripts/context_vm.py status
+python ano/scripts/context_vm.py validate
 ```
 """,
     )
@@ -418,6 +437,11 @@ def init_workspace(target: Path, no_bundled_apps: bool = False) -> dict:
         },
     )
     write_json(target / "ano/runtime/context_allocations.json", {"allocations": []})
+    write_json(target / "ano/runtime/context_vm/catalog.json", {"schema_version": VERSION, "objects": []})
+    write_json(target / "ano/runtime/context_vm/leases.json", {"schema_version": VERSION, "leases": []})
+    write_json(target / "ano/runtime/context_vm/page_table.json", {"schema_version": VERSION, "mounts": []})
+    write(target / "ano/runtime/context_vm/page_faults.jsonl", "")
+    write(target / "ano/runtime/context_vm/events.jsonl", "")
     write(
         target / "ano/runtime/events.jsonl",
         json.dumps(
@@ -426,6 +450,7 @@ def init_workspace(target: Path, no_bundled_apps: bool = False) -> dict:
                 "version": VERSION,
                 "filesystem": "current_root_clean_v1",
                 "app_package_inbox": True,
+                "context_virtual_memory": True,
                 "staged_packages": staged_packages,
                 "time": now,
             },

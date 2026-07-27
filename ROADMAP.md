@@ -15,7 +15,7 @@ Goals:
 
 ## v0.2: Single Host Runtime
 
-Status: current.
+Status: complete.
 
 Goals:
 
@@ -35,16 +35,21 @@ python scripts/init_workspace.py
 python ano/scripts/validate_workspace.py
 ```
 
-## v0.2.1: App Manifest and CPR Schema Tightening
+## v0.3: Context Virtual Memory
+
+Status: current experimental reference release.
 
 Goals:
 
-- Convert draft schemas into stricter machine-checkable YAML/JSON schema files.
-- Add manifest compatibility checks.
-- Add permission scope checks.
-- Add app package smoke-test helper.
+- Define Context Objects as versioned backing-store references.
+- Define revocable task and Agent-scoped Context Leases.
+- Pin task, authoritative laws, and output contract as the bootstrap working set.
+- Add demand paging through Host-resolved Context Page Fault Requests.
+- Add hot, warm, cold-reference, and archived tiers.
+- Add checkpoint-before-eviction and version-aware recovery snapshots.
+- Measure effective work per visible context token.
 
-## v0.3: Reference Installer and App Runtime CLI
+## v0.3.1: Reference Installer and App Runtime CLI
 
 Potential commands:
 
