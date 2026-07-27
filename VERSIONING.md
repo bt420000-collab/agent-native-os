@@ -5,10 +5,10 @@ Agent-Native OS follows semantic versioning for the public specification and ref
 ## Current version
 
 ```txt
-0.2.13
+0.3.0
 ```
 
-Codename: **Official Novel Skill App**
+Codename: **Context Virtual Memory**
 
 ## Version meaning
 
@@ -22,11 +22,14 @@ MAJOR.MINOR.PATCH
 
 ## Stability levels
 
-| Area | v0.2.13 status | Notes |
+| Area | v0.3.0 status | Notes |
 |---|---:|---|
 | Single OS Host principle | stable draft | Apps must not own Host authority. |
 | Skill App package naming | stable draft | Recommended format: `ano-<domain>-skill-app`. |
 | Context Permission Request | draft | Required concept, schema may evolve. |
+| Context Virtual Memory | experimental | Host-owned catalog, leases, working sets, paging, eviction, and snapshots. |
+| Context Lease | experimental | Revocable task and Agent-scoped authorization. |
+| Page Fault Request | experimental | Missing evidence is requested on demand instead of triggering a full scan. |
 | Runtime Approval Card | draft | User-facing approval format. |
 | User-defined Agent Topology | draft | Persistent customization model. |
 | Cross-App Bridge | draft | Required for App-to-App cooperation. |
@@ -59,6 +62,10 @@ A maintainer may also use **Actions → Smoke Test → Run workflow** to publish
 - refreshes existing notes and assets only during a manual run with refresh enabled.
 
 No personal access token or maintainer password is stored in the repository.
+
+## 0.3.0 Context Virtual Memory
+
+Current release. Adds Host-owned Context Virtual Memory, revocable Context Leases, demand-paged Agent working sets, Page Fault Requests, eviction records, and versioned recovery snapshots. This is an experimental reference contract, not a production memory manager.
 
 ## 0.2.13 Official Novel Skill App
 
