@@ -19,7 +19,7 @@ import tempfile
 import zipfile
 from pathlib import Path
 
-VERSION = "0.2.13"
+VERSION = "0.3.0"
 
 
 def iso_now() -> str:
