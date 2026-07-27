@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate an Agent-Native OS v0.2.13 clean workspace skeleton.
+"""Validate an Agent-Native OS v0.3.0 clean workspace skeleton.
 
 Usage:
     python ano/scripts/validate_workspace.py
@@ -11,7 +11,7 @@ import json
 import sys
 from pathlib import Path
 
-VERSION = "0.2.13"
+VERSION = "0.3.0"
 ROOT_ALLOWED = {"README.md", "USER_LOG.md", "ano", "user", "apps", "res", "out"}
 LEGACY_ROOTS = {".agent-os", "skills"}
 FORBIDDEN_ROOT_DIRS = {"ano-workspace", "my-workspace"}
@@ -20,10 +20,14 @@ REQUIRED_DIRS = [
     "ano/kernel",
     "ano/registry/apps",
     "ano/registry/mounts",
+    "ano/registry/context_objects",
     "ano/runtime/apps",
     "ano/runtime/sessions",
     "ano/runtime/locks",
     "ano/runtime/bridges",
+    "ano/runtime/context_vm/working_sets",
+    "ano/runtime/context_vm/cold_refs",
+    "ano/runtime/context_vm/snapshots",
     "ano/scripts",
     "ano/logs",
     "user/profile",
@@ -48,15 +52,22 @@ REQUIRED_FILES = [
     "ano/kernel/APP_PACKAGE_INBOX.md",
     "ano/kernel/OS_AGENT_COMMAND_GATE.md",
     "ano/kernel/CONTEXT_PERMISSION_MODEL.md",
+    "ano/kernel/CONTEXT_VIRTUAL_MEMORY.md",
     "ano/kernel/SCHEDULER.md",
     "ano/registry/installed_apps.json",
     "ano/runtime/process_table.json",
     "ano/runtime/context_allocations.json",
+    "ano/runtime/context_vm/catalog.json",
+    "ano/runtime/context_vm/leases.json",
+    "ano/runtime/context_vm/page_table.json",
+    "ano/runtime/context_vm/page_faults.jsonl",
+    "ano/runtime/context_vm/events.jsonl",
     "ano/runtime/events.jsonl",
     "ano/scripts/list_app_packages.py",
     "ano/scripts/install_app_package.py",
     "ano/scripts/validate_workspace.py",
     "ano/scripts/ano_host.py",
+    "ano/scripts/context_vm.py",
     "user/profile/global_profile.yaml",
 ]
 
@@ -64,6 +75,9 @@ JSON_FILES = [
     "ano/registry/installed_apps.json",
     "ano/runtime/process_table.json",
     "ano/runtime/context_allocations.json",
+    "ano/runtime/context_vm/catalog.json",
+    "ano/runtime/context_vm/leases.json",
+    "ano/runtime/context_vm/page_table.json",
 ]
 
 RESERVED_APP_DIRS = {"_inbox"}
