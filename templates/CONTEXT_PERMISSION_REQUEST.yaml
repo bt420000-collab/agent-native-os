@@ -4,6 +4,11 @@ runtime_context_request:
   app_id: ano.skill.example
   requested_mode: normal
 
+  lease_request:
+    lease_id: lease_TASK-001_example_001
+    revocable: true
+    valid_until: task_end
+
   purpose: >
     Explain what the app wants to do in this run.
 
@@ -20,6 +25,24 @@ runtime_context_request:
     max_tokens_hint: null
     allow_long_context: false
     allow_full_project_scan: false
+
+  context_vm:
+    full_project_scan: false
+    missing_evidence: page_fault_required
+    mount_policy: smallest_sufficient_object
+    max_page_fault_tokens: 3000
+    bootstrap_frames:
+      - frame: task_instruction
+        pinned: true
+      - frame: authoritative_laws
+        pinned: true
+      - frame: output_contract
+        pinned: true
+    snapshot_on:
+      - pause
+      - handoff
+      - compaction
+      - app_stop
 
   workspace_scope:
     read:
